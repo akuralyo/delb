@@ -4,9 +4,14 @@ import com.kreative.delb.model.Author;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.function.Predicate;
 
 public interface AuthorRepository extends CrudRepository<Author, String> {
 
-	List<Author> findAllByFirstName();
+	List<Author> findAllByFirstName(Predicate<Author> predicate);
 
+	Optional<Author> findOneByFirstName(String firstName);
+
+	Optional<Author> findOneByLastName(String lastName);
 }

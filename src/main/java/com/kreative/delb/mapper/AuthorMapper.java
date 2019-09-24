@@ -12,4 +12,10 @@ public class AuthorMapper {
 				.setFirstName(author.getFirstName())
 				.setLastName(author.getLastName());
 	}
+
+	public Author mapToModel(AuthorDto authorDto) {
+		return new Author()
+				.setFirstName(authorDto.getFirstName())
+				.setLastName(authorDto.getLastName());
+	}
 }

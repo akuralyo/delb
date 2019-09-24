@@ -20,20 +20,28 @@ public class AuthorTechnicalService {
 	@Autowired
 	private AuthorMapper authorMapper;
 
-	public List<AuthorDto> findAll() {
-		List<AuthorDto> authorDtos = new ArrayList<>();
+	public List<Author> findAll() {
+		List<Author> authors = new ArrayList<>();
 		authorRepository.findAll().forEach(author -> {
-			authorDtos.add(authorMapper.mapToDto(author));
+			authors.add(author);
 		});
-		return authorDtos;
+		return authors;
 	}
 
-	public AuthorDto findOneById(String id) {
+	public Author findOneById(String id) {
 		Optional<Author> authorOptional = authorRepository.findById(id);
 		if (authorOptional.isPresent()) {
-			return authorMapper.mapToDto(authorOptional.get());
+			return authorOptional.get();
 		} else {
 			return null;
 		}
+	}
+
+	public Author createAuthor(Author author) {
+		return authorRepository.save(author);
+	}
+
+	public Author createAuthor(AuthorDto authorDto) {
+		return authorRepository.save(authorMapper.mapToModel(authorDto));
 	}
 }
