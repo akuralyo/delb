@@ -8,7 +8,7 @@ import org.springframework.data.annotation.LastModifiedDate;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-public abstract class AbstractAuditSecurityFiled {
+public abstract class AbstractAuditSecurityField {
 
 	@CreatedDate
 	private LocalDate createdAt;
