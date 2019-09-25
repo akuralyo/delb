@@ -1,16 +1,14 @@
-package com.kreative.delb.resource;
+package com.kreative.delb.resource.author;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import com.kreative.delb.functionalService.AuthorFunctionnalService;
+import com.kreative.delb.resource.Views;
 import com.kreative.delb.resource.dto.AuthorDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static com.kreative.delb.resource.constants.Api.*;
@@ -22,9 +20,10 @@ public class AuthorsPublicResource {
 	@Autowired
 	private AuthorFunctionnalService authorFunctionnalService;
 
+	@JsonView(Views.Public.class)
 	@GetMapping
 	public List<AuthorDto> findAll() {
-		return new ArrayList<>();
+		return authorFunctionnalService.findAll();
 	}
 
 	@GetMapping(PV_ID)

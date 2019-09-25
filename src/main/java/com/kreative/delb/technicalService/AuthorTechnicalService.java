@@ -44,4 +44,13 @@ public class AuthorTechnicalService {
 	public Author createAuthor(AuthorDto authorDto) {
 		return authorRepository.save(authorMapper.mapToModel(authorDto));
 	}
+
+	public Author updateAuthor(String id, AuthorDto authorDto) {
+		Optional<Author> authorOptional = authorRepository.findById(id);
+		if (authorOptional.isPresent()) {
+			return authorRepository.save(authorMapper.mapToModel(authorDto.setId(id)));
+		} else {
+			return null;
+		}
+	}
 }

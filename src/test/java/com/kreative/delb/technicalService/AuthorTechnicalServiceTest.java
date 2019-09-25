@@ -31,7 +31,6 @@ public class AuthorTechnicalServiceTest {
 		MockitoAnnotations.initMocks(this);
 	}
 
-
 	@Test
 	public void findAll() {
 		// Initiation des réponses

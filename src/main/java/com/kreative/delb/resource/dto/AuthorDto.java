@@ -1,21 +1,43 @@
 package com.kreative.delb.resource.dto;
 
+
+import com.fasterxml.jackson.annotation.JsonView;
+import com.kreative.delb.resource.GroupValidation;
+import com.kreative.delb.resource.Views;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Null;
 import java.time.LocalDate;
 
 public class AuthorDto {
 
+	@JsonView(Views.Public.class)
+	@Null(groups = GroupValidation.IPost.class)
 	private String id;
 
+	@JsonView(Views.Public.class)
+	@NotBlank(groups = GroupValidation.IPost.class)
 	private String firstName;
 
+	@JsonView(Views.Public.class)
+	@NotBlank(groups = GroupValidation.IPost.class)
 	private String lastName;
 
+	@JsonView(Views.Public.class)
 	private String nickName;
 
+	@JsonView(Views.Public.class)
 	private LocalDate birthday;
+
+	@JsonView(Views.Private.class)
+	private String adresse;
 
 	public String getNickName() {
 		return nickName;
+	}
+
+	public String getAdresse() {
+		return adresse;
 	}
 
 	public AuthorDto setNickName(String nickName) {
@@ -56,6 +78,11 @@ public class AuthorDto {
 
 	public AuthorDto setLastName(String lastName) {
 		this.lastName = lastName;
+		return this;
+	}
+
+	public AuthorDto setAdresse(String adresse) {
+		this.adresse = adresse;
 		return this;
 	}
 }

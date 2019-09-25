@@ -1,4 +1,4 @@
-package com.kreative.delb.resource;
+package com.kreative.delb.resource.books;
 
 import com.kreative.delb.resource.dto.AuthorDto;
 import com.kreative.delb.resource.dto.BookDto;

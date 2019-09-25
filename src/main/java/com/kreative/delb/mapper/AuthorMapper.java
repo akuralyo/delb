@@ -13,14 +13,17 @@ public class AuthorMapper {
 				.setFirstName(author.getFirstName())
 				.setLastName(author.getLastName())
 				.setNickName(author.getNickName())
-				.setBirthday(author.getBirthday());
+				.setBirthday(author.getBirthday())
+				.setAdresse(author.getAdresse());
 	}
 
+	@Deprecated
 	public Author mapToModel(AuthorDto authorDto) {
 		return new Author()
 				.setFirstName(authorDto.getFirstName())
 				.setLastName(authorDto.getLastName())
 				.setNickName(authorDto.getNickName())
-				.setBirthday(authorDto.getBirthday());
+				.setBirthday(authorDto.getBirthday())
+				.setAdresse(authorDto.getAdresse());
 	}
 }
