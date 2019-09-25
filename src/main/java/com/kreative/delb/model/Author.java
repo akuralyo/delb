@@ -5,6 +5,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 
 @Document
 public class Author extends AbstractAuditSecurityField implements Serializable {
@@ -17,8 +18,14 @@ public class Author extends AbstractAuditSecurityField implements Serializable {
 
 	private String nickname;
 
+	private LocalDate birthday;
+
 	public ObjectId getId() {
 		return id;
+	}
+
+	public LocalDate getBirthday() {
+		return birthday;
 	}
 
 	public Author setId(ObjectId id) {
@@ -50,6 +57,11 @@ public class Author extends AbstractAuditSecurityField implements Serializable {
 
 	public Author setNickname(String nickname) {
 		this.nickname = nickname;
+		return this;
+	}
+
+	public Author setBirthday(LocalDate birthday) {
+		this.birthday = birthday;
 		return this;
 	}
 }

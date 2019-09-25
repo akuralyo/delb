@@ -10,12 +10,16 @@ public class AuthorMapper {
 	public AuthorDto mapToDto(Author author) {
 		return new AuthorDto()
 				.setFirstName(author.getFirstName())
-				.setLastName(author.getLastName());
+				.setLastName(author.getLastName())
+				.setNickName(author.getNickname())
+				.setBirthday(author.getBirthday());
 	}
 
 	public Author mapToModel(AuthorDto authorDto) {
 		return new Author()
 				.setFirstName(authorDto.getFirstName())
-				.setLastName(authorDto.getLastName());
+				.setLastName(authorDto.getLastName())
+				.setNickname(authorDto.getNickName())
+				.setBirthday(authorDto.getBirthday());
 	}
 }

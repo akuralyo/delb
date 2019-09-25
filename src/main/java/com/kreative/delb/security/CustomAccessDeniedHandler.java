@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class CustomAccessDeniedHandler implements AccessDeniedHandler {
-	// ublic static final Logger LOG			= Logger.getLogger(CustomAccessDeniedHandler.class);
+	// public static final Logger LOG = Logger.getLogger(CustomAccessDeniedHandler.class);
 
 	@Override
 	public void handle(
