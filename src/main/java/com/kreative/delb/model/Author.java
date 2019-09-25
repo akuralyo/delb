@@ -16,7 +16,7 @@ public class Author extends AbstractAuditSecurityField implements Serializable {
 
 	private String lastName;
 
-	private String nickname;
+	private String nickName;
 
 	private LocalDate birthday;
 
@@ -51,12 +51,12 @@ public class Author extends AbstractAuditSecurityField implements Serializable {
 		return this;
 	}
 
-	public String getNickname() {
-		return nickname;
+	public String getNickName() {
+		return nickName;
 	}
 
-	public Author setNickname(String nickname) {
-		this.nickname = nickname;
+	public Author setNickName(String nickName) {
+		this.nickName = nickName;
 		return this;
 	}
 

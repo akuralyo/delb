@@ -54,7 +54,7 @@ public class AuthorTechnicalServiceTest {
 		Assert.assertNotNull(author.getId());
 		Assert.assertEquals(author.getFirstName(), createAuthor(0).getFirstName());
 		Assert.assertEquals(author.getLastName(), createAuthor(0).getLastName());
-		Assert.assertEquals(author.getNickname(), createAuthor(0).getNickname());
+		Assert.assertEquals(author.getNickName(), createAuthor(0).getNickName());
 		Assert.assertEquals(author.getBirthday(), createAuthor(0).getBirthday());
 	}
 
@@ -90,6 +90,6 @@ public class AuthorTechnicalServiceTest {
 				.setId(new ObjectId())
 				.setFirstName("FirstName" + i)
 				.setLastName("LastName" + i)
-				.setNickname("NickName" + i);
+				.setNickName("NickName" + i);
 	}
 }

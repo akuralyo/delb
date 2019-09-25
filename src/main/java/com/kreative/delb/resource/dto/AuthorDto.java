@@ -4,6 +4,8 @@ import java.time.LocalDate;
 
 public class AuthorDto {
 
+	private String id;
+
 	private String firstName;
 
 	private String lastName;
@@ -23,6 +25,15 @@ public class AuthorDto {
 
 	public LocalDate getBirthday() {
 		return birthday;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public AuthorDto setId(String id) {
+		this.id = id;
+		return this;
 	}
 
 	public AuthorDto setBirthday(LocalDate birthday) {

@@ -9,9 +9,10 @@ public class AuthorMapper {
 
 	public AuthorDto mapToDto(Author author) {
 		return new AuthorDto()
+				.setId(author.getId().toString())
 				.setFirstName(author.getFirstName())
 				.setLastName(author.getLastName())
-				.setNickName(author.getNickname())
+				.setNickName(author.getNickName())
 				.setBirthday(author.getBirthday());
 	}
 
@@ -19,7 +20,7 @@ public class AuthorMapper {
 		return new Author()
 				.setFirstName(authorDto.getFirstName())
 				.setLastName(authorDto.getLastName())
-				.setNickname(authorDto.getNickName())
+				.setNickName(authorDto.getNickName())
 				.setBirthday(authorDto.getBirthday());
 	}
 }
