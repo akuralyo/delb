@@ -1,6 +1,6 @@
 package com.kreative.delb.resource;
 
-public class Views {
+public class ViewsAuthor {
 	public class Public {
 	}
 

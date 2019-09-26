@@ -3,7 +3,7 @@ package com.kreative.delb.resource.author;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.kreative.delb.model.Author;
 import com.kreative.delb.resource.GroupValidation;
-import com.kreative.delb.resource.Views;
+import com.kreative.delb.resource.ViewsAuthor;
 import com.kreative.delb.resource.constants.Api;
 import com.kreative.delb.resource.dto.AuthorDto;
 import com.kreative.delb.service.functionnal.AuthorFunctionnalService;
@@ -24,7 +24,7 @@ public class AuthorsPrivateResource {
 	@Autowired
 	private AuthorFunctionnalService authorFunctionnalService;
 
-	@JsonView(Views.Private.class)
+	@JsonView(ViewsAuthor.Private.class)
 	@GetMapping
 	public List<AuthorDto> findAll() {
 		return authorFunctionnalService.findAll();

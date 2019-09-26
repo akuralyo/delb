@@ -1,7 +1,7 @@
 package com.kreative.delb.resource.author;
 
 import com.fasterxml.jackson.annotation.JsonView;
-import com.kreative.delb.resource.Views;
+import com.kreative.delb.resource.ViewsAuthor;
 import com.kreative.delb.resource.dto.AuthorDto;
 import com.kreative.delb.service.functionnal.AuthorFunctionnalService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +23,7 @@ public class AuthorsPublicResource {
 	@Autowired
 	private AuthorFunctionnalService authorFunctionnalService;
 
-	@JsonView(Views.Public.class)
+	@JsonView(ViewsAuthor.Public.class)
 	@GetMapping
 	public List<AuthorDto> findAll() {
 		return authorFunctionnalService.findAll();

@@ -1,9 +1,15 @@
 package com.kreative.delb.resource.dto;
 
-public class BookDto {
-    private String id;
+import com.fasterxml.jackson.annotation.JsonView;
+import com.kreative.delb.resource.ViewsAuthor;
 
-    private String name;
+public class BookDto {
+
+	@JsonView(ViewsAuthor.Public.class)
+	private String id;
+
+	@JsonView(ViewsAuthor.Public.class)
+	private String name;
 
     private AuthorDto authorDto = new AuthorDto();
 
