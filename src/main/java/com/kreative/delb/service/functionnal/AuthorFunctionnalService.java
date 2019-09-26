@@ -1,11 +1,11 @@
-package com.kreative.delb.functionalService;
+package com.kreative.delb.service.functionnal;
 
 import com.kreative.delb.mapper.AuthorMapper;
 import com.kreative.delb.mapper.BookMapper;
 import com.kreative.delb.model.Author;
 import com.kreative.delb.resource.dto.AuthorDto;
-import com.kreative.delb.technicalService.AuthorTechnicalService;
-import com.kreative.delb.technicalService.BookTechnicalService;
+import com.kreative.delb.service.technical.AuthorTechnicalService;
+import com.kreative.delb.service.technical.BookTechnicalService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;

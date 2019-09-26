@@ -1,9 +1,9 @@
-package com.kreative.delb.functionalService;
+package com.kreative.delb.service.functionnal;
 
 import com.kreative.delb.model.Author;
 import com.kreative.delb.repository.AuthorRepository;
 import com.kreative.delb.resource.dto.BookDto;
-import com.kreative.delb.technicalService.AuthorTechnicalService;
+import com.kreative.delb.service.technical.AuthorTechnicalService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -1,4 +1,4 @@
-package com.kreative.delb.technicalService;
+package com.kreative.delb.service.technical;
 
 import com.kreative.delb.model.Author;
 import com.kreative.delb.objectMother.AuthorMother;
@@ -42,6 +42,7 @@ public class AuthorTechnicalServiceTest {
 		List<Author> authorList = authorTechnicalService.findAll();
 		// Vérification
 		assertEquals(authorList.size(), new AuthorMother().createAuthorList().size());
+		checkObject_author(authorList.get(1), new AuthorMother().createAuthor(1));
 	}
 
 	@Test
@@ -52,12 +53,16 @@ public class AuthorTechnicalServiceTest {
 		// Appel
 		Author author = authorTechnicalService.findOneById("id");
 		// Vérification
-		assertNotNull(author);
-		assertNotNull(author.getId());
-		assertEquals(author.getFirstName(), new AuthorMother().createAuthor(0).getFirstName());
-		assertEquals(author.getLastName(), new AuthorMother().createAuthor(0).getLastName());
-		assertEquals(author.getNickName(), new AuthorMother().createAuthor(0).getNickName());
-		assertEquals(author.getBirthday(), new AuthorMother().createAuthor(0).getBirthday());
+		checkObject_author(author, new AuthorMother().createAuthor(0));
+	}
+
+	private void checkObject_author(Author expected, Author returned) {
+		assertNotNull(returned);
+		assertNotNull(returned.getId());
+		assertEquals(returned.getFirstName(), expected.getFirstName());
+		assertEquals(returned.getLastName(), expected.getLastName());
+		assertEquals(returned.getNickName(), expected.getNickName());
+		assertEquals(returned.getBirthday(), expected.getBirthday());
 	}
 
 	@Test

@@ -1,4 +1,4 @@
-package com.kreative.delb.technicalService;
+package com.kreative.delb.service.technical;
 
 import com.kreative.delb.model.Book;
 import com.kreative.delb.repository.BookRepository;
