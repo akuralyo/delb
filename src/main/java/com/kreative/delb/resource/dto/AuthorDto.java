@@ -13,28 +13,28 @@ import java.util.List;
 
 public class AuthorDto {
 
-	@JsonView(ViewsAuthor.Public.class)
+	@JsonView(ViewsAuthor.ApiPublic.class)
 	@Null(groups = GroupValidation.IPost.class)
 	private String id;
 
-	@JsonView(ViewsAuthor.Public.class)
+	@JsonView(ViewsAuthor.ApiPublic.class)
 	@NotBlank(groups = GroupValidation.IPost.class)
 	private String firstName;
 
-	@JsonView(ViewsAuthor.Public.class)
+	@JsonView(ViewsAuthor.ApiPublic.class)
 	@NotBlank(groups = GroupValidation.IPost.class)
 	private String lastName;
 
-	@JsonView(ViewsAuthor.Public.class)
+	@JsonView(ViewsAuthor.ApiPublic.class)
 	private String nickName;
 
-	@JsonView(ViewsAuthor.Public.class)
+	@JsonView(ViewsAuthor.ApiPublic.class)
 	private LocalDate birthday;
 
-	@JsonView(ViewsAuthor.Private.class)
+	@JsonView(ViewsAuthor.ApiPrivate.class)
 	private String adresse;
 
-	@JsonView(ViewsAuthor.Public.class)
+	@JsonView(ViewsAuthor.ApiPublic.class)
 	private List<BookDto> bookDtoList = new ArrayList<>();
 
 	public List<BookDto> getBookDtoList() {

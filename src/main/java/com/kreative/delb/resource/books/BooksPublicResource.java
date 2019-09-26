@@ -1,6 +1,5 @@
 package com.kreative.delb.resource.books;
 
-import com.kreative.delb.resource.dto.AuthorDto;
 import com.kreative.delb.resource.dto.BookDto;
 import com.kreative.delb.service.functionnal.BooksFunctionnalService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +23,7 @@ public class BooksPublicResource {
 	private BooksFunctionnalService booksFunctionnalService;
 
 	@GetMapping(PV_ID)
-	public ResponseEntity<BookDto> get(@PathVariable String id) {
+	public ResponseEntity get(@PathVariable String id) {
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
@@ -34,7 +33,7 @@ public class BooksPublicResource {
 	}
 
 	@GetMapping(AUTHORS)
-	public ResponseEntity<AuthorDto> getAuthor() {
+	public ResponseEntity getAuthor() {
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 }

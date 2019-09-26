@@ -5,10 +5,10 @@ import com.kreative.delb.resource.ViewsAuthor;
 
 public class BookDto {
 
-	@JsonView(ViewsAuthor.Public.class)
+    @JsonView(ViewsAuthor.ApiPublic.class)
 	private String id;
 
-	@JsonView(ViewsAuthor.Public.class)
+    @JsonView(ViewsAuthor.ApiPublic.class)
 	private String name;
 
     private AuthorDto authorDto = new AuthorDto();

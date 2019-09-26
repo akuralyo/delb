@@ -43,7 +43,7 @@ public class AuthorFunctionnalService {
 	public AuthorDto findOneById(String id) {
 		Author author = authorTechnicalService.findOneById(id);
 		if (author == null) {
-			return null;
+			throw new HttpClientErrorException(HttpStatus.NOT_FOUND);
 		} else {
 			AuthorDto authorDto = authorMapper.mapToDto(author);
 			bookTechnicalService.findAllByAuthorId(authorDto.getId()).stream().forEach(book -> {

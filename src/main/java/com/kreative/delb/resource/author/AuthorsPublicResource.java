@@ -23,19 +23,15 @@ public class AuthorsPublicResource {
 	@Autowired
 	private AuthorFunctionnalService authorFunctionnalService;
 
-	@JsonView(ViewsAuthor.Public.class)
+	@JsonView(ViewsAuthor.ApiPublic.class)
 	@GetMapping
 	public List<AuthorDto> findAll() {
 		return authorFunctionnalService.findAll();
 	}
 
 	@GetMapping(PV_ID)
-	public ResponseEntity<AuthorDto> get(@PathVariable String id) {
+	public ResponseEntity get(@PathVariable String id) {
 		AuthorDto authorDto = authorFunctionnalService.findOneById(id);
-		if (authorDto == null) {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		} else {
-			return new ResponseEntity<>(authorDto, HttpStatus.OK);
-		}
+		return new ResponseEntity<>(authorDto, HttpStatus.OK);
 	}
 }

@@ -26,5 +26,10 @@ public class BooksPrivateResource {
 	public ResponseEntity updateAuthor(@RequestBody AuthorDto authorDto) {
 		throw new HttpClientErrorException(HttpStatus.NOT_IMPLEMENTED);
 	}
+
+	@DeleteMapping(PV_ID)
+	public ResponseEntity delete() {
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
 }
 

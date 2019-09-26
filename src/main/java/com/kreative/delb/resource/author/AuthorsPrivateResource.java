@@ -1,10 +1,8 @@
 package com.kreative.delb.resource.author;
 
 import com.fasterxml.jackson.annotation.JsonView;
-import com.kreative.delb.model.Author;
 import com.kreative.delb.resource.GroupValidation;
 import com.kreative.delb.resource.ViewsAuthor;
-import com.kreative.delb.resource.constants.Api;
 import com.kreative.delb.resource.dto.AuthorDto;
 import com.kreative.delb.service.functionnal.AuthorFunctionnalService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,21 +22,26 @@ public class AuthorsPrivateResource {
 	@Autowired
 	private AuthorFunctionnalService authorFunctionnalService;
 
-	@JsonView(ViewsAuthor.Private.class)
+	@JsonView(ViewsAuthor.ApiPrivate.class)
 	@GetMapping
 	public List<AuthorDto> findAll() {
 		return authorFunctionnalService.findAll();
 	}
 
 	@PostMapping
-	public ResponseEntity<Author> create(@RequestBody @Validated(GroupValidation.IPost.class) AuthorDto authorDto) {
+	public ResponseEntity create(@RequestBody @Validated(GroupValidation.IPost.class) AuthorDto authorDto) {
 		AuthorDto authorDtoCreated = authorFunctionnalService.createAuthor(authorDto);
-		return new ResponseEntity(authorDtoCreated, HttpStatus.CREATED);
+		return new ResponseEntity<>(authorDtoCreated, HttpStatus.CREATED);
 	}
 
-	@PutMapping(Api.PV_ID)
-	public ResponseEntity<AuthorDto> update(@PathVariable String id, @RequestBody @Validated(GroupValidation.IPut.class) AuthorDto authorDto) {
+	@PutMapping(PV_ID)
+	public ResponseEntity update(@PathVariable String id, @RequestBody @Validated(GroupValidation.IPut.class) AuthorDto authorDto) {
 		AuthorDto authorDtoUpdated = authorFunctionnalService.updateAuthor(id, authorDto);
-		return new ResponseEntity(authorDtoUpdated, HttpStatus.OK);
+		return new ResponseEntity<>(authorDtoUpdated, HttpStatus.OK);
+	}
+
+	@DeleteMapping(PV_ID)
+	public ResponseEntity delete() {
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 }
