@@ -4,14 +4,10 @@ import com.kreative.delb.model.Author;
 import com.kreative.delb.objectMother.AuthorMother;
 import com.kreative.delb.resource.dto.AuthorDto;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import static org.junit.Assert.*;
 
-@RunWith(SpringJUnit4ClassRunner.class)
 public class AuthorMapperTest {
-
 	@Test
 	public void mapToDto() {
 		Author author = new AuthorMother().createAuthor(0);

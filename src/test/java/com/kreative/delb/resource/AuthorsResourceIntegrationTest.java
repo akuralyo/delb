@@ -8,6 +8,7 @@ import com.kreative.delb.dao.UserDAO;
 import com.kreative.delb.resource.constants.Api;
 import com.kreative.delb.resource.dto.AuthorDto;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -69,6 +70,7 @@ public class AuthorsResourceIntegrationTest {
 	}
 
 	@Test
+	@Ignore
 	public void findAll_private_api() throws Exception {
 		int nbElement = 5;
 		authorDAO.initDb(nbElement);
