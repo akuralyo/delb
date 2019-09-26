@@ -1,7 +1,10 @@
 package com.kreative.delb.resource.dto;
 
 public class BookDto {
+    private String id;
+
     private String name;
+
     private AuthorDto authorDto = new AuthorDto();
 
     public String getName() {
@@ -10,6 +13,15 @@ public class BookDto {
 
     public BookDto setName(String name) {
         this.name = name;
+        return this;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public BookDto setId(String id) {
+        this.id = id;
         return this;
     }
 

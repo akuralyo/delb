@@ -8,6 +8,8 @@ import com.kreative.delb.resource.Views;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Null;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 public class AuthorDto {
 
@@ -31,6 +33,17 @@ public class AuthorDto {
 
 	@JsonView(Views.Private.class)
 	private String adresse;
+
+	private List<BookDto> bookDtoList = new ArrayList<>();
+
+	public List<BookDto> getBookDtoList() {
+		return bookDtoList;
+	}
+
+	public AuthorDto setBookDtoList(List<BookDto> bookDtoList) {
+		this.bookDtoList = bookDtoList;
+		return this;
+	}
 
 	public String getNickName() {
 		return nickName;

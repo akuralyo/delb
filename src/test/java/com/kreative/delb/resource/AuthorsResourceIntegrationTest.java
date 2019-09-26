@@ -61,6 +61,7 @@ public class AuthorsResourceIntegrationTest {
 		List<AuthorDto> authorDtoList = parseResponse(mvcRes, ArrayList.class);
 		//
 		assertEquals(authorDtoList.size(), nbElement);
+		// Le champ adresse n'est pas renvoyé dans le cas de l'api public
 		try {
 			assertNull(authorDtoList.get(0).getAdresse());
 			assertTrue(false);
