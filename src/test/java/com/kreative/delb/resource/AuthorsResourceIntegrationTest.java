@@ -7,33 +7,31 @@ import com.kreative.delb.dao.AuthorDAO;
 import com.kreative.delb.dao.BookDAO;
 import com.kreative.delb.dao.UserDAO;
 import com.kreative.delb.model.Author;
-import com.kreative.delb.resource.dto.AuthorDto;
 import org.apache.log4j.Logger;
+import org.bson.types.ObjectId;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.ResultMatcher;
+import org.springframework.web.util.NestedServletException;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.List;
 
 import static com.fasterxml.jackson.databind.DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES;
 import static com.fasterxml.jackson.databind.SerializationFeature.WRITE_DATES_AS_TIMESTAMPS;
 import static com.kreative.delb.resource.constants.Api.*;
 import static com.kreative.delb.resource.constants.Api.Resource.AUTHORS;
 import static org.hamcrest.Matchers.*;
-import static org.junit.Assert.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -67,6 +65,19 @@ public class AuthorsResourceIntegrationTest {
 
 	private Login login = new Login("ADMIN", "ADMIN");
 
+	@Before
+	public void before() throws Exception {
+		authorDAO.deleteAll();
+		userDAO.deleteAll();
+		bookDAO.deleteAll();
+		//
+		userDAO.createAdmin();
+		authorDAO.initDb(NB_ELEMENT);
+		//
+		logger.debug("Nb Author : " + authorDAO.findAll().size());
+		logger.debug("Nb Book : " + bookDAO.findAll().size());
+	}
+
 	@Test
 	public void private_findAll_ko_cuz_not_authenticated() throws Exception {
 		mockMvc.perform(get(PREFIXE + PRIVATE + AUTHORS))
@@ -75,26 +86,12 @@ public class AuthorsResourceIntegrationTest {
 	}
 
 	@Test
-	@Ignore
+	@WithMockUser(username = "admin")
 	public void private_findAll_ok() throws Exception {
-		// Récupération du token
-		MvcResult mvcResLogin = mockMvc.perform(post("/login")
-				.contentType("application/x-www-form-urlencoded")
-				.param("username", "ADMIN")
-				.param("password", "ADMIN"))
-				.andReturn();
-		// mvcResLogin.getResponse().getHeader();
-		//
-		MvcResult mvcRes = mockMvc.perform(get(PREFIXE + PRIVATE + AUTHORS)).andReturn();
-		List<AuthorDto> authorDtoList = parseResponse(mvcRes, ArrayList.class);
-		//
-		assertEquals(authorDtoList.size(), NB_ELEMENT);
-		try {
-			assertNotNull(authorDtoList.get(0).getAdresse());
-			assertTrue(true);
-		} catch (ClassCastException c) {
-			assertTrue(false);
-		}
+		mockMvc.perform(get(PREFIXE + PRIVATE + AUTHORS))
+				.andDo(print())
+				.andExpect(status().isOk())
+				.andExpect(checkAuthor(0, true));
 	}
 
 	@Test
@@ -116,7 +113,14 @@ public class AuthorsResourceIntegrationTest {
 		mockMvc.perform(get(PREFIXE + PUBLIC + AUTHORS))
 				.andDo(print())
 				.andExpect(status().isOk())
-				.andExpect(checkAuthor(0));
+				.andExpect(checkAuthor(0, false));
+	}
+
+	@Test(expected = NestedServletException.class)
+	public void public_findOne_ko_not_found() throws Exception {
+		mockMvc.perform(get(PREFIXE + PUBLIC + AUTHORS + "/" + new ObjectId().toString()))
+				.andDo(print())
+				.andExpect(status().isNotFound());
 	}
 
 	@Test
@@ -135,20 +139,7 @@ public class AuthorsResourceIntegrationTest {
 				.andExpect(status().isNotImplemented());
 	}
 
-	@Before
-	public void setUp() throws Exception {
-		authorDAO.deleteAll();
-		userDAO.deleteAll();
-		bookDAO.deleteAll();
-		//
-		userDAO.createAdmin();
-		authorDAO.initDb(NB_ELEMENT);
-		//
-		logger.debug("Nb Author : " + authorDAO.findAll().size());
-		logger.debug("Nb Book : " + bookDAO.findAll().size());
-	}
-
-	private static ResultMatcher allOf(final ResultMatcher... matchers) throws Exception {
+	private static ResultMatcher allOf(final ResultMatcher... matchers) {
 		return (result) -> {
 			for (ResultMatcher m : matchers) {
 				m.match(result);
@@ -177,7 +168,15 @@ public class AuthorsResourceIntegrationTest {
 		return result.toString();
 	}
 
-	private ResultMatcher checkAuthor(int i) throws Exception {
+	private ResultMatcher checkAuthor(int i, boolean apiPrivate) {
+		if (apiPrivate) {
+			return allOf(
+					jsonPath("$.[" + i + "].firstName", is("FirstName" + i)),
+					jsonPath("$.[" + i + "].lastName", is("LastName" + i)),
+					jsonPath("$.[" + i + "].nickName", is("NickName" + i)),
+					jsonPath("$.[" + i + "].adresse").exists(),
+					jsonPath("$.[" + i + "].bookDtoList", is(not(empty()))));
+		}
 		return allOf(
 				jsonPath("$.[" + i + "].firstName", is("FirstName" + i)),
 				jsonPath("$.[" + i + "].lastName", is("LastName" + i)),
@@ -186,7 +185,7 @@ public class AuthorsResourceIntegrationTest {
 				jsonPath("$.[" + i + "].bookDtoList", is(not(empty()))));
 	}
 
-	private ResultMatcher checkAuthor(Author author) throws Exception {
+	private ResultMatcher checkAuthor(Author author) {
 		return allOf(
 				jsonPath("$.firstName", is(author.getFirstName())),
 				jsonPath("$.lastName", is(author.getLastName())),
