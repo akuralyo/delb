@@ -63,8 +63,6 @@ public class AuthorsResourceIntegrationTest {
 	@Autowired
 	private BookDAO bookDAO;
 
-	private Login login = new Login("ADMIN", "ADMIN");
-
 	@Before
 	public void before() throws Exception {
 		authorDAO.deleteAll();

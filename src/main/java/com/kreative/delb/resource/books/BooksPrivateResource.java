@@ -2,6 +2,8 @@ package com.kreative.delb.resource.books;
 
 import com.kreative.delb.resource.dto.AuthorDto;
 import com.kreative.delb.resource.dto.BookDto;
+import com.kreative.delb.service.functionnal.BooksFunctionnalService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,9 +18,14 @@ import static com.kreative.delb.resource.constants.Api.Resource.BOOKS;
 @RestController
 @RequestMapping(PREFIXE + PRIVATE + BOOKS)
 public class BooksPrivateResource {
+
+	@Autowired
+	private BooksFunctionnalService booksFunctionnalService;
+
 	@PostMapping
 	public ResponseEntity create(@RequestBody BookDto bookDto) {
-		return new ResponseEntity<>(HttpStatus.CREATED);
+		BookDto bookDtoCreated = booksFunctionnalService.createBook(bookDto);
+		return new ResponseEntity<>(bookDtoCreated, HttpStatus.CREATED);
 	}
 
 	@DeleteMapping(PV_ID)

@@ -18,6 +18,10 @@ public class BookTechnicalService {
 	@Autowired
 	private BookRepository bookRepository;
 
+	public Book createBook(Book author) {
+		return bookRepository.save(author);
+	}
+
 	public List<Book> findAll() {
 		logger.debug("Accès à la méthode");
 		List<Book> bookList = new ArrayList<>();
