@@ -14,7 +14,8 @@ public class AuthorMother {
 				.setId(new ObjectId())
 				.setFirstName("FirstName" + i)
 				.setLastName("LastName" + i)
-				.setNickName("NickName" + i);
+				.setNickName("NickName" + i)
+				.setAdresse("Adresse" + i);
 	}
 
 	public AuthorDto createAuthorDto(int i) {

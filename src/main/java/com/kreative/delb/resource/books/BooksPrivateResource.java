@@ -7,10 +7,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.HttpClientErrorException;
 
-import static com.kreative.delb.resource.constants.Api.*;
+import static com.kreative.delb.resource.constants.Api.PREFIXE;
+import static com.kreative.delb.resource.constants.Api.PRIVATE;
+import static com.kreative.delb.resource.constants.Api.PathVariable.PV_ID;
+import static com.kreative.delb.resource.constants.Api.Resource.AUTHORS;
+import static com.kreative.delb.resource.constants.Api.Resource.BOOKS;
 
 @RestController
-@RequestMapping(API + PRIVATE + BOOKS)
+@RequestMapping(PREFIXE + PRIVATE + BOOKS)
 public class BooksPrivateResource {
 	@PostMapping
 	public ResponseEntity create(@RequestBody BookDto bookDto) {

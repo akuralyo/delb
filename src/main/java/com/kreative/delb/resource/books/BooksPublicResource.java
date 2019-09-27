@@ -13,10 +13,14 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.kreative.delb.resource.constants.Api.*;
+import static com.kreative.delb.resource.constants.Api.PREFIXE;
+import static com.kreative.delb.resource.constants.Api.PUBLIC;
+import static com.kreative.delb.resource.constants.Api.PathVariable.PV_ID;
+import static com.kreative.delb.resource.constants.Api.Resource.AUTHORS;
+import static com.kreative.delb.resource.constants.Api.Resource.BOOKS;
 
 @RestController
-@RequestMapping(API + PUBLIC + BOOKS)
+@RequestMapping(PREFIXE + PUBLIC + BOOKS)
 public class BooksPublicResource {
 
 	@Autowired

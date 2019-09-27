@@ -2,16 +2,17 @@ package com.kreative.delb.security;
 
 import com.kreative.delb.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
-import static com.kreative.delb.resource.constants.Api.API;
+import static com.kreative.delb.resource.constants.Api.PREFIXE;
 import static com.kreative.delb.resource.constants.Api.PUBLIC;
+import static com.kreative.delb.resource.constants.Api.PathVariable.PV_SELF;
+import static com.kreative.delb.resource.constants.Api.Resource.USERS;
 
 @RestController
-@RequestMapping(API + PUBLIC + "/users")
+@RequestMapping(PREFIXE + PUBLIC + USERS)
 public class UserResource {
 
 	@Autowired
@@ -21,5 +22,10 @@ public class UserResource {
 	public User createUser(@RequestBody User user) {
 		User createdUser = userService.createUser(user);
 		return createdUser;
+	}
+
+	@GetMapping(PV_SELF)
+	public ResponseEntity getSelf() {
+		return new ResponseEntity(HttpStatus.NOT_IMPLEMENTED);
 	}
 }

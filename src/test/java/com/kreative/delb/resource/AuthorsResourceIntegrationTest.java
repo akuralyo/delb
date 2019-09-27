@@ -6,7 +6,7 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.kreative.delb.dao.AuthorDAO;
 import com.kreative.delb.dao.BookDAO;
 import com.kreative.delb.dao.UserDAO;
-import com.kreative.delb.resource.constants.Api;
+import com.kreative.delb.model.Author;
 import com.kreative.delb.resource.dto.AuthorDto;
 import org.apache.log4j.Logger;
 import org.junit.Before;
@@ -20,7 +20,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.ResultMatcher;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -31,8 +30,11 @@ import java.util.List;
 
 import static com.fasterxml.jackson.databind.DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES;
 import static com.fasterxml.jackson.databind.SerializationFeature.WRITE_DATES_AS_TIMESTAMPS;
+import static com.kreative.delb.resource.constants.Api.*;
+import static com.kreative.delb.resource.constants.Api.Resource.AUTHORS;
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -66,17 +68,24 @@ public class AuthorsResourceIntegrationTest {
 	private Login login = new Login("ADMIN", "ADMIN");
 
 	@Test
+	public void private_findAll_ko_cuz_not_authenticated() throws Exception {
+		mockMvc.perform(get(PREFIXE + PRIVATE + AUTHORS))
+				.andDo(print())
+				.andExpect(status().isForbidden());
+	}
+
+	@Test
 	@Ignore
-	public void findAll_private_api() throws Exception {
+	public void private_findAll_ok() throws Exception {
 		// Récupération du token
-		MvcResult mvcResLogin = mockMvc.perform(MockMvcRequestBuilders.post("/login")
+		MvcResult mvcResLogin = mockMvc.perform(post("/login")
 				.contentType("application/x-www-form-urlencoded")
 				.param("username", "ADMIN")
 				.param("password", "ADMIN"))
 				.andReturn();
 		// mvcResLogin.getResponse().getHeader();
 		//
-		MvcResult mvcRes = mockMvc.perform(MockMvcRequestBuilders.get(Api.API + Api.PRIVATE + Api.AUTHORS)).andReturn();
+		MvcResult mvcRes = mockMvc.perform(get(PREFIXE + PRIVATE + AUTHORS)).andReturn();
 		List<AuthorDto> authorDtoList = parseResponse(mvcRes, ArrayList.class);
 		//
 		assertEquals(authorDtoList.size(), NB_ELEMENT);
@@ -89,39 +98,41 @@ public class AuthorsResourceIntegrationTest {
 	}
 
 	@Test
-	public void findAll_private_api_ko_cuz_not_authenticated() throws Exception {
-		mockMvc.perform(MockMvcRequestBuilders.get(Api.API + Api.PRIVATE + Api.AUTHORS))
+	public void public_create_ko_cuz_not_implemented() throws Exception {
+		mockMvc.perform(post(PREFIXE + PUBLIC + AUTHORS))
 				.andDo(print())
-				.andExpect(status().isForbidden());
+				.andExpect(status().isNotImplemented());
 	}
 
 	@Test
-	public void findAll_public_api_ok() throws Exception {
-		mockMvc.perform(MockMvcRequestBuilders.get(Api.API + Api.PUBLIC + Api.AUTHORS))
+	public void public_delete_ko_cuz_not_implemented() throws Exception {
+		mockMvc.perform(delete(PREFIXE + PUBLIC + AUTHORS + "/id"))
+				.andDo(print())
+				.andExpect(status().isNotImplemented());
+	}
+
+	@Test
+	public void public_findAll_ok() throws Exception {
+		mockMvc.perform(get(PREFIXE + PUBLIC + AUTHORS))
 				.andDo(print())
 				.andExpect(status().isOk())
 				.andExpect(checkAuthor(0));
 	}
 
 	@Test
-	public void get() {
+	public void public_findOne_ok() throws Exception {
+		Author author = authorDAO.findAnyone();
+		mockMvc.perform(get(PREFIXE + PUBLIC + AUTHORS + "/" + author.getId().toString()))
+				.andDo(print())
+				.andExpect(status().isOk())
+				.andExpect(checkAuthor(author));
 	}
 
-	public static <T> T parseResponse(MvcResult result, Class<T> responseClass) {
-		try {
-			String contentAsString = result.getResponse().getContentAsString();
-			return MAPPER.readValue(contentAsString, responseClass);
-		} catch (IOException e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	public static String requestBody(Object request) {
-		try {
-			return MAPPER.writeValueAsString(request);
-		} catch (JsonProcessingException e) {
-			throw new RuntimeException(e);
-		}
+	@Test
+	public void public_update_ko_cuz_not_implemented() throws Exception {
+		mockMvc.perform(put(PREFIXE + PUBLIC + AUTHORS))
+				.andDo(print())
+				.andExpect(status().isNotImplemented());
 	}
 
 	@Before
@@ -173,5 +184,31 @@ public class AuthorsResourceIntegrationTest {
 				jsonPath("$.[" + i + "].nickName", is("NickName" + i)),
 				jsonPath("$.[" + i + "].adresse").doesNotExist(),
 				jsonPath("$.[" + i + "].bookDtoList", is(not(empty()))));
+	}
+
+	private ResultMatcher checkAuthor(Author author) throws Exception {
+		return allOf(
+				jsonPath("$.firstName", is(author.getFirstName())),
+				jsonPath("$.lastName", is(author.getLastName())),
+				jsonPath("$.nickName", is(author.getNickName())),
+				jsonPath("$.adresse").doesNotExist(),
+				jsonPath("$.bookDtoList", is(not(empty()))));
+	}
+
+	private static <T> T parseResponse(MvcResult result, Class<T> responseClass) {
+		try {
+			String contentAsString = result.getResponse().getContentAsString();
+			return MAPPER.readValue(contentAsString, responseClass);
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	private static String requestBody(Object request) {
+		try {
+			return MAPPER.writeValueAsString(request);
+		} catch (JsonProcessingException e) {
+			throw new RuntimeException(e);
+		}
 	}
 }
