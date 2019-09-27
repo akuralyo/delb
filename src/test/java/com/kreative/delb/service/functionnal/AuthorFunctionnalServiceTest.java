@@ -39,15 +39,6 @@ public class AuthorFunctionnalServiceTest {
 	@InjectMocks
 	private AuthorFunctionnalService authorFunctionnalService;
 
-	@Before
-	public void setUp() {
-		initMocks(this);
-		when(authorMapper.mapToDto(Mockito.any()))
-				.thenCallRealMethod();
-		when(bookMapper.mapToDto(Mockito.any()))
-				.thenCallRealMethod();
-	}
-
 	@Test
 	public void findOneById_ok() {
 		// Initiation des réponses
@@ -60,6 +51,15 @@ public class AuthorFunctionnalServiceTest {
 		// Vérification
 		assertNotNull(authorDto);
 		assertEquals(authorDto.getBookDtoList().size(), new BookMother().createBookList().size());
+	}
+
+	@Before
+	public void setUp() {
+		initMocks(this);
+		when(authorMapper.mapToDto(Mockito.any()))
+				.thenCallRealMethod();
+		when(bookMapper.mapToDto(Mockito.any()))
+				.thenCallRealMethod();
 	}
 
 	@Test(expected = HttpClientErrorException.class)

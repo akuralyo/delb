@@ -23,6 +23,14 @@ public class AuthorTechnicalService {
 	@Autowired
 	private AuthorMapper authorMapper;
 
+	public Author createAuthor(Author author) {
+		return authorRepository.save(author);
+	}
+
+	public Author createAuthor(AuthorDto authorDto) {
+		return authorRepository.save(authorMapper.mapToModel(authorDto));
+	}
+
 	public List<Author> findAll() {
 		logger.debug("Accès à la méthode");
 		List<Author> authors = new ArrayList<>();
@@ -40,14 +48,6 @@ public class AuthorTechnicalService {
 		} else {
 			return null;
 		}
-	}
-
-	public Author createAuthor(Author author) {
-		return authorRepository.save(author);
-	}
-
-	public Author createAuthor(AuthorDto authorDto) {
-		return authorRepository.save(authorMapper.mapToModel(authorDto));
 	}
 
 	public Author updateAuthor(String id, AuthorDto authorDto) {

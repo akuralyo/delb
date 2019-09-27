@@ -29,17 +29,6 @@ public class User extends AbstractAuditSecurityField implements Serializable, Us
 		return this;
 	}
 
-	public User setUsername(String username) {
-		this.username = username;
-		return this;
-	}
-
-	public User setPassword(String password) {
-		this.password = password;
-		return this;
-	}
-
-
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		return null;
@@ -50,9 +39,19 @@ public class User extends AbstractAuditSecurityField implements Serializable, Us
 		return password;
 	}
 
+	public User setPassword(String password) {
+		this.password = password;
+		return this;
+	}
+
 	@Override
 	public String getUsername() {
 		return username;
+	}
+
+	public User setUsername(String username) {
+		this.username = username;
+		return this;
 	}
 
 	@Override

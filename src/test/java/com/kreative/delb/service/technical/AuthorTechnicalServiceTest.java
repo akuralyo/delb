@@ -29,9 +29,12 @@ public class AuthorTechnicalServiceTest {
 	@InjectMocks
 	private AuthorTechnicalService authorTechnicalService;
 
-	@Before
-	public void setUp() {
-		initMocks(this);
+	@Test
+	public void createAuthor_from_dto_ok() {
+	}
+
+	@Test
+	public void createAuthor_from_model_ok() {
 	}
 
 	@Test
@@ -46,26 +49,6 @@ public class AuthorTechnicalServiceTest {
 	}
 
 	@Test
-	public void findOneById_ok() {
-		// Initiation des réponses
-		when(authorRepository.findById(Mockito.anyString()))
-				.thenReturn(Optional.of(new AuthorMother().createAuthor(0)));
-		// Appel
-		Author author = authorTechnicalService.findOneById("id");
-		// Vérification
-		checkObject_author(author, new AuthorMother().createAuthor(0));
-	}
-
-	private void checkObject_author(Author expected, Author returned) {
-		assertNotNull(returned);
-		assertNotNull(returned.getId());
-		assertEquals(returned.getFirstName(), expected.getFirstName());
-		assertEquals(returned.getLastName(), expected.getLastName());
-		assertEquals(returned.getNickName(), expected.getNickName());
-		assertEquals(returned.getBirthday(), expected.getBirthday());
-	}
-
-	@Test
 	public void findOneById_ko() {
 		// Initiation des réponses
 		when(authorRepository.findById(Mockito.anyString()))
@@ -77,10 +60,27 @@ public class AuthorTechnicalServiceTest {
 	}
 
 	@Test
-	public void createAuthor_from_model_ok() {
+	public void findOneById_ok() {
+		// Initiation des réponses
+		when(authorRepository.findById(Mockito.anyString()))
+				.thenReturn(Optional.of(new AuthorMother().createAuthor(0)));
+		// Appel
+		Author author = authorTechnicalService.findOneById("id");
+		// Vérification
+		checkObject_author(author, new AuthorMother().createAuthor(0));
 	}
 
-	@Test
-	public void createAuthor_from_dto_ok() {
+	@Before
+	public void setUp() {
+		initMocks(this);
+	}
+
+	private void checkObject_author(Author expected, Author returned) {
+		assertNotNull(returned);
+		assertNotNull(returned.getId());
+		assertEquals(returned.getFirstName(), expected.getFirstName());
+		assertEquals(returned.getLastName(), expected.getLastName());
+		assertEquals(returned.getNickName(), expected.getNickName());
+		assertEquals(returned.getBirthday(), expected.getBirthday());
 	}
 }

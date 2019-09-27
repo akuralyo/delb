@@ -9,14 +9,6 @@ import java.util.List;
 
 public class AuthorMother {
 
-	public List<Author> createAuthorList() {
-		List<Author> authorList = new ArrayList<>();
-		authorList.add(createAuthor(0));
-		authorList.add(createAuthor(1));
-		authorList.add(createAuthor(2));
-		return authorList;
-	}
-
 	public Author createAuthor(int i) {
 		return new Author()
 				.setId(new ObjectId())
@@ -24,10 +16,19 @@ public class AuthorMother {
 				.setLastName("LastName" + i)
 				.setNickName("NickName" + i);
 	}
+
 	public AuthorDto createAuthorDto(int i) {
 		return new AuthorDto()
 				.setFirstName("FirstName" + i)
 				.setLastName("LastName" + i)
 				.setNickName("NickName" + i);
+	}
+
+	public List<Author> createAuthorList() {
+		List<Author> authorList = new ArrayList<>();
+		authorList.add(createAuthor(0));
+		authorList.add(createAuthor(1));
+		authorList.add(createAuthor(2));
+		return authorList;
 	}
 }

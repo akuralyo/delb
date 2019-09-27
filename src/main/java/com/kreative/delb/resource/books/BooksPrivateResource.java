@@ -17,6 +17,11 @@ public class BooksPrivateResource {
 		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
 
+	@DeleteMapping(PV_ID)
+	public ResponseEntity delete() {
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
+
 	@PutMapping(PV_ID)
 	public ResponseEntity update(@RequestBody BookDto bookDto) {
 		return new ResponseEntity<>(HttpStatus.OK);
@@ -25,11 +30,6 @@ public class BooksPrivateResource {
 	@PutMapping(PV_ID + AUTHORS)
 	public ResponseEntity updateAuthor(@RequestBody AuthorDto authorDto) {
 		throw new HttpClientErrorException(HttpStatus.NOT_IMPLEMENTED);
-	}
-
-	@DeleteMapping(PV_ID)
-	public ResponseEntity delete() {
-		return new ResponseEntity<>(HttpStatus.OK);
 	}
 }
 

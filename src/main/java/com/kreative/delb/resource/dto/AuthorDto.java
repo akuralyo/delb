@@ -50,17 +50,27 @@ public class AuthorDto {
 		return nickName;
 	}
 
-	public String getAdresse() {
-		return adresse;
-	}
-
 	public AuthorDto setNickName(String nickName) {
 		this.nickName = nickName;
 		return this;
 	}
 
+	public String getAdresse() {
+		return adresse;
+	}
+
+	public AuthorDto setAdresse(String adresse) {
+		this.adresse = adresse;
+		return this;
+	}
+
 	public LocalDate getBirthday() {
 		return birthday;
+	}
+
+	public AuthorDto setBirthday(LocalDate birthday) {
+		this.birthday = birthday;
+		return this;
 	}
 
 	public String getId() {
@@ -69,11 +79,6 @@ public class AuthorDto {
 
 	public AuthorDto setId(String id) {
 		this.id = id;
-		return this;
-	}
-
-	public AuthorDto setBirthday(LocalDate birthday) {
-		this.birthday = birthday;
 		return this;
 	}
 
@@ -92,11 +97,6 @@ public class AuthorDto {
 
 	public AuthorDto setLastName(String lastName) {
 		this.lastName = lastName;
-		return this;
-	}
-
-	public AuthorDto setAdresse(String adresse) {
-		this.adresse = adresse;
 		return this;
 	}
 }

@@ -11,13 +11,13 @@ public class UserDAO {
 	@Autowired
 	private UserRepository userRepository;
 
-	public void deleteAll() {
-		userRepository.deleteAll();
-	}
-
 	public void createAdmin() {
 		User user = new User().setUsername("ADMIN")
 				.setPassword("ADMIN");
 		userRepository.save(user);
+	}
+
+	public void deleteAll() {
+		userRepository.deleteAll();
 	}
 }

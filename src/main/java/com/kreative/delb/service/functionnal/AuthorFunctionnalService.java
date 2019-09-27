@@ -3,6 +3,7 @@ package com.kreative.delb.service.functionnal;
 import com.kreative.delb.mapper.AuthorMapper;
 import com.kreative.delb.mapper.BookMapper;
 import com.kreative.delb.model.Author;
+import com.kreative.delb.model.Book;
 import com.kreative.delb.resource.dto.AuthorDto;
 import com.kreative.delb.service.technical.AuthorTechnicalService;
 import com.kreative.delb.service.technical.BookTechnicalService;
@@ -29,9 +30,14 @@ public class AuthorFunctionnalService {
 	@Autowired
 	private BookMapper bookMapper;
 
+	public AuthorDto createAuthor(AuthorDto authorDto) {
+		return authorMapper.mapToDto(authorTechnicalService.createAuthor(authorDto));
+	}
+
 	public List<AuthorDto> findAll() {
 		return authorTechnicalService.findAll().stream()
 				.map(author -> authorMapper.mapToDto(author)).map(authorDto -> {
+					List<Book> bookList = bookTechnicalService.findAllByAuthorId(authorDto.getId());
 					bookTechnicalService.findAllByAuthorId(authorDto.getId()).stream().forEach(book -> {
 						authorDto.getBookDtoList().add(bookMapper.mapToDto(book));
 					});
@@ -51,10 +57,6 @@ public class AuthorFunctionnalService {
 			});
 			return authorDto;
 		}
-	}
-
-	public AuthorDto createAuthor(AuthorDto authorDto) {
-		return authorMapper.mapToDto(authorTechnicalService.createAuthor(authorDto));
 	}
 
 	public AuthorDto updateAuthor(String id, AuthorDto authorDto) {

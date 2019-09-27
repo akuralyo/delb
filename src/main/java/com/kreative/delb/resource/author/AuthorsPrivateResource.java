@@ -22,26 +22,26 @@ public class AuthorsPrivateResource {
 	@Autowired
 	private AuthorFunctionnalService authorFunctionnalService;
 
-	@JsonView(ViewsAuthor.ApiPrivate.class)
-	@GetMapping
-	public List<AuthorDto> findAll() {
-		return authorFunctionnalService.findAll();
-	}
-
 	@PostMapping
 	public ResponseEntity create(@RequestBody @Validated(GroupValidation.IPost.class) AuthorDto authorDto) {
 		AuthorDto authorDtoCreated = authorFunctionnalService.createAuthor(authorDto);
 		return new ResponseEntity<>(authorDtoCreated, HttpStatus.CREATED);
 	}
 
+	@DeleteMapping(PV_ID)
+	public ResponseEntity delete() {
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
+
+	@JsonView(ViewsAuthor.ApiPrivate.class)
+	@GetMapping
+	public List<AuthorDto> findAll() {
+		return authorFunctionnalService.findAll();
+	}
+
 	@PutMapping(PV_ID)
 	public ResponseEntity update(@PathVariable String id, @RequestBody @Validated(GroupValidation.IPut.class) AuthorDto authorDto) {
 		AuthorDto authorDtoUpdated = authorFunctionnalService.updateAuthor(id, authorDto);
 		return new ResponseEntity<>(authorDtoUpdated, HttpStatus.OK);
-	}
-
-	@DeleteMapping(PV_ID)
-	public ResponseEntity delete() {
-		return new ResponseEntity<>(HttpStatus.OK);
 	}
 }

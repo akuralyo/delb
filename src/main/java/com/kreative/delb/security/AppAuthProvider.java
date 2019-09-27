@@ -25,9 +25,9 @@ public class AppAuthProvider extends DaoAuthenticationProvider {
 		}
 		return new UsernamePasswordAuthenticationToken(user, password, user.getAuthorities());
 	}
+
 	@Override
 	public boolean supports(Class<?> authentication) {
 		return true;
 	}
-
 }

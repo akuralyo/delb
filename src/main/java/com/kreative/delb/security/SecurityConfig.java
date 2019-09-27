@@ -31,6 +31,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	private AccessDeniedHandler accessDeniedHandler;
 
+	@Bean
+	public AccessDeniedHandler accessDeniedHandler() {
+		return new CustomAccessDeniedHandler();
+	}
+
+	@Bean
+	public AuthenticationProvider getProvider() {
+		AppAuthProvider provider = new AppAuthProvider();
+		provider.setUserDetailsService(userDetailsService);
+		return provider;
+	}
+
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth.userDetailsService(userDetailsService);
@@ -79,17 +91,5 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 									Authentication authentication) throws IOException, ServletException {
 			response.setStatus(HttpServletResponse.SC_OK);
 		}
-	}
-
-	@Bean
-	public AuthenticationProvider getProvider() {
-		AppAuthProvider provider = new AppAuthProvider();
-		provider.setUserDetailsService(userDetailsService);
-		return provider;
-	}
-
-	@Bean
-	public AccessDeniedHandler accessDeniedHandler() {
-		return new CustomAccessDeniedHandler();
 	}
 }

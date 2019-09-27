@@ -26,16 +26,26 @@ public class Author extends AbstractAuditSecurityField implements Serializable {
 		return id;
 	}
 
+	public Author setId(ObjectId id) {
+		this.id = id;
+		return this;
+	}
+
 	public LocalDate getBirthday() {
 		return birthday;
+	}
+
+	public Author setBirthday(LocalDate birthday) {
+		this.birthday = birthday;
+		return this;
 	}
 
 	public String getAdresse() {
 		return adresse;
 	}
 
-	public Author setId(ObjectId id) {
-		this.id = id;
+	public Author setAdresse(String adresse) {
+		this.adresse = adresse;
 		return this;
 	}
 
@@ -63,16 +73,6 @@ public class Author extends AbstractAuditSecurityField implements Serializable {
 
 	public Author setNickName(String nickName) {
 		this.nickName = nickName;
-		return this;
-	}
-
-	public Author setBirthday(LocalDate birthday) {
-		this.birthday = birthday;
-		return this;
-	}
-
-	public Author setAdresse(String adresse) {
-		this.adresse = adresse;
 		return this;
 	}
 }
