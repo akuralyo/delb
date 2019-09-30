@@ -17,7 +17,7 @@ import org.springframework.test.web.servlet.MockMvc;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-public class BooksResourceIntegrationTest {
+public class BooksResourceIntegrationTest extends AbstractIntegrationtest {
 
 	private static final int NB_ELEMENT = 5;
 
@@ -37,9 +37,7 @@ public class BooksResourceIntegrationTest {
 
 	@Before
 	public void before() throws Exception {
-		authorDAO.deleteAll();
-		userDAO.deleteAll();
-		bookDAO.deleteAll();
+		super.before();
 		//
 		userDAO.createAdmin();
 		authorDAO.initDb(NB_ELEMENT);

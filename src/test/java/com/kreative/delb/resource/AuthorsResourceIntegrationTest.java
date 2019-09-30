@@ -7,6 +7,7 @@ import com.kreative.delb.dao.AuthorDAO;
 import com.kreative.delb.dao.BookDAO;
 import com.kreative.delb.dao.UserDAO;
 import com.kreative.delb.model.Author;
+import com.kreative.delb.objectMother.AuthorMother;
 import org.apache.log4j.Logger;
 import org.bson.types.ObjectId;
 import org.junit.Before;
@@ -32,6 +33,9 @@ import static com.fasterxml.jackson.databind.SerializationFeature.WRITE_DATES_AS
 import static com.kreative.delb.resource.constants.Api.*;
 import static com.kreative.delb.resource.constants.Api.Resource.AUTHORS;
 import static org.hamcrest.Matchers.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -40,7 +44,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-public class AuthorsResourceIntegrationTest {
+public class AuthorsResourceIntegrationTest extends AbstractIntegrationtest {
 
 	private static final int NB_ELEMENT = 5;
 
@@ -63,17 +67,51 @@ public class AuthorsResourceIntegrationTest {
 	@Autowired
 	private BookDAO bookDAO;
 
+
 	@Before
 	public void before() throws Exception {
-		authorDAO.deleteAll();
-		userDAO.deleteAll();
-		bookDAO.deleteAll();
+		super.before();
 		//
 		userDAO.createAdmin();
 		authorDAO.initDb(NB_ELEMENT);
 		//
 		logger.debug("Nb Author : " + authorDAO.findAll().size());
 		logger.debug("Nb Book : " + bookDAO.findAll().size());
+	}
+
+	@Test
+	@WithMockUser(username = "admin")
+	public void private_create_ok() throws Exception {
+		authorDAO.deleteAll();
+		//
+		mockMvc.perform(post(PREFIXE + PRIVATE + AUTHORS)
+				.content(asJsonString(new AuthorMother().createAuthorDto(0)))
+				.contentType(APPLICATION_JSON))
+				.andDo(print())
+				.andExpect(status().isCreated())
+				.andExpect(checkAuthor(0, true));
+		//
+		assertEquals(authorDAO.findAll().size(), 1);
+	}
+
+	@Test(expected = NestedServletException.class)
+	@WithMockUser(username = "admin")
+	public void private_delete_ko_cuz_object_not_existing() throws Exception {
+		mockMvc.perform(delete(PREFIXE + PRIVATE + AUTHORS + "/id")
+				.contentType(APPLICATION_JSON));
+	}
+
+	@Test
+	@WithMockUser(username = "admin")
+	public void private_delete_ok() throws Exception {
+		Author author = authorDAO.findAnyone();
+		//
+		mockMvc.perform(delete(PREFIXE + PRIVATE + AUTHORS + "/" + author.getId().toString())
+				.contentType(APPLICATION_JSON))
+				.andDo(print())
+				.andExpect(status().isOk());
+		//
+		assertNull(authorDAO.findOne(author.getId().toString()));
 	}
 
 	@Test
@@ -89,7 +127,24 @@ public class AuthorsResourceIntegrationTest {
 		mockMvc.perform(get(PREFIXE + PRIVATE + AUTHORS))
 				.andDo(print())
 				.andExpect(status().isOk())
-				.andExpect(checkAuthor(0, true));
+				.andExpect(checkAuthorFromList(0, true))
+				.andExpect(checkAuthorBook(0));
+	}
+
+	@Test
+	@WithMockUser(username = "admin")
+	public void private_update_ok() throws Exception {
+		Author author = authorDAO.findAnyone();
+		//
+		author.setFirstName("MyFirstName").setLastName("MyLastName");
+		//
+		mockMvc.perform(put(PREFIXE + PRIVATE + AUTHORS + "/" + author.getId().toString())
+				.content(asJsonString(new AuthorMother().createAuthorDto(author)))
+				.contentType(APPLICATION_JSON))
+				.andDo(print())
+				.andExpect(status().isOk())
+				.andExpect(checkAuthor(author, true));
+		//
 	}
 
 	@Test
@@ -111,7 +166,8 @@ public class AuthorsResourceIntegrationTest {
 		mockMvc.perform(get(PREFIXE + PUBLIC + AUTHORS))
 				.andDo(print())
 				.andExpect(status().isOk())
-				.andExpect(checkAuthor(0, false));
+				.andExpect(checkAuthorFromList(0, false))
+				.andExpect(checkAuthorBook(0));
 	}
 
 	@Test(expected = NestedServletException.class)
@@ -127,7 +183,8 @@ public class AuthorsResourceIntegrationTest {
 		mockMvc.perform(get(PREFIXE + PUBLIC + AUTHORS + "/" + author.getId().toString()))
 				.andDo(print())
 				.andExpect(status().isOk())
-				.andExpect(checkAuthor(author));
+				.andExpect(checkAuthor(author, false))
+				.andExpect(checkAuthorBooks(author));
 	}
 
 	@Test
@@ -137,13 +194,6 @@ public class AuthorsResourceIntegrationTest {
 				.andExpect(status().isNotImplemented());
 	}
 
-	private static ResultMatcher allOf(final ResultMatcher... matchers) {
-		return (result) -> {
-			for (ResultMatcher m : matchers) {
-				m.match(result);
-			}
-		};
-	}
 
 	private String buildUrlEncodedFormEntity(String... params) {
 		if ((params.length % 2) > 0) {
@@ -167,6 +217,36 @@ public class AuthorsResourceIntegrationTest {
 	}
 
 	private ResultMatcher checkAuthor(int i, boolean apiPrivate) {
+		return checkAuthor(new AuthorMother().createAuthor(i), apiPrivate);
+	}
+
+	private ResultMatcher checkAuthor(Author author, boolean apiPrivate) {
+		if (apiPrivate) {
+			return allOf(
+					jsonPath("$.firstName", is(author.getFirstName())),
+					jsonPath("$.lastName", is(author.getLastName())),
+					jsonPath("$.nickName", is(author.getNickName())),
+					jsonPath("$.adresse").exists());
+		} else {
+			return allOf(
+					jsonPath("$.firstName", is(author.getFirstName())),
+					jsonPath("$.lastName", is(author.getLastName())),
+					jsonPath("$.nickName", is(author.getNickName())),
+					jsonPath("$.adresse").doesNotExist());
+		}
+	}
+
+	private ResultMatcher checkAuthorBook(int indexAuthor) {
+		return allOf(
+				jsonPath("$.[" + indexAuthor + "].bookDtoList", is(not(empty()))));
+	}
+
+	private ResultMatcher checkAuthorBooks(Author author) {
+		return allOf(
+				jsonPath("$.bookDtoList", is(not(empty()))));
+	}
+
+	private ResultMatcher checkAuthorFromList(int i, boolean apiPrivate) {
 		if (apiPrivate) {
 			return allOf(
 					jsonPath("$.[" + i + "].firstName", is("FirstName" + i)),
@@ -181,15 +261,6 @@ public class AuthorsResourceIntegrationTest {
 				jsonPath("$.[" + i + "].nickName", is("NickName" + i)),
 				jsonPath("$.[" + i + "].adresse").doesNotExist(),
 				jsonPath("$.[" + i + "].bookDtoList", is(not(empty()))));
-	}
-
-	private ResultMatcher checkAuthor(Author author) {
-		return allOf(
-				jsonPath("$.firstName", is(author.getFirstName())),
-				jsonPath("$.lastName", is(author.getLastName())),
-				jsonPath("$.nickName", is(author.getNickName())),
-				jsonPath("$.adresse").doesNotExist(),
-				jsonPath("$.bookDtoList", is(not(empty()))));
 	}
 
 	private static <T> T parseResponse(MvcResult result, Class<T> responseClass) {

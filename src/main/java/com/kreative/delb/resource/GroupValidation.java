@@ -1,9 +1,9 @@
 package com.kreative.delb.resource;
 
-public class GroupValidation {
-	public class IPost {
+public interface GroupValidation {
+	interface IPost {
 	}
 
-	public class IPut {
+	interface IPut {
 	}
 }

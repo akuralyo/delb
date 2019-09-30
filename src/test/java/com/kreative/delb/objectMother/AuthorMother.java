@@ -22,7 +22,16 @@ public class AuthorMother {
 		return new AuthorDto()
 				.setFirstName("FirstName" + i)
 				.setLastName("LastName" + i)
-				.setNickName("NickName" + i);
+				.setNickName("NickName" + i)
+				.setAdresse("Mon adresse" + i);
+	}
+
+	public AuthorDto createAuthorDto(Author author) {
+		return new AuthorDto()
+				.setFirstName(author.getFirstName())
+				.setLastName(author.getLastName())
+				.setNickName(author.getNickName())
+				.setAdresse(author.getAdresse());
 	}
 
 	public List<Author> createAuthorList() {

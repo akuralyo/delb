@@ -33,7 +33,8 @@ public class AuthorsPrivateResource {
 	}
 
 	@DeleteMapping(PV_ID)
-	public ResponseEntity delete() {
+	public ResponseEntity delete(@PathVariable String id) {
+		authorFunctionnalService.deleteAuthor(id);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 

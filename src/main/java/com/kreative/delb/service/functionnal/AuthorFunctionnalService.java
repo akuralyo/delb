@@ -34,6 +34,15 @@ public class AuthorFunctionnalService {
 		return authorMapper.mapToDto(authorTechnicalService.createAuthor(authorDto));
 	}
 
+	public void deleteAuthor(String id) {
+		Author author = authorTechnicalService.findOneById(id);
+		if (author != null) {
+			authorTechnicalService.deleteAuthor(id);
+		} else {
+			throw new HttpClientErrorException(HttpStatus.NOT_FOUND);
+		}
+	}
+
 	public List<AuthorDto> findAll() {
 		return authorTechnicalService.findAll().stream()
 				.map(author -> authorMapper.mapToDto(author)).map(authorDto -> {

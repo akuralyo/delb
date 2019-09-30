@@ -31,6 +31,10 @@ public class AuthorTechnicalService {
 		return authorRepository.save(authorMapper.mapToModel(authorDto));
 	}
 
+	public void deleteAuthor(String id) {
+		authorRepository.deleteById(id);
+	}
+
 	public List<Author> findAll() {
 		logger.debug("Accès à la méthode");
 		List<Author> authors = new ArrayList<>();

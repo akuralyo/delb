@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 
 @Component
@@ -34,6 +35,15 @@ public class AuthorDAO {
 	public Author findAnyone() {
 		List<Author> authorList = findAll();
 		return authorList.get(new Random().nextInt(authorList.size()));
+	}
+
+	public Author findOne(String id) {
+		Optional<Author> authorOptional = authorRepository.findById(id);
+		if (authorOptional.isPresent()) {
+			return authorOptional.get();
+		} else {
+			return null;
+		}
 	}
 
 	public List<Author> initDb(int max) {
