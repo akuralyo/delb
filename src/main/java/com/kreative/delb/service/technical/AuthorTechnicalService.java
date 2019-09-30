@@ -15,7 +15,7 @@ import java.util.Optional;
 @Service
 public class AuthorTechnicalService {
 
-	private static Logger logger = Logger.getLogger(AuthorTechnicalService.class);
+	private static final Logger LOGGER = Logger.getLogger(AuthorTechnicalService.class);
 
 	@Autowired
 	private AuthorRepository authorRepository;
@@ -36,22 +36,16 @@ public class AuthorTechnicalService {
 	}
 
 	public List<Author> findAll() {
-		logger.debug("Accès à la méthode");
+		LOGGER.debug("Accès à la méthode");
 		List<Author> authors = new ArrayList<>();
-		authorRepository.findAll().forEach(author -> {
-			authors.add(author);
-		});
-		logger.debug("Nb d'éléments : " + authors.size());
+		authorRepository.findAll().forEach(authors::add);
+		LOGGER.debug("Nb d'éléments : " + authors.size());
 		return authors;
 	}
 
 	public Author findOneById(String id) {
 		Optional<Author> authorOptional = authorRepository.findById(id);
-		if (authorOptional.isPresent()) {
-			return authorOptional.get();
-		} else {
-			return null;
-		}
+		return authorOptional.orElse(null);
 	}
 
 	public Author updateAuthor(String id, AuthorDto authorDto) {
@@ -59,7 +53,7 @@ public class AuthorTechnicalService {
 		if (authorOptional.isPresent()) {
 			return authorRepository.save(authorMapper.mapToModel(authorDto.setId(id)));
 		} else {
-			logger.warn("Auteur not found");
+			LOGGER.warn("Auteur not found");
 			return null;
 		}
 	}

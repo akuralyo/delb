@@ -22,9 +22,7 @@ public class BookDAO {
 
 	public List<Book> findAll() {
 		List<Book> bookList = new ArrayList<>();
-		bookRepository.findAll().forEach(author -> {
-			bookList.add(author);
-		});
+		bookRepository.findAll().forEach(bookList::add);
 		return bookList;
 	}
 

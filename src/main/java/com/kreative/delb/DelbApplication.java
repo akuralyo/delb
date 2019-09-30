@@ -7,10 +7,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class DelbApplication {
 
-	private static Logger logger = Logger.getLogger(DelbApplication.class);
+	private static final Logger LOGGER = Logger.getLogger(DelbApplication.class);
 
 	public static void main(String[] args) {
 		SpringApplication.run(DelbApplication.class, args);
-		logger.info("Welcome =)");
+		LOGGER.info("Welcome =)");
 	}
 }

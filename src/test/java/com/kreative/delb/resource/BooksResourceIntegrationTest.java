@@ -21,7 +21,7 @@ public class BooksResourceIntegrationTest extends AbstractIntegrationtest {
 
 	private static final int NB_ELEMENT = 5;
 
-	private static Logger logger = Logger.getLogger(AuthorsResourceIntegrationTest.class);
+	private static final Logger LOGGER = Logger.getLogger(AuthorsResourceIntegrationTest.class);
 
 	@Autowired
 	private MockMvc mockMvc;
@@ -42,8 +42,8 @@ public class BooksResourceIntegrationTest extends AbstractIntegrationtest {
 		userDAO.createAdmin();
 		authorDAO.initDb(NB_ELEMENT);
 		//
-		logger.debug("Nb Author : " + authorDAO.findAll().size());
-		logger.debug("Nb Book : " + bookDAO.findAll().size());
+		LOGGER.debug("Nb Author : " + authorDAO.findAll().size());
+		LOGGER.debug("Nb Book : " + bookDAO.findAll().size());
 	}
 
 	@Test

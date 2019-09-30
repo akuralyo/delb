@@ -11,13 +11,13 @@ public class Api {
 
 	public static final String PRIVATE = "/private";
 
-	public class PathVariable {
+	public static class PathVariable {
 		public static final String PV_ID = "/{id}";
 
 		public static final String PV_SELF = "/self";
 	}
 
-	public class Resource {
+	public static class Resource {
 		public static final String BOOKS = "/books";
 
 		public static final String AUTHORS = "/authors";

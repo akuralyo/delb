@@ -20,8 +20,7 @@ public class UserResource {
 
 	@PostMapping
 	public User createUser(@RequestBody User user) {
-		User createdUser = userService.createUser(user);
-		return createdUser;
+		return userService.createUser(user);
 	}
 
 	@GetMapping(PV_SELF)

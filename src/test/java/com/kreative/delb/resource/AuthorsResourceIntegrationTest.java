@@ -53,7 +53,7 @@ public class AuthorsResourceIntegrationTest extends AbstractIntegrationtest {
 			.configure(FAIL_ON_UNKNOWN_PROPERTIES, false)
 			.registerModule(new JavaTimeModule());
 
-	private static Logger logger = Logger.getLogger(AuthorsResourceIntegrationTest.class);
+	private static final Logger LOGGER = Logger.getLogger(AuthorsResourceIntegrationTest.class);
 
 	@Autowired
 	private MockMvc mockMvc;
@@ -75,8 +75,8 @@ public class AuthorsResourceIntegrationTest extends AbstractIntegrationtest {
 		userDAO.createAdmin();
 		authorDAO.initDb(NB_ELEMENT);
 		//
-		logger.debug("Nb Author : " + authorDAO.findAll().size());
-		logger.debug("Nb Book : " + bookDAO.findAll().size());
+		LOGGER.debug("Nb Author : " + authorDAO.findAll().size());
+		LOGGER.debug("Nb Book : " + bookDAO.findAll().size());
 	}
 
 	@Test
@@ -97,7 +97,7 @@ public class AuthorsResourceIntegrationTest extends AbstractIntegrationtest {
 	@Test(expected = NestedServletException.class)
 	@WithMockUser(username = "admin")
 	public void private_delete_ko_cuz_object_not_existing() throws Exception {
-		mockMvc.perform(delete(PREFIXE + PRIVATE + AUTHORS + "/id")
+		mockMvc.perform(delete(PREFIXE + PRIVATE + AUTHORS + "/" + new ObjectId().toString())
 				.contentType(APPLICATION_JSON));
 	}
 
@@ -156,7 +156,7 @@ public class AuthorsResourceIntegrationTest extends AbstractIntegrationtest {
 
 	@Test
 	public void public_delete_ko_cuz_not_implemented() throws Exception {
-		mockMvc.perform(delete(PREFIXE + PUBLIC + AUTHORS + "/id"))
+		mockMvc.perform(delete(PREFIXE + PUBLIC + AUTHORS + "/" + new ObjectId().toString()))
 				.andDo(print())
 				.andExpect(status().isNotImplemented());
 	}
@@ -167,7 +167,7 @@ public class AuthorsResourceIntegrationTest extends AbstractIntegrationtest {
 				.andDo(print())
 				.andExpect(status().isOk())
 				.andExpect(checkAuthorFromList(0, false))
-				.andExpect(checkAuthorBook(0));
+				.andExpect(checkAuthorBook(1));
 	}
 
 	@Test(expected = NestedServletException.class)

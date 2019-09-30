@@ -13,7 +13,7 @@ import java.util.List;
 @Service
 public class BookTechnicalService {
 
-	private static Logger logger = Logger.getLogger(BookTechnicalService.class);
+	private static final Logger LOGGER = Logger.getLogger(BookTechnicalService.class);
 
 	@Autowired
 	private BookRepository bookRepository;
@@ -23,22 +23,18 @@ public class BookTechnicalService {
 	}
 
 	public List<Book> findAll() {
-		logger.debug("Accès à la méthode");
+		LOGGER.debug("Accès à la méthode");
 		List<Book> bookList = new ArrayList<>();
-		bookRepository.findAll().forEach(author -> {
-			bookList.add(author);
-		});
-		logger.debug("Nb d'éléments : " + bookList.size());
+		bookRepository.findAll().forEach(bookList::add);
+		LOGGER.debug("Nb d'éléments : " + bookList.size());
 		return bookList;
 	}
 
 	public List<Book> findAllByAuthorId(String authorId) {
-		logger.debug("Accès à la méthode");
+		LOGGER.debug("Accès à la méthode");
 		List<Book> bookList = new ArrayList<>();
-		bookRepository.findAllByAuthorId(new ObjectId(authorId)).forEach(author -> {
-			bookList.add(author);
-		});
-		logger.debug("Nb d'éléments : " + bookList.size());
+		bookList.addAll(bookRepository.findAllByAuthorId(new ObjectId(authorId)));
+		LOGGER.debug("Nb d'éléments : " + bookList.size());
 		return bookList;
 	}
 }

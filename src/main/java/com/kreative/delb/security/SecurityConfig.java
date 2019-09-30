@@ -76,7 +76,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.anyRequest().authenticated();
 	}
 
-	private class AuthentificationLoginSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
+	private static class AuthentificationLoginSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 		@Override
 		public void onAuthenticationSuccess(HttpServletRequest request,
 											HttpServletResponse response, Authentication authentication)
@@ -85,7 +85,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		}
 	}
 
-	private class AuthentificationLogoutSuccessHandler extends SimpleUrlLogoutSuccessHandler {
+	private static class AuthentificationLogoutSuccessHandler extends SimpleUrlLogoutSuccessHandler {
 		@Override
 		public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response,
 									Authentication authentication) throws IOException, ServletException {

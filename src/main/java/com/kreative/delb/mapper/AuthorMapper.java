@@ -8,13 +8,17 @@ import org.springframework.stereotype.Component;
 public class AuthorMapper {
 
 	public AuthorDto mapToDto(Author author) {
-		return new AuthorDto()
-				.setId(author.getId().toString())
-				.setFirstName(author.getFirstName())
-				.setLastName(author.getLastName())
-				.setNickName(author.getNickName())
-				.setBirthday(author.getBirthday())
-				.setAdresse(author.getAdresse());
+		if (author != null) {
+			return new AuthorDto()
+					.setId(author.getId().toString())
+					.setFirstName(author.getFirstName())
+					.setLastName(author.getLastName())
+					.setNickName(author.getNickName())
+					.setBirthday(author.getBirthday())
+					.setAdresse(author.getAdresse());
+		} else {
+			return null;
+		}
 	}
 
 	@Deprecated

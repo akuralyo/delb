@@ -27,7 +27,7 @@ public abstract class AbstractIntegrationtest {
 		bookDAO.deleteAll();
 	}
 
-	protected static ResultMatcher allOf(final ResultMatcher... matchers) {
+	static ResultMatcher allOf(final ResultMatcher... matchers) {
 		return (result) -> {
 			for (ResultMatcher m : matchers) {
 				m.match(result);
@@ -35,7 +35,7 @@ public abstract class AbstractIntegrationtest {
 		};
 	}
 
-	protected static String asJsonString(final Object obj) {
+	static String asJsonString(final Object obj) {
 		try {
 			return new ObjectMapper().writeValueAsString(obj);
 		} catch (Exception e) {

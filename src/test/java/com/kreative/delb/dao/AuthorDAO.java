@@ -26,9 +26,7 @@ public class AuthorDAO {
 
 	public List<Author> findAll() {
 		List<Author> authors = new ArrayList<>();
-		authorRepository.findAll().forEach(author -> {
-			authors.add(author);
-		});
+		authorRepository.findAll().forEach(authors::add);
 		return authors;
 	}
 
@@ -39,20 +37,15 @@ public class AuthorDAO {
 
 	public Author findOne(String id) {
 		Optional<Author> authorOptional = authorRepository.findById(id);
-		if (authorOptional.isPresent()) {
-			return authorOptional.get();
-		} else {
-			return null;
-		}
+		return authorOptional.orElse(null);
 	}
 
-	public List<Author> initDb(int max) {
+	public void initDb(int max) {
 		List<Author> authorList = new ArrayList<>();
 		for (int i = 0; i < max; i++) {
 			Author author = authorRepository.save(new AuthorMother().createAuthor(i));
 			bookDAO.initDb(author.getId());
 			authorList.add(author);
 		}
-		return authorList;
 	}
 }

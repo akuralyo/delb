@@ -44,7 +44,7 @@ public class AuthorTechnicalServiceTest {
 		// Appel
 		List<Author> authorList = authorTechnicalService.findAll();
 		// Vérification
-		assertEquals(authorList.size(), new AuthorMother().createAuthorList().size());
+		assertEquals(new AuthorMother().createAuthorList().size(), authorList.size());
 		checkObject_author(authorList.get(1), new AuthorMother().createAuthor(1));
 	}
 
