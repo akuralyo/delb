@@ -32,8 +32,7 @@ public class BookTechnicalService {
 
 	public List<Book> findAllByAuthorId(String authorId) {
 		LOGGER.debug("Accès à la méthode");
-		List<Book> bookList = new ArrayList<>();
-		bookList.addAll(bookRepository.findAllByAuthorId(new ObjectId(authorId)));
+		List<Book> bookList = new ArrayList<>(bookRepository.findAllByAuthorId(new ObjectId(authorId)));
 		LOGGER.debug("Nb d'éléments : " + bookList.size());
 		return bookList;
 	}

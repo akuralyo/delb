@@ -9,7 +9,7 @@ import java.util.List;
 
 public class AuthorMother {
 
-	public Author createAuthor(int i) {
+	private Author createAuthor(int i) {
 		return new Author()
 				.setId(new ObjectId())
 				.setFirstName("FirstName" + i)
@@ -18,7 +18,7 @@ public class AuthorMother {
 				.setAdresse("Adresse" + i);
 	}
 
-	public AuthorDto createAuthorDto(int i) {
+	private AuthorDto createAuthorDto(int i) {
 		return new AuthorDto()
 				.setFirstName("FirstName" + i)
 				.setLastName("LastName" + i)
@@ -26,7 +26,7 @@ public class AuthorMother {
 				.setAdresse("Mon adresse" + i);
 	}
 
-	public AuthorDto createAuthorDto(Author author) {
+	private AuthorDto createAuthorDto(Author author) {
 		return new AuthorDto()
 				.setFirstName(author.getFirstName())
 				.setLastName(author.getLastName())
@@ -34,7 +34,7 @@ public class AuthorMother {
 				.setAdresse(author.getAdresse());
 	}
 
-	public List<Author> createAuthorList() {
+	private List<Author> createAuthorList() {
 		List<Author> authorList = new ArrayList<>();
 		authorList.add(createAuthor(0));
 		authorList.add(createAuthor(1));

@@ -41,11 +41,9 @@ public class AuthorDAO {
 	}
 
 	public void initDb(int max) {
-		List<Author> authorList = new ArrayList<>();
 		for (int i = 0; i < max; i++) {
 			Author author = authorRepository.save(new AuthorMother().createAuthor(i));
 			bookDAO.initDb(author.getId());
-			authorList.add(author);
 		}
 	}
 }

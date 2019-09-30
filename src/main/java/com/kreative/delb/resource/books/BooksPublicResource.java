@@ -18,6 +18,7 @@ import static com.kreative.delb.resource.constants.Api.PUBLIC;
 import static com.kreative.delb.resource.constants.Api.PathVariable.PV_ID;
 import static com.kreative.delb.resource.constants.Api.Resource.AUTHORS;
 import static com.kreative.delb.resource.constants.Api.Resource.BOOKS;
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RestController
 @RequestMapping(PREFIXE + PUBLIC + BOOKS)
@@ -26,17 +27,17 @@ public class BooksPublicResource {
 	@Autowired
 	private BooksFunctionnalService booksFunctionnalService;
 
-	@GetMapping(PV_ID)
+	@GetMapping(value = PV_ID, consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
 	public ResponseEntity get(@PathVariable String id) {
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
-	@GetMapping
+	@GetMapping(consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
 	public List<BookDto> getAll() {
 		return new ArrayList<>();
 	}
 
-	@GetMapping(AUTHORS)
+	@GetMapping(value = AUTHORS, consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
 	public ResponseEntity getAuthor() {
 		return new ResponseEntity<>(HttpStatus.OK);
 	}

@@ -53,7 +53,7 @@ public class BooksFunctionnalService {
 
 	public List<BookDto> findAll() {
 		return bookTechnicalService.findAll().stream().map(bookMapper::mapToDto)
-				.map(bookDto -> bookDto.setAuthorDto(authorMapper.mapToDto(authorRepository.findById(bookDto.getAuthorDto().getId()).get())))
+				.map(bookDto -> bookDto.setAuthorDto(authorMapper.mapToDto(authorTechnicalService.findOneById(bookDto.getAuthorDto().getId()))))
 				.collect(Collectors.toList());
 	}
 

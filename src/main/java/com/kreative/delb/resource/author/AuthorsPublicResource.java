@@ -15,6 +15,7 @@ import static com.kreative.delb.resource.constants.Api.PREFIXE;
 import static com.kreative.delb.resource.constants.Api.PUBLIC;
 import static com.kreative.delb.resource.constants.Api.PathVariable.PV_ID;
 import static com.kreative.delb.resource.constants.Api.Resource.AUTHORS;
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RestController
 @RequestMapping(PREFIXE + PUBLIC + AUTHORS)
@@ -23,32 +24,32 @@ public class AuthorsPublicResource {
 	@Autowired
 	private AuthorFunctionnalService authorFunctionnalService;
 
-	@PostMapping
+	@PostMapping(consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
 	public ResponseEntity create() {
 		return new ResponseEntity(HttpStatus.NOT_IMPLEMENTED);
 	}
 
-	@DeleteMapping(PV_ID)
+	@DeleteMapping(value = PV_ID, produces = APPLICATION_JSON_VALUE)
 	public ResponseEntity delete() {
 		return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
 	}
 
-	@GetMapping
+	@GetMapping(produces = APPLICATION_JSON_VALUE)
 	@JsonView(ViewsAuthor.ApiPublic.class)
 	public List<AuthorDto> findAll() {
 		return authorFunctionnalService.findAll();
 	}
 
 
-	@GetMapping(PV_ID)
+	@GetMapping(value = PV_ID, produces = APPLICATION_JSON_VALUE)
 	@JsonView(ViewsAuthor.ApiPublic.class)
 	public ResponseEntity findOne(@PathVariable String id) {
 		AuthorDto authorDto = authorFunctionnalService.findOneById(id);
 		return new ResponseEntity<>(authorDto, HttpStatus.OK);
 	}
 
-	@PutMapping
-	public ResponseEntity update() {
+	@PutMapping(consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
+	public ResponseEntity update(@RequestBody AuthorDto authorDto) {
 		return new ResponseEntity(HttpStatus.NOT_IMPLEMENTED);
 	}
 }

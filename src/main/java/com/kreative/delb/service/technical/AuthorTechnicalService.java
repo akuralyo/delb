@@ -29,7 +29,7 @@ public class AuthorTechnicalService {
 	}
 
 	public Author createAuthor(AuthorDto authorDto) {
-		return authorRepository.save(authorMapper.mapToModel(authorDto));
+		return authorRepository.save(createOrUpdateAuthor(null, authorDto));
 	}
 
 	public void deleteAuthor(String id) {
@@ -52,14 +52,14 @@ public class AuthorTechnicalService {
 	public Author update(String id, AuthorDto authorDto) {
 		Optional<Author> authorOptional = authorRepository.findById(id);
 		if (authorOptional.isPresent()) {
-			return authorRepository.save(updateAuthor(authorOptional.get().getId(), authorDto));
+			return authorRepository.save(createOrUpdateAuthor(authorOptional.get().getId(), authorDto));
 		} else {
 			LOGGER.warn("Auteur not found");
 			return null;
 		}
 	}
 
-	private Author updateAuthor(ObjectId id, AuthorDto authorDto) {
+	private Author createOrUpdateAuthor(ObjectId id, AuthorDto authorDto) {
 		return new Author().setId(id)
 				.setFirstName(authorDto.getFirstName())
 				.setLastName(authorDto.getLastName())

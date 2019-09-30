@@ -48,9 +48,8 @@ public class AuthorFunctionnalService {
 		return authorTechnicalService.findAll().stream()
 				.map(authorMapper::mapToDto).peek(authorDto -> {
 					List<Book> bookList = bookTechnicalService.findAllByAuthorId(authorDto.getId());
-					bookTechnicalService.findAllByAuthorId(authorDto.getId()).forEach(book -> {
-						authorDto.getBookDtoList().add(bookMapper.mapToDto(book));
-					});
+					bookTechnicalService.findAllByAuthorId(authorDto.getId())
+							.forEach(book -> authorDto.getBookDtoList().add(bookMapper.mapToDto(book)));
 				})
 				.collect(Collectors.toList());
 	}
@@ -61,9 +60,8 @@ public class AuthorFunctionnalService {
 			throw new HttpClientErrorException(HttpStatus.NOT_FOUND);
 		} else {
 			AuthorDto authorDto = authorMapper.mapToDto(author);
-			bookTechnicalService.findAllByAuthorId(authorDto.getId()).forEach(book -> {
-				authorDto.getBookDtoList().add(bookMapper.mapToDto(book));
-			});
+			bookTechnicalService.findAllByAuthorId(authorDto.getId())
+					.forEach(book -> authorDto.getBookDtoList().add(bookMapper.mapToDto(book)));
 			return authorDto;
 		}
 	}

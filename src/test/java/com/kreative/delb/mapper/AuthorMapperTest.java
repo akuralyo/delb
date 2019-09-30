@@ -5,7 +5,8 @@ import com.kreative.delb.objectMother.AuthorMother;
 import com.kreative.delb.resource.dto.AuthorDto;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 public class AuthorMapperTest {
 	@Test
@@ -19,18 +20,5 @@ public class AuthorMapperTest {
 		assertEquals(authorDto.getLastName(), author.getLastName());
 		assertEquals(authorDto.getNickName(), author.getNickName());
 		assertEquals(authorDto.getBirthday(), author.getBirthday());
-	}
-
-	@Test
-	public void mapToModel() {
-		AuthorDto authorDto = new AuthorMother().createAuthorDto(0);
-		Author author = new AuthorMapper().mapToModel(authorDto);
-		//
-		assertNotNull(author);
-		assertNull(author.getId());
-		assertEquals(author.getFirstName(), authorDto.getFirstName());
-		assertEquals(author.getLastName(), authorDto.getLastName());
-		assertEquals(author.getNickName(), authorDto.getNickName());
-		assertEquals(author.getBirthday(), authorDto.getBirthday());
 	}
 }

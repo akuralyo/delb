@@ -149,7 +149,9 @@ public class AuthorsResourceIntegrationTest extends AbstractIntegrationtest {
 
 	@Test
 	public void public_create_ko_cuz_not_implemented() throws Exception {
-		mockMvc.perform(post(PREFIXE + PUBLIC + AUTHORS))
+		mockMvc.perform(post(PREFIXE + PUBLIC + AUTHORS)
+				.content(asJsonString(new AuthorMother().createAuthorDto(0)))
+				.contentType(APPLICATION_JSON))
 				.andDo(print())
 				.andExpect(status().isNotImplemented());
 	}
@@ -189,7 +191,9 @@ public class AuthorsResourceIntegrationTest extends AbstractIntegrationtest {
 
 	@Test
 	public void public_update_ko_cuz_not_implemented() throws Exception {
-		mockMvc.perform(put(PREFIXE + PUBLIC + AUTHORS))
+		mockMvc.perform(put(PREFIXE + PUBLIC + AUTHORS)
+				.content(asJsonString(new AuthorMother().createAuthorDto(0)))
+				.contentType(APPLICATION_JSON))
 				.andDo(print())
 				.andExpect(status().isNotImplemented());
 	}
