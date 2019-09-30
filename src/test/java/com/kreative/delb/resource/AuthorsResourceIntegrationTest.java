@@ -223,12 +223,14 @@ public class AuthorsResourceIntegrationTest extends AbstractIntegrationtest {
 	private ResultMatcher checkAuthor(Author author, boolean apiPrivate) {
 		if (apiPrivate) {
 			return allOf(
+					jsonPath("$.id").exists(),
 					jsonPath("$.firstName", is(author.getFirstName())),
 					jsonPath("$.lastName", is(author.getLastName())),
 					jsonPath("$.nickName", is(author.getNickName())),
 					jsonPath("$.adresse").exists());
 		} else {
 			return allOf(
+					jsonPath("$.id").exists(),
 					jsonPath("$.firstName", is(author.getFirstName())),
 					jsonPath("$.lastName", is(author.getLastName())),
 					jsonPath("$.nickName", is(author.getNickName())),
@@ -249,6 +251,7 @@ public class AuthorsResourceIntegrationTest extends AbstractIntegrationtest {
 	private ResultMatcher checkAuthorFromList(int i, boolean apiPrivate) {
 		if (apiPrivate) {
 			return allOf(
+					jsonPath("$.[" + i + "].id").exists(),
 					jsonPath("$.[" + i + "].firstName", is("FirstName" + i)),
 					jsonPath("$.[" + i + "].lastName", is("LastName" + i)),
 					jsonPath("$.[" + i + "].nickName", is("NickName" + i)),
@@ -256,6 +259,7 @@ public class AuthorsResourceIntegrationTest extends AbstractIntegrationtest {
 					jsonPath("$.[" + i + "].bookDtoList", is(not(empty()))));
 		}
 		return allOf(
+				jsonPath("$.[" + i + "].id").exists(),
 				jsonPath("$.[" + i + "].firstName", is("FirstName" + i)),
 				jsonPath("$.[" + i + "].lastName", is("LastName" + i)),
 				jsonPath("$.[" + i + "].nickName", is("NickName" + i)),

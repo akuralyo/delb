@@ -69,7 +69,7 @@ public class AuthorFunctionnalService {
 	}
 
 	public AuthorDto updateAuthor(String id, AuthorDto authorDto) {
-		Author authorUpdated = authorTechnicalService.updateAuthor(id, authorDto);
+		Author authorUpdated = authorTechnicalService.update(id, authorDto);
 		if (authorUpdated != null) {
 			return authorMapper.mapToDto(authorUpdated);
 		} else {

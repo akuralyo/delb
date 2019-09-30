@@ -5,6 +5,7 @@ import com.kreative.delb.model.Author;
 import com.kreative.delb.repository.AuthorRepository;
 import com.kreative.delb.resource.dto.AuthorDto;
 import org.apache.log4j.Logger;
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -48,13 +49,22 @@ public class AuthorTechnicalService {
 		return authorOptional.orElse(null);
 	}
 
-	public Author updateAuthor(String id, AuthorDto authorDto) {
+	public Author update(String id, AuthorDto authorDto) {
 		Optional<Author> authorOptional = authorRepository.findById(id);
 		if (authorOptional.isPresent()) {
-			return authorRepository.save(authorMapper.mapToModel(authorDto.setId(id)));
+			return authorRepository.save(updateAuthor(authorOptional.get().getId(), authorDto));
 		} else {
 			LOGGER.warn("Auteur not found");
 			return null;
 		}
+	}
+
+	private Author updateAuthor(ObjectId id, AuthorDto authorDto) {
+		return new Author().setId(id)
+				.setFirstName(authorDto.getFirstName())
+				.setLastName(authorDto.getLastName())
+				.setNickName(authorDto.getNickName())
+				.setBirthday(authorDto.getBirthday())
+				.setAdresse(authorDto.getAdresse());
 	}
 }

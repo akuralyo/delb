@@ -65,7 +65,7 @@ public class AuthorFunctionnalServiceTest {
 	@Test(expected = HttpClientErrorException.class)
 	public void updateAuthor_ko() {
 		// Initiation des réponses
-		when(authorTechnicalService.updateAuthor(Mockito.anyString(), Mockito.any()))
+		when(authorTechnicalService.update(Mockito.anyString(), Mockito.any()))
 				.thenReturn(null);
 		// Appel
 		authorFunctionnalService.updateAuthor("id", new AuthorDto());
