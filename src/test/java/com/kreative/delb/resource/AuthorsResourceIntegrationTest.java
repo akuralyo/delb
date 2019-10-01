@@ -7,6 +7,7 @@ import com.kreative.delb.objectMother.AuthorMother;
 import org.apache.log4j.Logger;
 import org.bson.types.ObjectId;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -26,6 +27,7 @@ import static com.fasterxml.jackson.databind.DeserializationFeature.FAIL_ON_UNKN
 import static com.fasterxml.jackson.databind.SerializationFeature.WRITE_DATES_AS_TIMESTAMPS;
 import static com.kreative.delb.resource.constants.Api.*;
 import static com.kreative.delb.resource.constants.Api.Resource.AUTHORS;
+import static com.kreative.delb.resource.constants.Api.Resource.SEARCH;
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
@@ -168,6 +170,16 @@ public class AuthorsResourceIntegrationTest extends AbstractIntegrationtest {
 				.andExpect(status().isOk())
 				.andExpect(checkAuthor(author, false))
 				.andExpect(checkAuthorBooks(author));
+	}
+
+	@Test
+	@Ignore
+	public void public_search_ok() throws Exception {
+		mockMvc.perform(post(PREFIXE + PUBLIC + AUTHORS + SEARCH)
+				.content(asJsonString(new AuthorMother().createMapAuthorDto(0)))
+				.contentType(APPLICATION_JSON))
+				.andDo(print())
+				.andExpect(status().isOk());
 	}
 
 	@Test

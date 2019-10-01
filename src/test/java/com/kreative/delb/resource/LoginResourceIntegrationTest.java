@@ -15,6 +15,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 public class LoginResourceIntegrationTest extends AbstractIntegrationtest {
 
+	@Before
+	public void before() throws Exception {
+		super.before();
+		userDAO.createAdmin();
+	}
+
 	@Test
 	public void login_ko() throws Exception {
 		// Récupération du token
@@ -33,11 +39,5 @@ public class LoginResourceIntegrationTest extends AbstractIntegrationtest {
 				.param("username", "ADMIN")
 				.param("password", "ADMIN"))
 				.andExpect(status().isOk());
-	}
-
-	@Before
-	public void setUp() throws Exception {
-		super.before();
-		userDAO.createAdmin();
 	}
 }

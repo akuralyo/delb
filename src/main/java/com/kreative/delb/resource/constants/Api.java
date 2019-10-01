@@ -23,5 +23,7 @@ public class Api {
 		public static final String AUTHORS = "/authors";
 
 		public static final String USERS = "/users";
+
+		public static final String SEARCH = "/search";
 	}
 }
