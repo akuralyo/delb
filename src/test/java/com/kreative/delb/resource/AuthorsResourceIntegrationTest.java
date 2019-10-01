@@ -1,11 +1,7 @@
 package com.kreative.delb.resource;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import com.kreative.delb.dao.AuthorDAO;
-import com.kreative.delb.dao.BookDAO;
-import com.kreative.delb.dao.UserDAO;
 import com.kreative.delb.model.Author;
 import com.kreative.delb.objectMother.AuthorMother;
 import org.apache.log4j.Logger;
@@ -13,12 +9,10 @@ import org.bson.types.ObjectId;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.ResultMatcher;
 import org.springframework.web.util.NestedServletException;
@@ -55,24 +49,11 @@ public class AuthorsResourceIntegrationTest extends AbstractIntegrationtest {
 
 	private static final Logger LOGGER = Logger.getLogger(AuthorsResourceIntegrationTest.class);
 
-	@Autowired
-	private MockMvc mockMvc;
-
-	@Autowired
-	private AuthorDAO authorDAO;
-
-	@Autowired
-	private UserDAO userDAO;
-
-	@Autowired
-	private BookDAO bookDAO;
-
 
 	@Before
 	public void before() throws Exception {
 		super.before();
 		//
-		userDAO.createAdmin();
 		authorDAO.initDb(NB_ELEMENT);
 		//
 		LOGGER.debug("Nb Author : " + authorDAO.findAll().size());
@@ -276,14 +257,6 @@ public class AuthorsResourceIntegrationTest extends AbstractIntegrationtest {
 			String contentAsString = result.getResponse().getContentAsString();
 			return MAPPER.readValue(contentAsString, responseClass);
 		} catch (IOException e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	private static String requestBody(Object request) {
-		try {
-			return MAPPER.writeValueAsString(request);
-		} catch (JsonProcessingException e) {
 			throw new RuntimeException(e);
 		}
 	}

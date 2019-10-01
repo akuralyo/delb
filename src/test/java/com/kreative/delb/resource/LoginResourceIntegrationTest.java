@@ -1,14 +1,11 @@
 package com.kreative.delb.resource;
 
-import com.kreative.delb.dao.UserDAO;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.test.web.servlet.MockMvc;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -16,13 +13,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-public class LoginResourceIntegrationTest {
-
-	@Autowired
-	private MockMvc mockMvc;
-
-	@Autowired
-	private UserDAO userDAO;
+public class LoginResourceIntegrationTest extends AbstractIntegrationtest {
 
 	@Test
 	public void login_ko() throws Exception {
@@ -46,8 +37,7 @@ public class LoginResourceIntegrationTest {
 
 	@Before
 	public void setUp() throws Exception {
-		userDAO.deleteAll();
-		//
+		super.before();
 		userDAO.createAdmin();
 	}
 }

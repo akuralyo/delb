@@ -6,22 +6,25 @@ import com.kreative.delb.dao.BookDAO;
 import com.kreative.delb.dao.UserDAO;
 import org.junit.Before;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultMatcher;
 
 public abstract class AbstractIntegrationtest {
 
+	@Autowired
+	protected AuthorDAO authorDAO;
 
 	@Autowired
-	private AuthorDAO authorDAO;
+	protected UserDAO userDAO;
 
 	@Autowired
-	private UserDAO userDAO;
+	protected BookDAO bookDAO;
 
 	@Autowired
-	private BookDAO bookDAO;
+	protected MockMvc mockMvc;
 
 	@Before
-	public void before() throws Exception {
+	protected void before() throws Exception {
 		authorDAO.deleteAll();
 		userDAO.deleteAll();
 		bookDAO.deleteAll();
