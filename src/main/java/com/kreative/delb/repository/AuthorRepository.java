@@ -15,4 +15,6 @@ public interface AuthorRepository extends CrudRepository<Author, String>, Queryd
 	Optional<Author> findOneByFirstName(String firstName);
 
 	Optional<Author> findOneByLastName(String lastName);
+
+	Optional<Author> findOneByUserId(String userId);
 }

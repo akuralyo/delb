@@ -12,6 +12,8 @@ public class Author extends AbstractAuditSecurityField implements Serializable {
 	@Id
 	private ObjectId id;
 
+	private ObjectId userId;
+
 	private String firstName;
 
 	private String lastName;
@@ -21,6 +23,15 @@ public class Author extends AbstractAuditSecurityField implements Serializable {
 	private LocalDate birthday;
 
 	private String adresse;
+
+	public ObjectId getUserId() {
+		return userId;
+	}
+
+	public Author setUserId(ObjectId userId) {
+		this.userId = userId;
+		return this;
+	}
 
 	public ObjectId getId() {
 		return id;

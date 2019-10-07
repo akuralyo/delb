@@ -29,7 +29,6 @@ import static com.kreative.delb.resource.constants.Api.*;
 import static com.kreative.delb.resource.constants.Api.Resource.AUTHORS;
 import static com.kreative.delb.resource.constants.Api.Resource.SEARCH;
 import static org.hamcrest.Matchers.*;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -56,14 +55,12 @@ public class AuthorsResourceIntegrationTest extends AbstractIntegrationtest {
 	public void before() throws Exception {
 		super.before();
 		//
-		authorDAO.initDb(NB_ELEMENT);
-		//
 		LOGGER.debug("Nb Author : " + authorDAO.findAll().size());
 		LOGGER.debug("Nb Book : " + bookDAO.findAll().size());
 	}
 
 	@Test
-	@WithMockUser(username = "admin")
+	@WithMockUser(username = "anonymousUser")
 	public void private_create_ok() throws Exception {
 		authorDAO.deleteAll();
 		//
@@ -71,21 +68,18 @@ public class AuthorsResourceIntegrationTest extends AbstractIntegrationtest {
 				.content(asJsonString(new AuthorMother().createAuthorDto(0)))
 				.contentType(APPLICATION_JSON))
 				.andDo(print())
-				.andExpect(status().isCreated())
-				.andExpect(checkAuthor(0, true));
-		//
-		assertEquals(authorDAO.findAll().size(), 1);
+				.andExpect(status().isNotImplemented());
 	}
 
 	@Test(expected = NestedServletException.class)
-	@WithMockUser(username = "admin")
+	@WithMockUser(username = "anonymousUser")
 	public void private_delete_ko_cuz_object_not_existing() throws Exception {
 		mockMvc.perform(delete(PREFIXE + PRIVATE + AUTHORS + "/" + new ObjectId().toString())
 				.contentType(APPLICATION_JSON));
 	}
 
 	@Test
-	@WithMockUser(username = "admin")
+	@WithMockUser(username = "anonymousUser")
 	public void private_delete_ok() throws Exception {
 		Author author = authorDAO.findAnyone();
 		//
@@ -105,7 +99,7 @@ public class AuthorsResourceIntegrationTest extends AbstractIntegrationtest {
 	}
 
 	@Test
-	@WithMockUser(username = "admin")
+	@WithMockUser(username = "anonymousUser")
 	public void private_findAll_ok() throws Exception {
 		mockMvc.perform(get(PREFIXE + PRIVATE + AUTHORS))
 				.andDo(print())
@@ -115,7 +109,7 @@ public class AuthorsResourceIntegrationTest extends AbstractIntegrationtest {
 	}
 
 	@Test
-	@WithMockUser(username = "admin")
+	@WithMockUser(username = "anonymousUser")
 	public void private_update_ok() throws Exception {
 		Author author = authorDAO.findAnyone();
 		//

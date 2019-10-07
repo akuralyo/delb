@@ -1,5 +1,6 @@
 package com.kreative.delb.model;
 
+import com.kreative.delb.security.RoleAuthority;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -20,6 +21,8 @@ public class User extends AbstractAuditSecurityField implements Serializable, Us
 
 	private String password;
 
+	private Collection<RoleAuthority> roleAuthorityCollection;
+
 	public ObjectId getUserId() {
 		return id;
 	}
@@ -29,9 +32,18 @@ public class User extends AbstractAuditSecurityField implements Serializable, Us
 		return this;
 	}
 
+	public Collection<RoleAuthority> getRoleAuthorityCollection() {
+		return roleAuthorityCollection;
+	}
+
+	public User setRoleAuthorityCollection(Collection<RoleAuthority> roleAuthorityCollection) {
+		this.roleAuthorityCollection = roleAuthorityCollection;
+		return this;
+	}
+
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		return null;
+		return this.roleAuthorityCollection;
 	}
 
 	@Override

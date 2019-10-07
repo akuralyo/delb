@@ -72,7 +72,7 @@ public class AuthorTechnicalServiceTest {
 	public void update_ko() {
 		when(authorRepository.findById(Mockito.anyString())).thenReturn(Optional.empty());
 		//
-		Author author = authorTechnicalService.update("id", new AuthorDto());
+		Author author = authorTechnicalService.updateById("id", new AuthorDto());
 		//
 		Assert.assertNull(author);
 	}
@@ -85,7 +85,7 @@ public class AuthorTechnicalServiceTest {
 		AuthorDto authorDto = new AuthorMother().createAuthorDto(0).setFirstName("MyFirstName");
 		when(authorRepository.save(Mockito.any())).thenReturn(author);
 		//
-		Author actualResponse = authorTechnicalService.update(author.getId().toString(), authorDto);
+		Author actualResponse = authorTechnicalService.updateById(author.getId().toString(), authorDto);
 		//
 		Assert.assertEquals(author, actualResponse);
 	}

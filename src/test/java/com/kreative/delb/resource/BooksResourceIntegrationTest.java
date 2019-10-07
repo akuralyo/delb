@@ -22,8 +22,6 @@ public class BooksResourceIntegrationTest extends AbstractIntegrationtest {
 	public void before() throws Exception {
 		super.before();
 		//
-		authorDAO.initDb(NB_ELEMENT);
-		//
 		LOGGER.debug("Nb Author : " + authorDAO.findAll().size());
 		LOGGER.debug("Nb Book : " + bookDAO.findAll().size());
 	}

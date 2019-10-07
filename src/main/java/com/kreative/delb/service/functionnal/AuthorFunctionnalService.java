@@ -4,7 +4,9 @@ import com.kreative.delb.mapper.AuthorMapper;
 import com.kreative.delb.mapper.BookMapper;
 import com.kreative.delb.model.Author;
 import com.kreative.delb.model.Book;
+import com.kreative.delb.model.User;
 import com.kreative.delb.resource.dto.AuthorDto;
+import com.kreative.delb.security.UserRepository;
 import com.kreative.delb.service.technical.AuthorTechnicalService;
 import com.kreative.delb.service.technical.BookTechnicalService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -30,10 +33,8 @@ public class AuthorFunctionnalService {
 	@Autowired
 	private BookMapper bookMapper;
 
-
-	public AuthorDto createAuthor(AuthorDto authorDto) {
-		return authorMapper.mapToDto(authorTechnicalService.createAuthor(authorDto));
-	}
+	@Autowired
+	private UserRepository userRepository;
 
 	public void deleteAuthor(String id) {
 		Author author = authorTechnicalService.findOneById(id);
@@ -66,12 +67,26 @@ public class AuthorFunctionnalService {
 		}
 	}
 
-	public AuthorDto updateAuthor(String id, AuthorDto authorDto) {
-		Author authorUpdated = authorTechnicalService.update(id, authorDto);
+	public AuthorDto updateAuthorById(String id, AuthorDto authorDto) {
+		Author authorUpdated = authorTechnicalService.updateById(id, authorDto);
 		if (authorUpdated != null) {
 			return authorMapper.mapToDto(authorUpdated);
 		} else {
 			throw new HttpClientErrorException(HttpStatus.NOT_FOUND);
+		}
+	}
+
+	public AuthorDto updateAuthorByUsername(String username, AuthorDto authorDto) {
+		Optional<User> userOptional = userRepository.findOneByUsername(username);
+		if (userOptional.isPresent() && userOptional.get().getAuthorities().contains("AUTHOR")) {
+			Author authorUpdated = authorTechnicalService.updateByUsername(username, authorDto);
+			if (authorUpdated != null) {
+				return authorMapper.mapToDto(authorUpdated);
+			} else {
+				throw new HttpClientErrorException(HttpStatus.NOT_FOUND);
+			}
+		} else {
+			throw new HttpClientErrorException(HttpStatus.UNAUTHORIZED);
 		}
 	}
 }

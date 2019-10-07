@@ -1,7 +1,6 @@
 package com.kreative.delb.dao;
 
 import com.kreative.delb.model.Author;
-import com.kreative.delb.objectMother.AuthorMother;
 import com.kreative.delb.repository.AuthorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -38,12 +37,5 @@ public class AuthorDAO {
 	public Author findOne(String id) {
 		Optional<Author> authorOptional = authorRepository.findById(id);
 		return authorOptional.orElse(null);
-	}
-
-	public void initDb(int max) {
-		for (int i = 0; i < max; i++) {
-			Author author = authorRepository.save(new AuthorMother().createAuthor(i));
-			bookDAO.initDb(author.getId());
-		}
 	}
 }

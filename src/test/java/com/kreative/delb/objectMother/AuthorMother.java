@@ -11,6 +11,16 @@ import java.util.Map;
 
 public class AuthorMother {
 
+	public Author createAuthor(int i, ObjectId userId) {
+		return new Author()
+				.setId(new ObjectId())
+				.setFirstName("FirstName" + i)
+				.setLastName("LastName" + i)
+				.setNickName("NickName" + i)
+				.setAdresse("Adresse" + i)
+				.setUserId(userId);
+	}
+
 	public Author createAuthor(int i) {
 		return new Author()
 				.setId(new ObjectId())

@@ -1,6 +1,8 @@
 package com.kreative.delb.security;
 
+import com.kreative.delb.model.Author;
 import com.kreative.delb.model.User;
+import com.kreative.delb.repository.AuthorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -15,8 +17,15 @@ public class UserService implements UserDetailsService {
 	@Autowired
 	private UserRepository userRepository;
 
+	@Autowired
+	private AuthorRepository authorRepository;
+
 	public User createUser(User user) {
-		return userRepository.save(user);
+		User userCreated = userRepository.save(user);
+		if (user.getAuthorities().contains(new RoleAuthority().setRole(Role.AUTHOR))) {
+			authorRepository.save(new Author().setUserId(userCreated.getUserId()));
+		}
+		return userCreated;
 	}
 
 	@Override

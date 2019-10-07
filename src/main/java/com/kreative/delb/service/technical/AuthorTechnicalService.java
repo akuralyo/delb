@@ -49,8 +49,18 @@ public class AuthorTechnicalService {
 		return authorOptional.orElse(null);
 	}
 
-	public Author update(String id, AuthorDto authorDto) {
+	public Author updateById(String id, AuthorDto authorDto) {
 		Optional<Author> authorOptional = authorRepository.findById(id);
+		if (authorOptional.isPresent()) {
+			return authorRepository.save(createOrUpdateAuthor(authorOptional.get().getId(), authorDto));
+		} else {
+			LOGGER.warn("Auteur not found");
+			return null;
+		}
+	}
+
+	public Author updateByUsername(String username, AuthorDto authorDto) {
+		Optional<Author> authorOptional = authorRepository.findOneByUserId(username);
 		if (authorOptional.isPresent()) {
 			return authorRepository.save(createOrUpdateAuthor(authorOptional.get().getId(), authorDto));
 		} else {
