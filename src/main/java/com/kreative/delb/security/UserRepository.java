@@ -1,6 +1,6 @@
 package com.kreative.delb.security;
 
-import com.kreative.delb.model.User;
+import com.kreative.delb.user.User;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.Optional;

@@ -1,11 +1,11 @@
 package com.kreative.delb.service.technical;
 
-import com.kreative.delb.model.User;
-import com.kreative.delb.repository.AuthorRepository;
-import com.kreative.delb.repository.BookRepository;
+import com.kreative.delb.author.repository.AuthorRepository;
+import com.kreative.delb.book.repository.BookRepository;
 import com.kreative.delb.security.Role;
 import com.kreative.delb.security.RoleAuthority;
 import com.kreative.delb.security.UserRepository;
+import com.kreative.delb.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

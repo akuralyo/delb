@@ -1,6 +1,6 @@
 package com.kreative.delb.security;
 
-import com.kreative.delb.model.User;
+import com.kreative.delb.user.User;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -9,10 +9,10 @@ import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 
-import static com.kreative.delb.resource.constants.Api.PREFIXE;
-import static com.kreative.delb.resource.constants.Api.PRIVATE;
-import static com.kreative.delb.resource.constants.Api.PathVariable.PV_SELF;
-import static com.kreative.delb.resource.constants.Api.Resource.USERS;
+import static com.kreative.delb.common.resource.constants.Api.PREFIXE;
+import static com.kreative.delb.common.resource.constants.Api.PRIVATE;
+import static com.kreative.delb.common.resource.constants.Api.PathVariable.PV_SELF;
+import static com.kreative.delb.common.resource.constants.Api.Resource.USERS;
 
 @RestController
 @RequestMapping(PREFIXE + PRIVATE + USERS)

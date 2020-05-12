@@ -1,8 +1,8 @@
 package com.kreative.delb.security;
 
-import com.kreative.delb.model.Author;
-import com.kreative.delb.model.User;
-import com.kreative.delb.repository.AuthorRepository;
+import com.kreative.delb.author.model.Author;
+import com.kreative.delb.author.repository.AuthorRepository;
+import com.kreative.delb.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

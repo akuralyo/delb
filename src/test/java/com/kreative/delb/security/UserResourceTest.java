@@ -1,6 +1,6 @@
 package com.kreative.delb.security;
 
-import com.kreative.delb.resource.AbstractIntegrationtest;
+import com.kreative.delb.common.resource.AbstractIntegrationtest;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

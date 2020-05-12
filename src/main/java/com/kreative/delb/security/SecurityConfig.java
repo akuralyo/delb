@@ -1,6 +1,6 @@
 package com.kreative.delb.security;
 
-import com.kreative.delb.resource.constants.Api;
+import com.kreative.delb.common.resource.constants.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
