@@ -1,8 +1,8 @@
 package com.kreative.delb.book.resource;
 
+import com.kreative.delb.author.dto.AuthorDto;
+import com.kreative.delb.book.dto.BookDto;
 import com.kreative.delb.book.service.BooksFunctionnalService;
-import com.kreative.delb.common.resource.dto.AuthorDto;
-import com.kreative.delb.common.resource.dto.BookDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

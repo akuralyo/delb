@@ -1,7 +1,7 @@
 package com.kreative.delb.author.mapper;
 
+import com.kreative.delb.author.dto.AuthorDto;
 import com.kreative.delb.author.model.Author;
-import com.kreative.delb.common.resource.dto.AuthorDto;
 import com.kreative.delb.author.objectMother.AuthorMother;
 import org.junit.Test;
 
@@ -15,7 +15,7 @@ public class AuthorMapperTest {
 		AuthorDto authorDto = new AuthorMapper().mapToDto(author);
 		//
 		assertNotNull(authorDto);
-		assertEquals(authorDto.getId(), author.getId().toString());
+		assertEquals(authorDto.getIdAuthor(), author.getIdAuthor());
 		assertEquals(authorDto.getFirstName(), author.getFirstName());
 		assertEquals(authorDto.getLastName(), author.getLastName());
 		assertEquals(authorDto.getNickName(), author.getNickName());

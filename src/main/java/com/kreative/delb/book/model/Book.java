@@ -1,46 +1,51 @@
 package com.kreative.delb.book.model;
 
 import com.kreative.delb.common.model.AbstractAuditSecurityField;
-import org.bson.types.ObjectId;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.beans.factory.annotation.Value;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.io.Serializable;
 
-@Document
+@Entity
+@Table(name = "BOOK")
 public class Book extends AbstractAuditSecurityField implements Serializable {
 
 	@Id
-	private ObjectId id;
+	@Value("ID_BOOK")
+	private String idBook;
 
-	private String name;
+	@Value("TITLE")
+	private String title;
 
-	private ObjectId authorId;
+	@Value("AUTHOR_ID")
+	private String authorId;
 
-	public ObjectId getAuthorId() {
+	public String getAuthorId() {
 		return authorId;
 	}
 
-	public Book setAuthorId(ObjectId authorId) {
+	public Book setAuthorId(String authorId) {
 		this.authorId = authorId;
 		return this;
 	}
 
-	public ObjectId getId() {
-		return id;
+	public String getIdBook() {
+		return idBook;
 	}
 
-	public Book setId(ObjectId id) {
-		this.id = id;
+	public Book setIdBook(String idBook) {
+		this.idBook = idBook;
 		return this;
 	}
 
-	public String getName() {
-		return name;
+	public String getTitle() {
+		return title;
 	}
 
-	public Book setName(String name) {
-		this.name = name;
+	public Book setTitle(String title) {
+		this.title = title;
 		return this;
 	}
 }

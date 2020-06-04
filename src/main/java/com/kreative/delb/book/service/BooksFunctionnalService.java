@@ -4,11 +4,10 @@ import com.kreative.delb.author.mapper.AuthorMapper;
 import com.kreative.delb.author.model.Author;
 import com.kreative.delb.author.repository.AuthorRepository;
 import com.kreative.delb.author.service.AuthorTechnicalService;
+import com.kreative.delb.book.dto.BookDto;
 import com.kreative.delb.book.mapper.BookMapper;
 import com.kreative.delb.book.model.Book;
-import com.kreative.delb.common.resource.dto.BookDto;
 import org.apache.log4j.Logger;
-import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -38,26 +37,26 @@ public class BooksFunctionnalService {
 
 	public BookDto createBook(BookDto bookDto) {
 		// Vérification que l'auteur existe déjà
-		Optional<Author> authorOptional = authorRepository.findById(bookDto.getAuthorDto().getId());
+		Optional<Author> authorOptional = authorRepository.findById(bookDto.getAuthorDto().getIdAuthor());
 		if (!authorOptional.isPresent()) {
 			LOGGER.warn("Création de l'auteur");
 			Author author = authorTechnicalService.createAuthor(bookDto.getAuthorDto());
 			return bookMapper.mapToDto(bookTechnicalService.createBook(
-					createBookFromDto(bookDto, author.getId().toString())));
+					createBookFromDto(bookDto, author.getIdAuthor().toString())));
 		} else {
 			return bookMapper.mapToDto(bookTechnicalService.createBook(
-					createBookFromDto(bookDto, bookDto.getAuthorDto().getId())));
+					createBookFromDto(bookDto, bookDto.getAuthorDto().getIdAuthor())));
 		}
 	}
 
 	public List<BookDto> findAll() {
 		return bookTechnicalService.findAll().stream().map(bookMapper::mapToDto)
-				.map(bookDto -> bookDto.setAuthorDto(authorMapper.mapToDto(authorTechnicalService.findOneById(bookDto.getAuthorDto().getId()))))
+				.map(bookDto -> bookDto.setAuthorDto(authorMapper.mapToDto(authorTechnicalService.findOneById(bookDto.getAuthorDto().getIdAuthor()))))
 				.collect(Collectors.toList());
 	}
 
 	private Book createBookFromDto(BookDto bookDto, String authorId) {
-		return new Book().setName(bookDto.getName()).
-				setAuthorId(new ObjectId(authorId));
+		return new Book().setTitle(bookDto.getTitle()).
+				setAuthorId(authorId);
 	}
 }

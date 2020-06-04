@@ -1,13 +1,11 @@
 package com.kreative.delb.author.service;
 
+import com.kreative.delb.author.dto.AuthorDto;
 import com.kreative.delb.author.mapper.AuthorMapper;
-import com.kreative.delb.author.service.AuthorFunctionnalService;
-import com.kreative.delb.author.service.AuthorTechnicalService;
-import com.kreative.delb.book.mapper.BookMapper;
-import com.kreative.delb.book.service.BookTechnicalService;
-import com.kreative.delb.common.resource.dto.AuthorDto;
 import com.kreative.delb.author.objectMother.AuthorMother;
+import com.kreative.delb.book.mapper.BookMapper;
 import com.kreative.delb.book.objectMother.BookMother;
+import com.kreative.delb.book.service.BookTechnicalService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

@@ -1,7 +1,10 @@
-package com.kreative.delb.common.resource.dto;
+package com.kreative.delb.author.dto;
 
 
 import com.fasterxml.jackson.annotation.JsonView;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
+import com.kreative.delb.book.dto.BookDto;
 import com.kreative.delb.common.resource.GroupValidation;
 import com.kreative.delb.common.resource.ViewsAuthor;
 
@@ -15,7 +18,7 @@ public class AuthorDto {
 
 	@JsonView(ViewsAuthor.ApiPublic.class)
 	@Null(groups = GroupValidation.IPost.class)
-	private String id;
+	private String idAuthor;
 
 	@JsonView(ViewsAuthor.ApiPublic.class)
 	@NotBlank(groups = GroupValidation.IPost.class)
@@ -29,6 +32,7 @@ public class AuthorDto {
 	private String nickName;
 
 	@JsonView(ViewsAuthor.ApiPublic.class)
+	@JsonSerialize(using = ToStringSerializer.class)
 	private LocalDate birthday;
 
 	@JsonView(ViewsAuthor.ApiPrivate.class)
@@ -73,12 +77,12 @@ public class AuthorDto {
 		return this;
 	}
 
-	public String getId() {
-		return id;
+	public String getIdAuthor() {
+		return idAuthor;
 	}
 
-	public AuthorDto setId(String id) {
-		this.id = id;
+	public AuthorDto setIdAuthor(String idAuthor) {
+		this.idAuthor = idAuthor;
 		return this;
 	}
 

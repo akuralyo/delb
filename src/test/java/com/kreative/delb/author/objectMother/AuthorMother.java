@@ -1,29 +1,24 @@
 package com.kreative.delb.author.objectMother;
 
+import com.kreative.delb.author.dto.AuthorDto;
 import com.kreative.delb.author.model.Author;
-import com.kreative.delb.common.resource.dto.AuthorDto;
-import org.bson.types.ObjectId;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class AuthorMother {
 
-	public Author createAuthor(int i, ObjectId userId) {
+	public Author createAuthor(int i, String userId) {
 		return new Author()
-				.setId(new ObjectId())
+				.setIdAuthor(userId)
 				.setFirstName("FirstName" + i)
 				.setLastName("LastName" + i)
 				.setNickName("NickName" + i)
-				.setAdresse("Adresse" + i)
-				.setUserId(userId);
+				.setAdresse("Adresse" + i);
 	}
 
 	public Author createAuthor(int i) {
 		return new Author()
-				.setId(new ObjectId())
+				.setIdAuthor(UUID.randomUUID().toString())
 				.setFirstName("FirstName" + i)
 				.setLastName("LastName" + i)
 				.setNickName("NickName" + i)
@@ -40,9 +35,11 @@ public class AuthorMother {
 
 	public AuthorDto createAuthorDto(Author author) {
 		return new AuthorDto()
+				.setIdAuthor(author.getIdAuthor())
 				.setFirstName(author.getFirstName())
 				.setLastName(author.getLastName())
 				.setNickName(author.getNickName())
+				.setBirthday(author.getBirthday())
 				.setAdresse(author.getAdresse());
 	}
 

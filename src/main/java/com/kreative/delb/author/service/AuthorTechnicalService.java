@@ -1,17 +1,17 @@
 package com.kreative.delb.author.service;
 
+import com.kreative.delb.author.dto.AuthorDto;
 import com.kreative.delb.author.mapper.AuthorMapper;
 import com.kreative.delb.author.model.Author;
 import com.kreative.delb.author.repository.AuthorRepository;
-import com.kreative.delb.common.resource.dto.AuthorDto;
 import org.apache.log4j.Logger;
-import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class AuthorTechnicalService {
@@ -29,7 +29,7 @@ public class AuthorTechnicalService {
 	}
 
 	public Author createAuthor(AuthorDto authorDto) {
-		return authorRepository.save(createOrUpdateAuthor(null, authorDto));
+		return authorRepository.save(createOrUpdateAuthor(UUID.randomUUID().toString(), authorDto));
 	}
 
 	public void deleteAuthor(String id) {
@@ -44,15 +44,15 @@ public class AuthorTechnicalService {
 		return authors;
 	}
 
-	public Author findOneById(String id) {
-		Optional<Author> authorOptional = authorRepository.findById(id);
+	public Author findOneById(String idAuthor) {
+		Optional<Author> authorOptional = authorRepository.findOneByIdAuthor(idAuthor);
 		return authorOptional.orElse(null);
 	}
 
 	public Author updateById(String id, AuthorDto authorDto) {
 		Optional<Author> authorOptional = authorRepository.findById(id);
 		if (authorOptional.isPresent()) {
-			return authorRepository.save(createOrUpdateAuthor(authorOptional.get().getId(), authorDto));
+			return authorRepository.save(createOrUpdateAuthor(authorOptional.get().getIdAuthor(), authorDto));
 		} else {
 			LOGGER.warn("Auteur not found");
 			return null;
@@ -60,17 +60,18 @@ public class AuthorTechnicalService {
 	}
 
 	public Author updateByUsername(String username, AuthorDto authorDto) {
-		Optional<Author> authorOptional = authorRepository.findOneByUserId(username);
+		Optional<Author> authorOptional = authorRepository.findOneByIdAuthor(username);
 		if (authorOptional.isPresent()) {
-			return authorRepository.save(createOrUpdateAuthor(authorOptional.get().getId(), authorDto));
+			return authorRepository.save(createOrUpdateAuthor(authorOptional.get().getIdAuthor(), authorDto));
 		} else {
 			LOGGER.warn("Auteur not found");
 			return null;
 		}
 	}
 
-	private Author createOrUpdateAuthor(ObjectId id, AuthorDto authorDto) {
-		return new Author().setId(id)
+	private Author createOrUpdateAuthor(String IdAuthor, AuthorDto authorDto) {
+		return new Author()
+				.setIdAuthor(IdAuthor)
 				.setFirstName(authorDto.getFirstName())
 				.setLastName(authorDto.getLastName())
 				.setNickName(authorDto.getNickName())

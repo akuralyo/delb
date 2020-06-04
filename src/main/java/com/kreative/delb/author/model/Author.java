@@ -1,45 +1,43 @@
 package com.kreative.delb.author.model;
 
 import com.kreative.delb.common.model.AbstractAuditSecurityField;
-import org.bson.types.ObjectId;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.beans.factory.annotation.Value;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.io.Serializable;
 import java.time.LocalDate;
 
-@Document
+@Entity
+@Table(name = "AUTHOR")
 public class Author extends AbstractAuditSecurityField implements Serializable {
+
 	@Id
-	private ObjectId id;
+	@Value("ID_AUTHOR")
+	private String idAuthor;
 
-	private ObjectId userId;
-
+	@Value("FIRST_NAME")
 	private String firstName;
 
+	@Value("LAST_NAME")
 	private String lastName;
 
+	@Value("NICK_NAME")
 	private String nickName;
 
+	@Value("BIRTHDAY")
 	private LocalDate birthday;
 
+	@Value("ADRESSE")
 	private String adresse;
 
-	public ObjectId getUserId() {
-		return userId;
+	public String getIdAuthor() {
+		return idAuthor;
 	}
 
-	public Author setUserId(ObjectId userId) {
-		this.userId = userId;
-		return this;
-	}
-
-	public ObjectId getId() {
-		return id;
-	}
-
-	public Author setId(ObjectId id) {
-		this.id = id;
+	public Author setIdAuthor(String idAuthor) {
+		this.idAuthor = idAuthor;
 		return this;
 	}
 

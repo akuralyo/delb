@@ -1,9 +1,9 @@
 package com.kreative.delb.author.service;
 
+import com.kreative.delb.author.dto.AuthorDto;
 import com.kreative.delb.author.model.Author;
 import com.kreative.delb.author.objectMother.AuthorMother;
 import com.kreative.delb.author.repository.AuthorRepository;
-import com.kreative.delb.common.resource.dto.AuthorDto;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -15,6 +15,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -44,7 +45,7 @@ public class AuthorTechnicalServiceTest {
 	@Test
 	public void findOneById_ko() {
 		// Initiation des réponses
-		when(authorRepository.findById(Mockito.anyString()))
+		when(authorRepository.findOneByIdAuthor(Mockito.anyString()))
 				.thenReturn(Optional.empty());
 		//
 		Author author = authorTechnicalService.findOneById("id");
@@ -55,12 +56,13 @@ public class AuthorTechnicalServiceTest {
 	@Test
 	public void findOneById_ok() {
 		// Initiation des réponses
-		when(authorRepository.findById(Mockito.anyString()))
-				.thenReturn(Optional.of(new AuthorMother().createAuthor(0)));
+		String idAuthor = UUID.randomUUID().toString();
+		when(authorRepository.findOneByIdAuthor(Mockito.anyString()))
+				.thenReturn(Optional.of(new AuthorMother().createAuthor(0, idAuthor)));
 		// Appel
 		Author author = authorTechnicalService.findOneById("id");
 		// Vérification
-		checkObject_author(author, new AuthorMother().createAuthor(0));
+		checkObject_author(author, new AuthorMother().createAuthor(0, idAuthor));
 	}
 
 	@Before
@@ -85,14 +87,14 @@ public class AuthorTechnicalServiceTest {
 		AuthorDto authorDto = new AuthorMother().createAuthorDto(0).setFirstName("MyFirstName");
 		when(authorRepository.save(Mockito.any())).thenReturn(author);
 		//
-		Author actualResponse = authorTechnicalService.updateById(author.getId().toString(), authorDto);
+		Author actualResponse = authorTechnicalService.updateById(author.getIdAuthor().toString(), authorDto);
 		//
 		Assert.assertEquals(author, actualResponse);
 	}
 
 	private void checkObject_author(Author expected, Author returned) {
 		assertNotNull(returned);
-		assertNotNull(returned.getId());
+		assertNotNull(returned.getIdAuthor());
 		assertEquals(returned.getFirstName(), expected.getFirstName());
 		assertEquals(returned.getLastName(), expected.getLastName());
 		assertEquals(returned.getNickName(), expected.getNickName());

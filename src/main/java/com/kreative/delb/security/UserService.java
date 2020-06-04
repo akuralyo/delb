@@ -23,7 +23,7 @@ public class UserService implements UserDetailsService {
 	public User createUser(User user) {
 		User userCreated = userRepository.save(user);
 		if (user.getAuthorities().contains(new RoleAuthority().setRole(Role.AUTHOR))) {
-			authorRepository.save(new Author().setUserId(userCreated.getUserId()));
+			authorRepository.save(new Author().setIdAuthor(userCreated.getUserId()));
 		}
 		return userCreated;
 	}

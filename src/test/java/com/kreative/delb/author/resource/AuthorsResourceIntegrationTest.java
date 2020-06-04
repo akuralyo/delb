@@ -2,11 +2,12 @@ package com.kreative.delb.author.resource;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.kreative.delb.DelbApplication;
 import com.kreative.delb.author.model.Author;
-import com.kreative.delb.common.resource.AbstractIntegrationtest;
 import com.kreative.delb.author.objectMother.AuthorMother;
+import com.kreative.delb.common.resource.AbstractIntegrationtest;
+import com.kreative.delb.config.DaoTestConfig;
 import org.apache.log4j.Logger;
-import org.bson.types.ObjectId;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -14,6 +15,7 @@ import org.junit.runner.RunWith;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.ResultMatcher;
@@ -23,6 +25,8 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.time.LocalDate;
+import java.util.UUID;
 
 import static com.fasterxml.jackson.databind.DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES;
 import static com.fasterxml.jackson.databind.SerializationFeature.WRITE_DATES_AS_TIMESTAMPS;
@@ -40,6 +44,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
+@ContextConfiguration(classes = {DelbApplication.class, DaoTestConfig.class})
 public class AuthorsResourceIntegrationTest extends AbstractIntegrationtest {
 
 	private static final int NB_ELEMENT = 5;
@@ -62,8 +67,7 @@ public class AuthorsResourceIntegrationTest extends AbstractIntegrationtest {
 
 	@Test
 	@WithMockUser(username = "anonymousUser")
-	public void private_create_ok() throws Exception {
-		authorDAO.deleteAll();
+	public void private_create_ko() throws Exception {
 		//
 		mockMvc.perform(post(PREFIXE + PRIVATE + AUTHORS)
 				.content(asJsonString(new AuthorMother().createAuthorDto(0)))
@@ -75,7 +79,7 @@ public class AuthorsResourceIntegrationTest extends AbstractIntegrationtest {
 	@Test(expected = NestedServletException.class)
 	@WithMockUser(username = "anonymousUser")
 	public void private_delete_ko_cuz_object_not_existing() throws Exception {
-		mockMvc.perform(delete(PREFIXE + PRIVATE + AUTHORS + "/" + new ObjectId().toString())
+		mockMvc.perform(delete(PREFIXE + PRIVATE + AUTHORS + "/" + UUID.randomUUID().toString())
 				.contentType(APPLICATION_JSON));
 	}
 
@@ -84,12 +88,12 @@ public class AuthorsResourceIntegrationTest extends AbstractIntegrationtest {
 	public void private_delete_ok() throws Exception {
 		Author author = authorDAO.findAnyone();
 		//
-		mockMvc.perform(delete(PREFIXE + PRIVATE + AUTHORS + "/" + author.getId().toString())
+		mockMvc.perform(delete(PREFIXE + PRIVATE + AUTHORS + "/" + author.getIdAuthor())
 				.contentType(APPLICATION_JSON))
 				.andDo(print())
 				.andExpect(status().isOk());
 		//
-		assertNull(authorDAO.findOne(author.getId().toString()));
+		assertNull(authorDAO.findOne(author.getIdAuthor()));
 	}
 
 	@Test
@@ -111,13 +115,25 @@ public class AuthorsResourceIntegrationTest extends AbstractIntegrationtest {
 
 	@Test
 	@WithMockUser(username = "anonymousUser")
+	public void private_findOne_ok() throws Exception {
+		Author author = authorDAO.findAnyone();
+		mockMvc.perform(get(PREFIXE + PRIVATE + AUTHORS + "/" + author.getIdAuthor()))
+				.andDo(print())
+				.andExpect(status().isOk())
+				.andExpect(checkAuthor(author, true))
+				.andExpect(checkAuthorBooks(author));
+	}
+
+	@Test
+	@WithMockUser(username = "anonymousUser")
 	public void private_update_ok() throws Exception {
 		Author author = authorDAO.findAnyone();
 		//
-		author.setFirstName("MyFirstName").setLastName("MyLastName");
+		author.setFirstName("MyFirstName").setLastName("MyLastName").setBirthday(LocalDate.now());
 		//
-		mockMvc.perform(put(PREFIXE + PRIVATE + AUTHORS + "/" + author.getId().toString())
-				.content(asJsonString(new AuthorMother().createAuthorDto(author)))
+		String json = asJsonString(new AuthorMother().createAuthorDto(author).setIdAuthor(""));
+		mockMvc.perform(put(PREFIXE + PRIVATE + AUTHORS + "/" + author.getIdAuthor())
+				.content(asJsonString(new AuthorMother().createAuthorDto(author).setIdAuthor("")))
 				.contentType(APPLICATION_JSON))
 				.andDo(print())
 				.andExpect(status().isOk())
@@ -136,7 +152,7 @@ public class AuthorsResourceIntegrationTest extends AbstractIntegrationtest {
 
 	@Test
 	public void public_delete_ko_cuz_not_implemented() throws Exception {
-		mockMvc.perform(delete(PREFIXE + PUBLIC + AUTHORS + "/" + new ObjectId().toString()))
+		mockMvc.perform(delete(PREFIXE + PUBLIC + AUTHORS + "/" + UUID.randomUUID().toString()))
 				.andDo(print())
 				.andExpect(status().isNotImplemented());
 	}
@@ -147,12 +163,12 @@ public class AuthorsResourceIntegrationTest extends AbstractIntegrationtest {
 				.andDo(print())
 				.andExpect(status().isOk())
 				.andExpect(checkAuthorFromList(0, false))
-				.andExpect(checkAuthorBook(1));
+				.andExpect(checkAuthorBook(0));
 	}
 
 	@Test(expected = NestedServletException.class)
 	public void public_findOne_ko_not_found() throws Exception {
-		mockMvc.perform(get(PREFIXE + PUBLIC + AUTHORS + "/" + new ObjectId().toString()))
+		mockMvc.perform(get(PREFIXE + PUBLIC + AUTHORS + "/" + UUID.randomUUID().toString()))
 				.andDo(print())
 				.andExpect(status().isNotFound());
 	}
@@ -160,7 +176,7 @@ public class AuthorsResourceIntegrationTest extends AbstractIntegrationtest {
 	@Test
 	public void public_findOne_ok() throws Exception {
 		Author author = authorDAO.findAnyone();
-		mockMvc.perform(get(PREFIXE + PUBLIC + AUTHORS + "/" + author.getId().toString()))
+		mockMvc.perform(get(PREFIXE + PUBLIC + AUTHORS + "/" + author.getIdAuthor()))
 				.andDo(print())
 				.andExpect(status().isOk())
 				.andExpect(checkAuthor(author, false))
@@ -179,7 +195,7 @@ public class AuthorsResourceIntegrationTest extends AbstractIntegrationtest {
 
 	@Test
 	public void public_update_ko_cuz_not_implemented() throws Exception {
-		mockMvc.perform(put(PREFIXE + PUBLIC + AUTHORS)
+		mockMvc.perform(put(PREFIXE + PUBLIC + AUTHORS + "/toto")
 				.content(asJsonString(new AuthorMother().createAuthorDto(0)))
 				.contentType(APPLICATION_JSON))
 				.andDo(print())
@@ -215,14 +231,14 @@ public class AuthorsResourceIntegrationTest extends AbstractIntegrationtest {
 	private ResultMatcher checkAuthor(Author author, boolean apiPrivate) {
 		if (apiPrivate) {
 			return allOf(
-					jsonPath("$.id").exists(),
+					jsonPath("$.idAuthor").exists(),
 					jsonPath("$.firstName", is(author.getFirstName())),
 					jsonPath("$.lastName", is(author.getLastName())),
 					jsonPath("$.nickName", is(author.getNickName())),
 					jsonPath("$.adresse").exists());
 		} else {
 			return allOf(
-					jsonPath("$.id").exists(),
+					jsonPath("$.idAuthor").exists(),
 					jsonPath("$.firstName", is(author.getFirstName())),
 					jsonPath("$.lastName", is(author.getLastName())),
 					jsonPath("$.nickName", is(author.getNickName())),
@@ -243,7 +259,7 @@ public class AuthorsResourceIntegrationTest extends AbstractIntegrationtest {
 	private ResultMatcher checkAuthorFromList(int i, boolean apiPrivate) {
 		if (apiPrivate) {
 			return allOf(
-					jsonPath("$.[" + i + "].id").exists(),
+					jsonPath("$.[" + i + "].idAuthor").exists(),
 					jsonPath("$.[" + i + "].firstName", is("FirstName" + i)),
 					jsonPath("$.[" + i + "].lastName", is("LastName" + i)),
 					jsonPath("$.[" + i + "].nickName", is("NickName" + i)),
@@ -251,7 +267,7 @@ public class AuthorsResourceIntegrationTest extends AbstractIntegrationtest {
 					jsonPath("$.[" + i + "].bookDtoList", is(not(empty()))));
 		}
 		return allOf(
-				jsonPath("$.[" + i + "].id").exists(),
+				jsonPath("$.[" + i + "].idAuthor").exists(),
 				jsonPath("$.[" + i + "].firstName", is("FirstName" + i)),
 				jsonPath("$.[" + i + "].lastName", is("LastName" + i)),
 				jsonPath("$.[" + i + "].nickName", is("NickName" + i)),

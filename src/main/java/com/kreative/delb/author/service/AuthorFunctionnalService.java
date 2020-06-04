@@ -1,11 +1,11 @@
 package com.kreative.delb.author.service;
 
+import com.kreative.delb.author.dto.AuthorDto;
 import com.kreative.delb.author.mapper.AuthorMapper;
 import com.kreative.delb.author.model.Author;
 import com.kreative.delb.book.mapper.BookMapper;
 import com.kreative.delb.book.model.Book;
 import com.kreative.delb.book.service.BookTechnicalService;
-import com.kreative.delb.common.resource.dto.AuthorDto;
 import com.kreative.delb.security.UserRepository;
 import com.kreative.delb.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,8 +47,8 @@ public class AuthorFunctionnalService {
 	public List<AuthorDto> findAll() {
 		return authorTechnicalService.findAll().stream()
 				.map(authorMapper::mapToDto).peek(authorDto -> {
-					List<Book> bookList = bookTechnicalService.findAllByAuthorId(authorDto.getId());
-					bookTechnicalService.findAllByAuthorId(authorDto.getId())
+					List<Book> bookList = bookTechnicalService.findAllByAuthorId(authorDto.getIdAuthor());
+					bookTechnicalService.findAllByAuthorId(authorDto.getIdAuthor())
 							.forEach(book -> authorDto.getBookDtoList().add(bookMapper.mapToDto(book)));
 				})
 				.collect(Collectors.toList());
@@ -60,7 +60,7 @@ public class AuthorFunctionnalService {
 			throw new HttpClientErrorException(HttpStatus.NOT_FOUND);
 		} else {
 			AuthorDto authorDto = authorMapper.mapToDto(author);
-			bookTechnicalService.findAllByAuthorId(authorDto.getId())
+			bookTechnicalService.findAllByAuthorId(authorDto.getIdAuthor())
 					.forEach(book -> authorDto.getBookDtoList().add(bookMapper.mapToDto(book)));
 			return authorDto;
 		}

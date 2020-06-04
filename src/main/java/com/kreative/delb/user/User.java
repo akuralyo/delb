@@ -1,50 +1,42 @@
 package com.kreative.delb.user;
 
 import com.kreative.delb.common.model.AbstractAuditSecurityField;
-import com.kreative.delb.security.RoleAuthority;
-import org.bson.types.ObjectId;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.io.Serializable;
 import java.util.Collection;
 
-
-@Document
+@Entity
+@Table(name = "USER")
 public class User extends AbstractAuditSecurityField implements Serializable, UserDetails {
 
 	@Id
-	private ObjectId id;
+	@Value("ID_USER")
+	private String idUser;
 
+	@Value("USERNAME")
 	private String username;
 
+	@Value("PASSWORD")
 	private String password;
 
-	private Collection<RoleAuthority> roleAuthorityCollection;
-
-	public ObjectId getUserId() {
-		return id;
+	public String getUserId() {
+		return idUser;
 	}
 
-	public User setUserId(ObjectId userId) {
-		this.id = userId;
-		return this;
-	}
-
-	public Collection<RoleAuthority> getRoleAuthorityCollection() {
-		return roleAuthorityCollection;
-	}
-
-	public User setRoleAuthorityCollection(Collection<RoleAuthority> roleAuthorityCollection) {
-		this.roleAuthorityCollection = roleAuthorityCollection;
+	public User setUserId(String userId) {
+		this.idUser = userId;
 		return this;
 	}
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		return this.roleAuthorityCollection;
+		return null;
 	}
 
 	@Override

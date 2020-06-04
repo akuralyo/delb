@@ -3,7 +3,6 @@ package com.kreative.delb.book.service;
 import com.kreative.delb.book.model.Book;
 import com.kreative.delb.book.repository.BookRepository;
 import org.apache.log4j.Logger;
-import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -32,7 +31,7 @@ public class BookTechnicalService {
 
 	public List<Book> findAllByAuthorId(String authorId) {
 		LOGGER.debug("Accès à la méthode");
-		List<Book> bookList = new ArrayList<>(bookRepository.findAllByAuthorId(new ObjectId(authorId)));
+		List<Book> bookList = new ArrayList<>(bookRepository.findAllByAuthorId(authorId));
 		LOGGER.debug("Nb d'éléments : " + bookList.size());
 		return bookList;
 	}

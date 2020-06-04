@@ -1,33 +1,35 @@
-package com.kreative.delb.common.resource.dto;
+package com.kreative.delb.book.dto;
 
 import com.fasterxml.jackson.annotation.JsonView;
+import com.kreative.delb.author.dto.AuthorDto;
 import com.kreative.delb.common.resource.ViewsAuthor;
 
 public class BookDto {
 
 	@JsonView(ViewsAuthor.ApiPublic.class)
-	private String id;
+	private String idBook;
 
 	@JsonView(ViewsAuthor.ApiPublic.class)
-	private String name;
+	private String title;
 
+	@JsonView(ViewsAuthor.ApiPublic.class)
 	private AuthorDto authorDto = new AuthorDto();
 
-	public String getName() {
-		return name;
+	public String getTitle() {
+		return title;
 	}
 
-	public BookDto setName(String name) {
-		this.name = name;
+	public BookDto setTitle(String title) {
+		this.title = title;
 		return this;
 	}
 
-	public String getId() {
-		return id;
+	public String getIdBook() {
+		return idBook;
 	}
 
-	public BookDto setId(String id) {
-		this.id = id;
+	public BookDto setIdBook(String idBook) {
+		this.idBook = idBook;
 		return this;
 	}
 

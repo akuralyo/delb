@@ -1,10 +1,10 @@
 package com.kreative.delb.author.resource;
 
 import com.fasterxml.jackson.annotation.JsonView;
+import com.kreative.delb.author.dto.AuthorDto;
 import com.kreative.delb.author.service.AuthorFunctionnalService;
 import com.kreative.delb.common.resource.GroupValidation;
 import com.kreative.delb.common.resource.ViewsAuthor;
-import com.kreative.delb.common.resource.dto.AuthorDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -44,7 +44,8 @@ public class AuthorsPrivateResource {
 	@JsonView(ViewsAuthor.ApiPrivate.class)
 	@GetMapping(produces = APPLICATION_JSON_VALUE)
 	public List<AuthorDto> findAll() {
-		return authorFunctionnalService.findAll();
+		List<AuthorDto> authorDtoList = authorFunctionnalService.findAll();
+		return authorDtoList;
 	}
 
 	@JsonView(ViewsAuthor.ApiPrivate.class)
@@ -56,7 +57,7 @@ public class AuthorsPrivateResource {
 
 	@JsonView(ViewsAuthor.ApiPrivate.class)
 	@PutMapping(value = PV_ID, consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
-	public ResponseEntity update(@PathVariable String id, @RequestBody @Validated(GroupValidation.IPut.class) AuthorDto authorDto) {
+	public ResponseEntity update(@PathVariable String id, @RequestBody AuthorDto authorDto) {
 		AuthorDto authorDtoUpdated = authorFunctionnalService.updateAuthorById(id, authorDto);
 		return new ResponseEntity<>(authorDtoUpdated, HttpStatus.OK);
 	}

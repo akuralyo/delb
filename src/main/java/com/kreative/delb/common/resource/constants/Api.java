@@ -25,7 +25,5 @@ public class Api {
 		public static final String USERS = "/users";
 
 		public static final String SEARCH = "/search";
-
-		public static final String REINIT = "/init";
 	}
 }
