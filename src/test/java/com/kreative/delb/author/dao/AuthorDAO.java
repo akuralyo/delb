@@ -4,12 +4,14 @@ import com.kreative.delb.author.model.Author;
 import com.kreative.delb.author.repository.AuthorRepository;
 import com.kreative.delb.book.dao.BookDAO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 
+@Component
 public class AuthorDAO {
 
 	@Autowired

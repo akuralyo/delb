@@ -11,7 +11,7 @@ public class BookMother {
 	public Book createBook(int i, String authorId) {
 		return new Book()
 				.setIdBook(UUID.randomUUID().toString())
-				.setTitle("Mon livre N°" + i + " de " + authorId)
+				.setTitle("Le livre numéro" + i + " de " + authorId)
 				.setAuthorId(authorId);
 	}
 

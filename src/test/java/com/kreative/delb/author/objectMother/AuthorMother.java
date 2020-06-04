@@ -3,6 +3,7 @@ package com.kreative.delb.author.objectMother;
 import com.kreative.delb.author.dto.AuthorDto;
 import com.kreative.delb.author.model.Author;
 
+import java.time.LocalDate;
 import java.util.*;
 
 public class AuthorMother {
@@ -22,6 +23,7 @@ public class AuthorMother {
 				.setFirstName("FirstName" + i)
 				.setLastName("LastName" + i)
 				.setNickName("NickName" + i)
+				.setBirthday(LocalDate.now())
 				.setAdresse("Adresse" + i);
 	}
 

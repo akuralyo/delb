@@ -6,7 +6,6 @@ import com.kreative.delb.DelbApplication;
 import com.kreative.delb.author.model.Author;
 import com.kreative.delb.author.objectMother.AuthorMother;
 import com.kreative.delb.common.resource.AbstractIntegrationtest;
-import com.kreative.delb.config.DaoTestConfig;
 import org.apache.log4j.Logger;
 import org.junit.Before;
 import org.junit.Ignore;
@@ -44,7 +43,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-@ContextConfiguration(classes = {DelbApplication.class, DaoTestConfig.class})
+@ContextConfiguration(classes = {DelbApplication.class})
 public class AuthorsResourceIntegrationTest extends AbstractIntegrationtest {
 
 	private static final int NB_ELEMENT = 5;

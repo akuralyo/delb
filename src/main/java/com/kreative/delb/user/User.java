@@ -25,11 +25,11 @@ public class User extends AbstractAuditSecurityField implements Serializable, Us
 	@Value("PASSWORD")
 	private String password;
 
-	public String getUserId() {
+	public String getIdUser() {
 		return idUser;
 	}
 
-	public User setUserId(String userId) {
+	public User setIdUser(String userId) {
 		this.idUser = userId;
 		return this;
 	}

@@ -1,16 +1,22 @@
 package com.kreative.delb.common.resource;
 
+import com.kreative.delb.DelbApplication;
 import com.kreative.delb.user.User;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-/**@RunWith(SpringRunner.class)
+@RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
- */
+@ContextConfiguration(classes = {DelbApplication.class})
 public class LoginResourceIntegrationTest extends AbstractIntegrationtest {
 
 	@Before
