@@ -1,10 +1,10 @@
 package com.kreative.delb.user;
 
 import com.kreative.delb.common.model.AbstractAuditSecurityField;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -12,24 +12,39 @@ import java.io.Serializable;
 import java.util.Collection;
 
 @Entity
-@Table(name = "USER")
-public class User extends AbstractAuditSecurityField implements Serializable, UserDetails {
+@Table(name = "MEMBER")
+public class Member extends AbstractAuditSecurityField implements Serializable, UserDetails {
 
 	@Id
-	@Value("ID_USER")
+	@Column(name = "ID_MEMBER")
 	private String idUser;
 
-	@Value("USERNAME")
+	@Column(name = "USERNAME")
 	private String username;
 
-	@Value("PASSWORD")
+	@Column(name = "PASSWORD")
 	private String password;
+
+	/**
+	 * @OneToMany(fetch = FetchType.EAGER, cascade=CascadeType.PERSIST)
+	 * @JoinColumn(name = "ID_MEMBER")
+	 * private Collection<Role> roles = new ArrayList<>();
+	 * <p>
+	 * public Collection<Role> getRoles() {
+	 * return roles;
+	 * }
+	 * <p>
+	 * public Member setRoles(Collection<Role> roles) {
+	 * this.roles = roles;
+	 * return this;
+	 * }
+	 */
 
 	public String getIdUser() {
 		return idUser;
 	}
 
-	public User setIdUser(String userId) {
+	public Member setIdUser(String userId) {
 		this.idUser = userId;
 		return this;
 	}
@@ -44,7 +59,7 @@ public class User extends AbstractAuditSecurityField implements Serializable, Us
 		return password;
 	}
 
-	public User setPassword(String password) {
+	public Member setPassword(String password) {
 		this.password = password;
 		return this;
 	}
@@ -54,7 +69,7 @@ public class User extends AbstractAuditSecurityField implements Serializable, Us
 		return username;
 	}
 
-	public User setUsername(String username) {
+	public Member setUsername(String username) {
 		this.username = username;
 		return this;
 	}

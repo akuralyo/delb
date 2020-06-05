@@ -2,13 +2,15 @@ package com.kreative.delb.book.resource;
 
 import com.kreative.delb.book.dto.BookDto;
 import com.kreative.delb.book.service.BooksFunctionnalService;
-import com.kreative.delb.common.utils.RestApi;
+import com.kreative.delb.common.resource.AbstractRessourceApi;
+import com.kreative.delb.common.resource.RestApi;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.HashMap;
 import java.util.List;
 
 import static com.kreative.delb.common.resource.constants.Api.PREFIXE;
@@ -17,13 +19,13 @@ import static com.kreative.delb.common.resource.constants.Api.Resource.BOOKS;
 
 @RestController
 @RequestMapping(PREFIXE + PUBLIC + BOOKS)
-public class BooksPublicResource implements RestApi<BookDto> {
+public class BooksPublicResource extends AbstractRessourceApi<BookDto> implements RestApi<BookDto> {
 
 	@Autowired
 	private BooksFunctionnalService booksFunctionnalService;
 
 	@Override
-	public ResponseEntity<BookDto> create(BookDto object) {
+	public ResponseEntity<BookDto> create(BookDto objectDto) {
 		return new ResponseEntity(HttpStatus.FORBIDDEN);
 	}
 
@@ -43,7 +45,12 @@ public class BooksPublicResource implements RestApi<BookDto> {
 	}
 
 	@Override
-	public ResponseEntity update(String id, BookDto authorDto) {
+	public ResponseEntity<HashMap<String, Object>> findOneByIdAndFilterApply(String id, List<String> filterList) {
+		return new ResponseEntity(HttpStatus.NOT_IMPLEMENTED);
+	}
+
+	@Override
+	public ResponseEntity update(String id, BookDto objectDto) {
 		return new ResponseEntity(HttpStatus.NOT_IMPLEMENTED);
 	}
 }

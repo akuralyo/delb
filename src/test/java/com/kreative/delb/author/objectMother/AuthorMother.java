@@ -14,6 +14,8 @@ public class AuthorMother {
 				.setFirstName("FirstName" + i)
 				.setLastName("LastName" + i)
 				.setNickName("NickName" + i)
+				.setBirthday(LocalDate.now())
+				.setAdresse("Adresse" + i)
 				.setAdresse("Adresse" + i);
 	}
 

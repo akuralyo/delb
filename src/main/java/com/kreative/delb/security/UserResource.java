@@ -1,6 +1,6 @@
 package com.kreative.delb.security;
 
-import com.kreative.delb.user.User;
+import com.kreative.delb.user.Member;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,7 +24,7 @@ public class UserResource {
 	private UserService userService;
 
 	@PostMapping
-	public User createUser(@RequestBody User user) {
+	public Member createUser(@RequestBody Member user) {
 		return userService.createUser(user);
 	}
 

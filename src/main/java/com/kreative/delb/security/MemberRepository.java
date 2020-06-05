@@ -1,13 +1,13 @@
 package com.kreative.delb.security;
 
-import com.kreative.delb.user.User;
+import com.kreative.delb.user.Member;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
 @Repository
-public interface UserRepository extends CrudRepository<User, String> {
+public interface MemberRepository extends CrudRepository<Member, String> {
 
-	Optional<User> findOneByUsername(String username);
+	Optional<Member> findOneByUsername(String username);
 }

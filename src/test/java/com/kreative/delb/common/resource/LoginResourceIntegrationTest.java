@@ -1,7 +1,7 @@
 package com.kreative.delb.common.resource;
 
 import com.kreative.delb.DelbApplication;
-import com.kreative.delb.user.User;
+import com.kreative.delb.user.Member;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -26,7 +26,7 @@ public class LoginResourceIntegrationTest extends AbstractIntegrationtest {
 
 	@Test
 	public void login_ko() throws Exception {
-		User user = userDAO.findAnyone();
+		Member user = memberDAO.findAnyone();
 		//
 		mockMvc.perform(post("/login")
 				.contentType("application/x-www-form-urlencoded")
@@ -37,7 +37,7 @@ public class LoginResourceIntegrationTest extends AbstractIntegrationtest {
 
 	@Test
 	public void login_ok() throws Exception {
-		User user = userDAO.findAnyone();
+		Member user = memberDAO.findAnyone();
 		//
 		mockMvc.perform(post("/login")
 				.contentType("application/x-www-form-urlencoded")

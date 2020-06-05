@@ -1,9 +1,7 @@
 package com.kreative.delb.book.resource;
 
-import com.kreative.delb.author.resource.AuthorsResourceIntegrationTest;
 import com.kreative.delb.common.resource.AbstractIntegrationtest;
 import org.apache.log4j.Logger;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -14,19 +12,9 @@ import org.springframework.test.context.junit4.SpringRunner;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-public class BooksResourceIntegrationTest extends AbstractIntegrationtest {
+public class BooksPrivateResourceIntegrationTest extends AbstractIntegrationtest {
 
-	private static final int NB_ELEMENT = 5;
-
-	private static final Logger LOGGER = Logger.getLogger(AuthorsResourceIntegrationTest.class);
-
-	@Before
-	public void before() throws Exception {
-		super.before();
-		//
-		LOGGER.debug("Nb Author : " + authorDAO.findAll().size());
-		LOGGER.debug("Nb Book : " + bookDAO.findAll().size());
-	}
+	private static final Logger LOGGER = Logger.getLogger(BooksPrivateResourceIntegrationTest.class);
 
 	@Test
 	@WithMockUser(username = "admin")

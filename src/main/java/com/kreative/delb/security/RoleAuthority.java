@@ -4,15 +4,15 @@ import org.springframework.security.core.GrantedAuthority;
 
 public class RoleAuthority implements GrantedAuthority {
 
-	private Role role;
+	private ConstantesRole constantesRole;
 
 	@Override
 	public String getAuthority() {
-		return this.role.name();
+		return this.constantesRole.name();
 	}
 
-	public RoleAuthority setRole(Role role) {
-		this.role = role;
+	public RoleAuthority setConstantesRole(ConstantesRole constantesRole) {
+		this.constantesRole = constantesRole;
 		return this;
 	}
 }

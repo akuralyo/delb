@@ -6,8 +6,8 @@ import com.kreative.delb.author.model.Author;
 import com.kreative.delb.book.mapper.BookMapper;
 import com.kreative.delb.book.model.Book;
 import com.kreative.delb.book.service.BookTechnicalService;
-import com.kreative.delb.security.UserRepository;
-import com.kreative.delb.user.User;
+import com.kreative.delb.security.MemberRepository;
+import com.kreative.delb.user.Member;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -33,7 +33,7 @@ public class AuthorFunctionnalService {
 	private BookMapper bookMapper;
 
 	@Autowired
-	private UserRepository userRepository;
+	private MemberRepository memberRepository;
 
 	public void deleteAuthor(String id) {
 		Author author = authorTechnicalService.findOneById(id);
@@ -76,7 +76,7 @@ public class AuthorFunctionnalService {
 	}
 
 	public AuthorDto updateAuthorByUsername(String username, AuthorDto authorDto) {
-		Optional<User> userOptional = userRepository.findOneByUsername(username);
+		Optional<Member> userOptional = memberRepository.findOneByUsername(username);
 		if (userOptional.isPresent() && userOptional.get().getAuthorities().contains("AUTHOR")) {
 			Author authorUpdated = authorTechnicalService.updateByUsername(username, authorDto);
 			if (authorUpdated != null) {

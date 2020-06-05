@@ -2,7 +2,7 @@ package com.kreative.delb.security;
 
 import com.kreative.delb.author.model.Author;
 import com.kreative.delb.author.repository.AuthorRepository;
-import com.kreative.delb.user.User;
+import com.kreative.delb.user.Member;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -15,23 +15,23 @@ import java.util.Objects;
 public class UserService implements UserDetailsService {
 
 	@Autowired
-	private UserRepository userRepository;
+	private MemberRepository memberRepository;
 
 	@Autowired
 	private AuthorRepository authorRepository;
 
-	public User createUser(User user) {
-		User userCreated = userRepository.save(user);
-		if (user.getAuthorities().contains(new RoleAuthority().setRole(Role.AUTHOR))) {
-			authorRepository.save(new Author().setIdAuthor(userCreated.getIdUser()));
+	public Member createUser(Member user) {
+		Member memberCreated = memberRepository.save(user);
+		if (user.getAuthorities().contains(new RoleAuthority().setConstantesRole(ConstantesRole.ROLE_AUTHOR))) {
+			authorRepository.save(new Author().setIdAuthor(memberCreated.getIdUser()));
 		}
-		return userCreated;
+		return memberCreated;
 	}
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		Objects.requireNonNull(username);
-		return userRepository.findOneByUsername(username)
+		return memberRepository.findOneByUsername(username)
 				.orElseThrow(() -> new UsernameNotFoundException("User not found"));
 	}
 }

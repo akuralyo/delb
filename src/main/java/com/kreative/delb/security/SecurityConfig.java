@@ -4,6 +4,7 @@ import com.kreative.delb.common.resource.constants.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -72,7 +73,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/logout").permitAll()
 				.antMatchers("/user").authenticated()
 				.antMatchers(Api.PREFIXE + Api.PUBLIC + "/**").permitAll()
-				.antMatchers(Api.PREFIXE + Api.PRIVATE + "/**").authenticated()
+				.antMatchers(Api.PREFIXE + Api.PRIVATE + "/**").fullyAuthenticated()
+				.antMatchers(HttpMethod.PUT, Api.PREFIXE + Api.PRIVATE + Api.Resource.AUTHORS + "**")
+				.hasAuthority("MODO")
 				.anyRequest().authenticated();
 	}
 
