@@ -26,11 +26,23 @@ public class Author extends AbstractAuditSecurityField implements Serializable {
 	@Value("NICK_NAME")
 	private String nickName;
 
+	@Value("USER_ID")
+	private String userId;
+
 	@Value("BIRTHDAY")
 	private LocalDate birthday;
 
 	@Value("ADRESSE")
 	private String adresse;
+
+	public String getUserId() {
+		return userId;
+	}
+
+	public Author setUserId(String userId) {
+		this.userId = userId;
+		return this;
+	}
 
 	public String getIdAuthor() {
 		return idAuthor;

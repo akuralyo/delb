@@ -43,8 +43,7 @@ public abstract class AbstractIntegrationtest {
 
 	public void initDbAuthor(int max) {
 		for (int i = 0; i < max; i++) {
-			Author author = authorRepository.save(new AuthorMother().createAuthor(i));
-			bookRepository.saveAll(new BookMother().createBookList(author.getIdAuthor()));
+			createAuthor(i);
 		}
 	}
 

@@ -5,6 +5,8 @@ import com.kreative.delb.author.dto.AuthorDto;
 import com.kreative.delb.author.service.AuthorFunctionnalService;
 import com.kreative.delb.common.resource.GroupValidation;
 import com.kreative.delb.common.resource.ViewsAuthor;
+import com.kreative.delb.common.utils.RestApi;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -15,49 +17,45 @@ import java.util.List;
 
 import static com.kreative.delb.common.resource.constants.Api.PREFIXE;
 import static com.kreative.delb.common.resource.constants.Api.PRIVATE;
-import static com.kreative.delb.common.resource.constants.Api.PathVariable.PV_ID;
 import static com.kreative.delb.common.resource.constants.Api.PathVariable.PV_SELF;
 import static com.kreative.delb.common.resource.constants.Api.Resource.AUTHORS;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RestController
 @RequestMapping(PREFIXE + PRIVATE + AUTHORS)
-public class AuthorsPrivateResource {
+public class AuthorsPrivateResource implements RestApi<AuthorDto> {
 
-	private final AuthorFunctionnalService authorFunctionnalService;
+	@Autowired
+	private AuthorFunctionnalService authorFunctionnalService;
 
-	public AuthorsPrivateResource(AuthorFunctionnalService authorFunctionnalService) {
-		this.authorFunctionnalService = authorFunctionnalService;
-	}
-
-	@PostMapping(consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
-	public ResponseEntity create() {
+	@Override
+	public ResponseEntity<AuthorDto> create(AuthorDto object) {
 		return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
 	}
 
-	@DeleteMapping(value = PV_ID, consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
+	@Override
 	public ResponseEntity delete(@PathVariable String id) {
 		authorFunctionnalService.deleteAuthor(id);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
+	@Override
 	@JsonView(ViewsAuthor.ApiPrivate.class)
-	@GetMapping(produces = APPLICATION_JSON_VALUE)
-	public List<AuthorDto> findAll() {
+	public ResponseEntity<List<AuthorDto>> findAll() {
 		List<AuthorDto> authorDtoList = authorFunctionnalService.findAll();
-		return authorDtoList;
+		return new ResponseEntity<List<AuthorDto>>(authorDtoList, HttpStatus.OK);
 	}
 
+	@Override
 	@JsonView(ViewsAuthor.ApiPrivate.class)
-	@GetMapping(value = PV_ID, produces = APPLICATION_JSON_VALUE)
-	public ResponseEntity findOne(@PathVariable String id) {
+	public ResponseEntity findOneById(String id) {
 		AuthorDto authorDto = authorFunctionnalService.findOneById(id);
 		return new ResponseEntity<>(authorDto, HttpStatus.OK);
 	}
 
+	@Override
 	@JsonView(ViewsAuthor.ApiPrivate.class)
-	@PutMapping(value = PV_ID, consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
-	public ResponseEntity update(@PathVariable String id, @RequestBody AuthorDto authorDto) {
+	public ResponseEntity update(String id, AuthorDto authorDto) {
 		AuthorDto authorDtoUpdated = authorFunctionnalService.updateAuthorById(id, authorDto);
 		return new ResponseEntity<>(authorDtoUpdated, HttpStatus.OK);
 	}

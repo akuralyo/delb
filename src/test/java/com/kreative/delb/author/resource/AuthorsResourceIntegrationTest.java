@@ -141,19 +141,19 @@ public class AuthorsResourceIntegrationTest extends AbstractIntegrationtest {
 	}
 
 	@Test
-	public void public_create_ko_cuz_not_implemented() throws Exception {
+	public void public_create_ko_cuz_forbidden() throws Exception {
 		mockMvc.perform(post(PREFIXE + PUBLIC + AUTHORS)
 				.content(asJsonString(new AuthorMother().createAuthorDto(0)))
 				.contentType(APPLICATION_JSON))
 				.andDo(print())
-				.andExpect(status().isNotImplemented());
+				.andExpect(status().isForbidden());
 	}
 
 	@Test
-	public void public_delete_ko_cuz_not_implemented() throws Exception {
+	public void public_delete_ko_cuz_forbidden() throws Exception {
 		mockMvc.perform(delete(PREFIXE + PUBLIC + AUTHORS + "/" + UUID.randomUUID().toString()))
 				.andDo(print())
-				.andExpect(status().isNotImplemented());
+				.andExpect(status().isForbidden());
 	}
 
 	@Test
@@ -193,12 +193,12 @@ public class AuthorsResourceIntegrationTest extends AbstractIntegrationtest {
 	}
 
 	@Test
-	public void public_update_ko_cuz_not_implemented() throws Exception {
+	public void public_update_ko_cuz_forbidden() throws Exception {
 		mockMvc.perform(put(PREFIXE + PUBLIC + AUTHORS + "/toto")
 				.content(asJsonString(new AuthorMother().createAuthorDto(0)))
 				.contentType(APPLICATION_JSON))
 				.andDo(print())
-				.andExpect(status().isNotImplemented());
+				.andExpect(status().isForbidden());
 	}
 
 

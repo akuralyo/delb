@@ -21,4 +21,40 @@ abstract public class AbstractAuditSecurityField {
 
 	@LastModifiedBy
 	private String modifiedBy;
+
+	public LocalDate getCreatedAt() {
+		return createdAt;
+	}
+
+	public AbstractAuditSecurityField setCreatedAt(LocalDate createdAt) {
+		this.createdAt = createdAt;
+		return this;
+	}
+
+	public String getCreatedBy() {
+		return createdBy;
+	}
+
+	public AbstractAuditSecurityField setCreatedBy(String createdBy) {
+		this.createdBy = createdBy;
+		return this;
+	}
+
+	public LocalDateTime getModifiedAt() {
+		return modifiedAt;
+	}
+
+	public AbstractAuditSecurityField setModifiedAt(LocalDateTime modifiedAt) {
+		this.modifiedAt = modifiedAt;
+		return this;
+	}
+
+	public String getModifiedBy() {
+		return modifiedBy;
+	}
+
+	public AbstractAuditSecurityField setModifiedBy(String modifiedBy) {
+		this.modifiedBy = modifiedBy;
+		return this;
+	}
 }
