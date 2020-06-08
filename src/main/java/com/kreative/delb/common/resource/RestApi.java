@@ -38,6 +38,14 @@ public interface RestApi<T> {
 	ResponseEntity<List<T>> findAll();
 
 	/**
+	 * API qui permet de récupérer tous les objets en BDD
+	 *
+	 * @return
+	 */
+	@GetMapping(produces = APPLICATION_JSON_VALUE, params = {"filterList"})
+	ResponseEntity<List<HashMap<String, Object>>> findAllAndFilterAplly(@RequestParam List<String> filterList);
+
+	/**
 	 * API qui permet de récupérer un objet grâce à son ID
 	 *
 	 * @param id : Identifiant de l'objet en BDD

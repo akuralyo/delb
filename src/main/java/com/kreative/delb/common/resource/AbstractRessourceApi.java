@@ -2,6 +2,7 @@ package com.kreative.delb.common.resource;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -20,5 +21,13 @@ public abstract class AbstractRessourceApi<T> {
 			}
 			return objectReturned;
 		}
+	}
+
+	protected List<HashMap<String, Object>> filter(List<T> objetList, List<String> filterList) {
+		List<HashMap<String, Object>> hashMapList = new ArrayList<>();
+		objetList.stream().forEach(objet -> {
+			hashMapList.add(filter(objet, filterList));
+		});
+		return hashMapList;
 	}
 }

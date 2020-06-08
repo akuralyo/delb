@@ -40,6 +40,11 @@ public class BooksPublicResource extends AbstractRessourceApi<BookDto> implement
 	}
 
 	@Override
+	public ResponseEntity<List<HashMap<String, Object>>> findAllAndFilterAplly(List<String> filterList) {
+		return null;
+	}
+
+	@Override
 	public ResponseEntity<BookDto> findOneById(String id) {
 		return new ResponseEntity(HttpStatus.NOT_IMPLEMENTED);
 	}

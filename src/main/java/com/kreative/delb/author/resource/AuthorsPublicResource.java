@@ -40,7 +40,13 @@ public class AuthorsPublicResource extends AbstractRessourceApi<AuthorDto> imple
 	@JsonView(ViewsAuthor.ApiPublic.class)
 	public ResponseEntity<List<AuthorDto>> findAll() {
 		List<AuthorDto> authorDtoList = authorFunctionnalService.findAll();
-		return new ResponseEntity<List<AuthorDto>>(authorDtoList, HttpStatus.OK);
+		return new ResponseEntity<>(authorDtoList, HttpStatus.OK);
+	}
+
+	@Override
+	public ResponseEntity<List<HashMap<String, Object>>> findAllAndFilterAplly(List<String> filterList) {
+		List<AuthorDto> authorDtoList = authorFunctionnalService.findAll();
+		return new ResponseEntity<>(filter(authorDtoList, filterList), HttpStatus.OK);
 	}
 
 	@Override

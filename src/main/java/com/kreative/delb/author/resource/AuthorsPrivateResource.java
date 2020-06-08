@@ -14,6 +14,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.HashMap;
 import java.util.List;
 
 import static com.kreative.delb.common.resource.constants.Api.PREFIXE;
@@ -45,6 +46,11 @@ public class AuthorsPrivateResource extends AbstractRessourceApi<AuthorDto> impl
 	public ResponseEntity<List<AuthorDto>> findAll() {
 		List<AuthorDto> authorDtoList = authorFunctionnalService.findAll();
 		return new ResponseEntity<List<AuthorDto>>(authorDtoList, HttpStatus.OK);
+	}
+
+	@Override
+	public ResponseEntity<List<HashMap<String, Object>>> findAllAndFilterAplly(List<String> filterList) {
+		return null;
 	}
 
 	@Override
