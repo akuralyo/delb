@@ -1,7 +1,7 @@
 package com.kreative.delb.user.dao;
 
-import com.kreative.delb.security.MemberRepository;
-import com.kreative.delb.user.Member;
+import com.kreative.delb.security.UserRepository;
+import com.kreative.delb.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -13,16 +13,16 @@ import java.util.Random;
 public class MemberDAO {
 
 	@Autowired
-	private MemberRepository memberRepository;
+	private UserRepository userRepository;
 
-	public List<Member> findAll() {
-		List<Member> userList = new ArrayList<>();
-		memberRepository.findAll().forEach(userList::add);
+	public List<User> findAll() {
+		List<User> userList = new ArrayList<>();
+		userRepository.findAll().forEach(userList::add);
 		return userList;
 	}
 
-	public Member findAnyone() {
-		List<Member> userList = findAll();
+	public User findAnyone() {
+		List<User> userList = findAll();
 		return userList.get(new Random().nextInt(userList.size()));
 	}
 }

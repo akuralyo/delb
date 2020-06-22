@@ -1,4 +1,4 @@
-package com.kreative.delb.common.resource;
+package com.kreative.delb.core.api;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -6,10 +6,10 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.List;
 
-import static com.kreative.delb.common.resource.constants.Api.PathVariable.PV_ID;
+import static com.kreative.delb.core.api.ApiPathVariable.PV_ID;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
-public interface RestApi<T> {
+public interface ApiRest<T> {
 
 	/**
 	 * API qui permet de sauvegarder un objet en BDD

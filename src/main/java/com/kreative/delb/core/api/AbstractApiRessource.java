@@ -1,4 +1,4 @@
-package com.kreative.delb.common.resource;
+package com.kreative.delb.core.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
