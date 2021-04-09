@@ -1,28 +1,28 @@
 package com.kreative.delb.user.dao;
 
-import com.kreative.delb.security.UserRepository;
-import com.kreative.delb.user.User;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import com.kreative.delb.infrastructure.h2.User.model.UserModel;
+import com.kreative.delb.infrastructure.h2.User.repository.UserRepository;
+
 @Component
-public class MemberDAO {
+public class UserDAO {
 
-	@Autowired
-	private UserRepository userRepository;
+  @Autowired private UserRepository userRepository;
 
-	public List<User> findAll() {
-		List<User> userList = new ArrayList<>();
-		userRepository.findAll().forEach(userList::add);
-		return userList;
-	}
+  public List<UserModel> findAll() {
+    final List<UserModel> userList = new ArrayList<>();
+    userRepository.findAll().forEach(userList::add);
+    return userList;
+  }
 
-	public User findAnyone() {
-		List<User> userList = findAll();
-		return userList.get(new Random().nextInt(userList.size()));
-	}
+  public UserModel findAnyone() {
+    final List<UserModel> userList = findAll();
+    return userList.get(new Random().nextInt(userList.size()));
+  }
 }

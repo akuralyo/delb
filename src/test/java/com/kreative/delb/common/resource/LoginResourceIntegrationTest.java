@@ -1,7 +1,8 @@
 package com.kreative.delb.common.resource;
 
-import com.kreative.delb.DelbApplication;
-import com.kreative.delb.user.Member;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -10,39 +11,44 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import com.kreative.delb.DelbApplication;
+import com.kreative.delb.infrastructure.h2.User.model.UserModel;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
 @ContextConfiguration(classes = {DelbApplication.class})
-public class LoginResourceIntegrationTest extends AbstractIntegrationtest {
+public class LoginResourceIntegrationTest extends AbstractIntegrationTest {
 
-	@Before
-	public void before() throws Exception {
-		super.before();
-	}
+  @Override
+  @Before
+  public void before() throws Exception {
+    super.before();
+  }
 
-	@Test
-	public void login_ko() throws Exception {
-		Member user = memberDAO.findAnyone();
-		//
-		mockMvc.perform(post("/login")
-				.contentType("application/x-www-form-urlencoded")
-				.param("username", user.getUsername())
-				.param("password", user.getPassword() + "SB"))
-				.andExpect(status().isUnauthorized());
-	}
+  @Test
+  public void login_ko() throws Exception {
+    final UserModel user = userDAO.findAnyone();
+    //
+    mockMvc
+        .perform(
+            post("/login")
+                .contentType("application/x-www-form-urlencoded")
+                .param("username", user.getUsername())
+                .param("password", user.getPassword() + "SB"))
+        .andExpect(status().isUnauthorized());
+  }
 
-	@Test
-	public void login_ok() throws Exception {
-		Member user = memberDAO.findAnyone();
-		//
-		mockMvc.perform(post("/login")
-				.contentType("application/x-www-form-urlencoded")
-				.param("username", user.getUsername())
-				.param("password", user.getPassword()))
-				.andExpect(status().isOk());
-	}
+  @Test
+  public void login_ok() throws Exception {
+    final UserModel user = userDAO.findAnyone();
+    //
+    mockMvc
+        .perform(
+            post("/login")
+                .contentType("application/x-www-form-urlencoded")
+                .param("username", user.getUsername())
+                .param("password", user.getPassword()))
+        .andExpect(status().isOk());
+  }
 }

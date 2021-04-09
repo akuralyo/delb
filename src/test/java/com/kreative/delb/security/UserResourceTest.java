@@ -1,6 +1,5 @@
 package com.kreative.delb.security;
 
-import com.kreative.delb.common.resource.AbstractIntegrationtest;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -8,25 +7,25 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import com.kreative.delb.common.resource.AbstractIntegrationTest;
+
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-public class UserResourceTest extends AbstractIntegrationtest {
+public class UserResourceTest extends AbstractIntegrationTest {
 
-	@Before
-	public void before() throws Exception {
-		super.before();
-	}
+  @Override
+@Before
+  public void before() throws Exception {
+    super.before();
+  }
 
-	@Test
-	public void createUser() {
-	}
+  @Test
+  public void createUser() {}
 
-	@Test
-	public void getSelf() {
-	}
+  @Test
+  public void getSelf() {}
 
-	@Test
-	public void update() {
-	}
+  @Test
+  public void update() {}
 }
