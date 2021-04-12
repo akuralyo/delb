@@ -1,10 +1,9 @@
 package com.kreative.delb.domain.service.user.mapper;
 
-import org.springframework.stereotype.Component;
-
 import com.kreative.delb.application.common.utils.Transformer;
 import com.kreative.delb.domain.service.user.model.User;
 import com.kreative.delb.infrastructure.h2.User.model.UserModel;
+import org.springframework.stereotype.Component;
 
 @Component
 public class UserMapper implements Transformer<UserModel, User> {

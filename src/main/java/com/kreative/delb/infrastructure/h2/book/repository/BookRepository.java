@@ -1,10 +1,9 @@
 package com.kreative.delb.infrastructure.h2.book.repository;
 
-import java.util.List;
-
+import com.kreative.delb.infrastructure.h2.book.model.BookModel;
 import org.springframework.data.repository.CrudRepository;
 
-import com.kreative.delb.infrastructure.h2.book.model.BookModel;
+import java.util.List;
 
 public interface BookRepository extends CrudRepository<BookModel, String> {
 

@@ -1,17 +1,16 @@
 package com.kreative.delb.application.common;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 public abstract class AbstractApiRessource<T> {
 
   protected List<HashMap<String, Object>> filter(List<T> objetList, List<String> filterList) {
     List<HashMap<String, Object>> hashMapList = new ArrayList<>();
-    objetList
-        .stream()
+    objetList.stream()
         .forEach(
             objet -> {
               hashMapList.add(filter(objet, filterList));

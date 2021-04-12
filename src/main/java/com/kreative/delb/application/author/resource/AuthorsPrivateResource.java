@@ -1,20 +1,5 @@
 package com.kreative.delb.application.author.resource;
 
-import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
-
-import java.security.Principal;
-import java.util.HashMap;
-import java.util.List;
-
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
 import com.fasterxml.jackson.annotation.JsonView;
 import com.kreative.delb.application.author.dto.AuthorDto;
 import com.kreative.delb.application.common.AbstractApiRessource;
@@ -24,6 +9,16 @@ import com.kreative.delb.application.common.ApiRestRessource;
 import com.kreative.delb.application.common.resource.ViewsAuthor;
 import com.kreative.delb.application.common.resource.constants.Api;
 import com.kreative.delb.domain.service.author.service.AuthorService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
+
+import java.security.Principal;
+import java.util.HashMap;
+import java.util.List;
+
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RestController
 @RequestMapping(Api.PREFIXE + Api.PRIVATE + Api.Resource.AUTHORS)

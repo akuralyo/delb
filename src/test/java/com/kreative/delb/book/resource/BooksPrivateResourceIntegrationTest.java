@@ -1,5 +1,6 @@
 package com.kreative.delb.book.resource;
 
+import com.kreative.delb.common.resource.AbstractIntegrationTest;
 import org.apache.log4j.Logger;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -7,8 +8,6 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
-
-import com.kreative.delb.common.resource.AbstractIntegrationTest;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest

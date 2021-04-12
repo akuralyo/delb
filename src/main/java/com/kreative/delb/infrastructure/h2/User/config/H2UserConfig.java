@@ -1,9 +1,8 @@
 package com.kreative.delb.infrastructure.h2.User.config;
 
+import com.kreative.delb.infrastructure.h2.User.service.UserAdapter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
-import com.kreative.delb.infrastructure.h2.User.service.UserAdapter;
 
 @Configuration
 public class H2UserConfig {

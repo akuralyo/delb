@@ -1,12 +1,5 @@
 package com.kreative.delb.domain.service.book.service;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
-
-import org.apache.log4j.Logger;
-import org.springframework.stereotype.Service;
-
 import com.kreative.delb.domain.service.author.mapper.AuthorMapper;
 import com.kreative.delb.domain.service.book.mapper.BookMapper;
 import com.kreative.delb.domain.service.book.model.Book;
@@ -14,6 +7,12 @@ import com.kreative.delb.domain.spi.AuthorSpi;
 import com.kreative.delb.infrastructure.h2.author.model.AuthorModel;
 import com.kreative.delb.infrastructure.h2.book.model.BookModel;
 import com.kreative.delb.infrastructure.h2.book.service.BookAdapter;
+import org.apache.log4j.Logger;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class BookService {
@@ -46,7 +45,7 @@ public class BookService {
       LOGGER.warn("Création de l'auteur");
       final AuthorModel author = authorSpi.createAuthor(book.getAuthor());
       return bookMapper.mapToDto(
-          bookAdapter.createBook(createBookModelFromBook(book, author.getIdAuthor().toString())));
+          bookAdapter.createBook(createBookModelFromBook(book, author.getIdAuthor())));
     } else {
       return bookMapper.mapToDto(
           bookAdapter.createBook(createBookModelFromBook(book, book.getAuthor().getIdAuthor())));

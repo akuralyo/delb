@@ -1,10 +1,9 @@
 package com.kreative.delb.infrastructure.h2.author.repository;
 
-import java.util.Optional;
-
+import com.kreative.delb.infrastructure.h2.author.model.AuthorModel;
 import org.springframework.data.repository.CrudRepository;
 
-import com.kreative.delb.infrastructure.h2.author.model.AuthorModel;
+import java.util.Optional;
 
 public interface AuthorRepository extends CrudRepository<AuthorModel, String> {
 

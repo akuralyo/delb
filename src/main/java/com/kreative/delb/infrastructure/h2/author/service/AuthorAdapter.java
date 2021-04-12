@@ -1,16 +1,15 @@
 package com.kreative.delb.infrastructure.h2.author.service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
-
-import org.apache.log4j.Logger;
-
 import com.kreative.delb.domain.service.author.model.Author;
 import com.kreative.delb.domain.spi.AuthorSpi;
 import com.kreative.delb.infrastructure.h2.author.model.AuthorModel;
 import com.kreative.delb.infrastructure.h2.author.repository.AuthorRepository;
+import org.apache.log4j.Logger;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 public class AuthorAdapter implements AuthorSpi {
 
@@ -32,19 +31,6 @@ public class AuthorAdapter implements AuthorSpi {
     return authorRepository.save(author);
   }
 
-  private AuthorModel createOrUpdateAuthor(final String IdAuthor, final Author author) {
-    final AuthorModel authorModel = new AuthorModel();
-
-    authorModel.setIdAuthor(IdAuthor);
-    authorModel.setFirstName(author.getFirstName());
-    authorModel.setLastName(author.getLastName());
-    authorModel.setNickName(author.getNickName());
-    authorModel.setBirthday(author.getBirthday());
-    authorModel.setAdresse(author.getAdresse());
-
-    return authorModel;
-  }
-
   @Override
   public void deleteAuthor(final String id) {
     authorRepository.deleteById(id);
@@ -57,6 +43,11 @@ public class AuthorAdapter implements AuthorSpi {
     authorRepository.findAll().forEach(authors::add);
     LOGGER.debug("Nb d'éléments : " + authors.size());
     return authors;
+  }
+
+  @Override
+  public Optional<AuthorModel> findById(final String id) {
+    return authorRepository.findById(id);
   }
 
   @Override
@@ -89,8 +80,16 @@ public class AuthorAdapter implements AuthorSpi {
     }
   }
 
-  @Override
-  public Optional<AuthorModel> findById(final String id) {
-    return authorRepository.findById(id);
+  private AuthorModel createOrUpdateAuthor(final String IdAuthor, final Author author) {
+    final AuthorModel authorModel = new AuthorModel();
+
+    authorModel.setIdAuthor(IdAuthor);
+    authorModel.setFirstName(author.getFirstName());
+    authorModel.setLastName(author.getLastName());
+    authorModel.setNickName(author.getNickName());
+    authorModel.setBirthday(author.getBirthday());
+    authorModel.setAdresse(author.getAdresse());
+
+    return authorModel;
   }
 }

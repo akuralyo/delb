@@ -1,10 +1,9 @@
 package com.kreative.delb.domain.service.author.mapper;
 
-import org.springframework.stereotype.Component;
-
 import com.kreative.delb.application.common.utils.Transformer;
 import com.kreative.delb.domain.service.author.model.Author;
 import com.kreative.delb.infrastructure.h2.author.model.AuthorModel;
+import org.springframework.stereotype.Component;
 
 @Component
 public class AuthorMapper implements Transformer<AuthorModel, Author> {

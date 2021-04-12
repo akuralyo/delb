@@ -1,25 +1,19 @@
 package com.kreative.delb.application.security;
 
-import static com.kreative.delb.application.common.resource.constants.Api.PREFIXE;
-import static com.kreative.delb.application.common.resource.constants.Api.PRIVATE;
-import static com.kreative.delb.application.common.resource.constants.Api.Resource.USERS;
-
-import java.security.Principal;
-
+import com.kreative.delb.application.common.ApiRestPathVariable;
+import com.kreative.delb.domain.service.user.model.User;
+import com.kreative.delb.domain.service.user.service.UserService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import com.kreative.delb.application.common.ApiRestPathVariable;
-import com.kreative.delb.domain.service.user.model.User;
-import com.kreative.delb.domain.service.user.service.UserService;
+import java.security.Principal;
+
+import static com.kreative.delb.application.common.resource.constants.Api.PREFIXE;
+import static com.kreative.delb.application.common.resource.constants.Api.PRIVATE;
+import static com.kreative.delb.application.common.resource.constants.Api.Resource.USERS;
 
 @RestController
 @RequestMapping(PREFIXE + PRIVATE + USERS)

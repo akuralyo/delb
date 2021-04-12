@@ -1,13 +1,12 @@
 package com.kreative.delb.book.dao;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import com.kreative.delb.infrastructure.h2.book.model.BookModel;
+import com.kreative.delb.infrastructure.h2.book.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.kreative.delb.infrastructure.h2.book.model.BookModel;
-import com.kreative.delb.infrastructure.h2.book.repository.BookRepository;
+import java.util.ArrayList;
+import java.util.List;
 
 @Component
 public class BookDAO {

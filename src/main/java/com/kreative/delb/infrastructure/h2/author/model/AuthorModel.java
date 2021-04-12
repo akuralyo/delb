@@ -1,18 +1,15 @@
 package com.kreative.delb.infrastructure.h2.author.model;
 
-import java.io.Serializable;
-import java.time.LocalDate;
+import com.kreative.delb.infrastructure.common.model.AbstractAuditSecurityField;
+import lombok.Getter;
+import lombok.Setter;
+import org.springframework.beans.factory.annotation.Value;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
-
-import org.springframework.beans.factory.annotation.Value;
-
-import com.kreative.delb.infrastructure.common.model.AbstractAuditSecurityField;
-
-import lombok.Getter;
-import lombok.Setter;
+import java.io.Serializable;
+import java.time.LocalDate;
 
 @Entity
 @Getter

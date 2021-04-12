@@ -1,15 +1,12 @@
 package com.kreative.delb.author.resource;
 
-import static org.hamcrest.Matchers.empty;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.not;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-
-import org.springframework.test.web.servlet.ResultMatcher;
-
 import com.kreative.delb.author.objectMother.AuthorMother;
 import com.kreative.delb.common.resource.AbstractIntegrationTest;
 import com.kreative.delb.infrastructure.h2.author.model.AuthorModel;
+import org.springframework.test.web.servlet.ResultMatcher;
+
+import static org.hamcrest.Matchers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
 public abstract class AbstractAuthorResourceIntegrationTest extends AbstractIntegrationTest {
 

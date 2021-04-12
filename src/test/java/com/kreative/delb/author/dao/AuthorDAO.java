@@ -1,15 +1,14 @@
 package com.kreative.delb.author.dao;
 
+import com.kreative.delb.infrastructure.h2.author.model.AuthorModel;
+import com.kreative.delb.infrastructure.h2.author.repository.AuthorRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
-import com.kreative.delb.infrastructure.h2.author.model.AuthorModel;
-import com.kreative.delb.infrastructure.h2.author.repository.AuthorRepository;
 
 @Component
 public class AuthorDAO {

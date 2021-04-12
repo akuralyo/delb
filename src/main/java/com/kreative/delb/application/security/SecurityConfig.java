@@ -1,11 +1,7 @@
 package com.kreative.delb.application.security;
 
-import java.io.IOException;
-
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
+import com.kreative.delb.application.common.resource.constants.Api;
+import com.kreative.delb.domain.service.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,12 +18,30 @@ import org.springframework.security.web.authentication.SimpleUrlAuthenticationFa
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.logout.SimpleUrlLogoutSuccessHandler;
 
-import com.kreative.delb.application.common.resource.constants.Api;
-import com.kreative.delb.domain.service.user.service.UserService;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
+  @Autowired private AccessDeniedHandler accessDeniedHandler;
+
+  @Autowired private UserService userDetailsService;
+
+  @Bean
+  public AccessDeniedHandler accessDeniedHandler() {
+    return new CustomAccessDeniedHandler();
+  }
+
+  @Bean
+  public AuthenticationProvider getProvider() {
+    AppAuthProvider provider = new AppAuthProvider();
+    provider.setUserDetailsService(userDetailsService);
+    return provider;
+  }
 
   private static class AuthentificationLoginSuccessHandler
       extends SimpleUrlAuthenticationSuccessHandler {
@@ -46,15 +60,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         throws IOException, ServletException {
       response.setStatus(HttpServletResponse.SC_OK);
     }
-  }
-
-  @Autowired private AccessDeniedHandler accessDeniedHandler;
-
-  @Autowired private UserService userDetailsService;
-
-  @Bean
-  public AccessDeniedHandler accessDeniedHandler() {
-    return new CustomAccessDeniedHandler();
   }
 
   @Override
@@ -95,12 +100,5 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .hasAuthority("MODO")
         .anyRequest()
         .authenticated();
-  }
-
-  @Bean
-  public AuthenticationProvider getProvider() {
-    AppAuthProvider provider = new AppAuthProvider();
-    provider.setUserDetailsService(userDetailsService);
-    return provider;
   }
 }

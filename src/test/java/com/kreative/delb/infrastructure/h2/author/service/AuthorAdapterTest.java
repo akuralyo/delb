@@ -1,14 +1,9 @@
 package com.kreative.delb.infrastructure.h2.author.service;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.mockito.Mockito.when;
-import static org.mockito.MockitoAnnotations.initMocks;
-
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
-
+import com.kreative.delb.application.author.dto.AuthorDto;
+import com.kreative.delb.author.objectMother.AuthorMother;
+import com.kreative.delb.infrastructure.h2.author.model.AuthorModel;
+import com.kreative.delb.infrastructure.h2.author.repository.AuthorRepository;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -18,10 +13,14 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import com.kreative.delb.application.author.dto.AuthorDto;
-import com.kreative.delb.author.objectMother.AuthorMother;
-import com.kreative.delb.infrastructure.h2.author.model.AuthorModel;
-import com.kreative.delb.infrastructure.h2.author.repository.AuthorRepository;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.mockito.Mockito.when;
+import static org.mockito.MockitoAnnotations.initMocks;
 
 @RunWith(MockitoJUnitRunner.class)
 public class AuthorAdapterTest {
@@ -29,15 +28,6 @@ public class AuthorAdapterTest {
   @InjectMocks private AuthorAdapter authorAdapter;
 
   @Mock private AuthorRepository authorRepository;
-
-  private void checkObject_author(final AuthorModel expected, final AuthorModel returned) {
-    assertNotNull(returned);
-    assertNotNull(returned.getIdAuthor());
-    assertEquals(returned.getFirstName(), expected.getFirstName());
-    assertEquals(returned.getLastName(), expected.getLastName());
-    assertEquals(returned.getNickName(), expected.getNickName());
-    assertEquals(returned.getBirthday(), expected.getBirthday());
-  }
 
   @Test
   public void findAll() {
@@ -99,9 +89,17 @@ public class AuthorAdapterTest {
 
     when(authorRepository.save(ArgumentMatchers.any())).thenReturn(author);
     //
-    final AuthorModel actualResponse =
-        authorAdapter.updateById(author.getIdAuthor().toString(), authorDto);
+    final AuthorModel actualResponse = authorAdapter.updateById(author.getIdAuthor(), authorDto);
     //
     Assert.assertEquals(author, actualResponse);
+  }
+
+  private void checkObject_author(final AuthorModel expected, final AuthorModel returned) {
+    assertNotNull(returned);
+    assertNotNull(returned.getIdAuthor());
+    assertEquals(returned.getFirstName(), expected.getFirstName());
+    assertEquals(returned.getLastName(), expected.getLastName());
+    assertEquals(returned.getNickName(), expected.getNickName());
+    assertEquals(returned.getBirthday(), expected.getBirthday());
   }
 }

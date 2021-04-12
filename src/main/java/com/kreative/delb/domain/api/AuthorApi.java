@@ -7,11 +7,11 @@ import java.util.List;
 
 public interface AuthorApi {
 
-	void deleteAuthor(final String id);
+  void deleteAuthor(final String id);
 
-	List<AuthorDto> findAll();
+  List<AuthorDto> findAll();
 
-	AuthorDto findOneById(final String id);
+  AuthorDto findOneById(final String id);
 
-	AuthorDto updateAuthorById(final String id, final Author author);
+  AuthorDto updateAuthorById(final String id, final Author author);
 }

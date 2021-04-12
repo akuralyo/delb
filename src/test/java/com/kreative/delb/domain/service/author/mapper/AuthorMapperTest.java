@@ -1,13 +1,12 @@
 package com.kreative.delb.domain.service.author.mapper;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-
-import org.junit.Test;
-
 import com.kreative.delb.author.objectMother.AuthorMother;
 import com.kreative.delb.domain.service.author.model.Author;
 import com.kreative.delb.infrastructure.h2.author.model.AuthorModel;
+import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 public class AuthorMapperTest {
   @Test

@@ -1,19 +1,17 @@
 package com.kreative.delb.domain.service.author.service;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
-import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Service;
-import org.springframework.web.client.HttpClientErrorException;
-
 import com.kreative.delb.domain.service.author.mapper.AuthorMapper;
 import com.kreative.delb.domain.service.author.model.Author;
 import com.kreative.delb.domain.service.book.mapper.BookMapper;
 import com.kreative.delb.domain.spi.AuthorSpi;
 import com.kreative.delb.domain.spi.BookSpi;
 import com.kreative.delb.infrastructure.h2.author.model.AuthorModel;
-import com.kreative.delb.infrastructure.h2.book.model.BookModel;
+import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpClientErrorException;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class AuthorService {
@@ -47,11 +45,7 @@ public class AuthorService {
   }
 
   public List<Author> findAll() {
-    return authorSpi
-        .findAll()
-        .stream()
-        .map(authorMapper::mapToDto)
-        .collect(Collectors.toList());
+    return authorSpi.findAll().stream().map(authorMapper::mapToDto).collect(Collectors.toList());
   }
 
   public Author findOneById(final String id) {

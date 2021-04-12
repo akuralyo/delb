@@ -1,12 +1,5 @@
 package com.kreative.delb.domain.service.user.service;
 
-import java.util.Objects;
-
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.stereotype.Service;
-
 import com.kreative.delb.application.security.ConstantesRole;
 import com.kreative.delb.application.security.RoleAuthority;
 import com.kreative.delb.domain.service.user.mapper.UserMapper;
@@ -15,6 +8,12 @@ import com.kreative.delb.domain.spi.AuthorSpi;
 import com.kreative.delb.domain.spi.UserSpi;
 import com.kreative.delb.infrastructure.h2.User.model.UserModel;
 import com.kreative.delb.infrastructure.h2.author.model.AuthorModel;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
+
+import java.util.Objects;
 
 @Service
 public class UserService implements UserDetailsService {

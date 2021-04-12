@@ -1,10 +1,10 @@
 package com.kreative.delb.book.objectMother;
 
+import com.kreative.delb.infrastructure.h2.book.model.BookModel;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-
-import com.kreative.delb.infrastructure.h2.book.model.BookModel;
 
 public class BookMother {
 

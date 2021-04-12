@@ -12,23 +12,21 @@ import java.util.List;
 @Slf4j
 public class AuthorDtoAdapter implements AuthorApi {
 
+  @Override
+  public void deleteAuthor(String id) {}
 
-	@Override
-	public void deleteAuthor(String id) {
-	}
+  @Override
+  public List<AuthorDto> findAll() {
+    return null;
+  }
 
-	@Override
-	public List<AuthorDto> findAll() {
-		return null;
-	}
+  @Override
+  public AuthorDto findOneById(String id) {
+    return null;
+  }
 
-	@Override
-	public AuthorDto findOneById(String id) {
-		return null;
-	}
-
-	@Override
-	public AuthorDto updateAuthorById(String id, Author author) {
-		return null;
-	}
+  @Override
+  public AuthorDto updateAuthorById(String id, Author author) {
+    return null;
+  }
 }

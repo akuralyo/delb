@@ -1,13 +1,12 @@
 package com.kreative.delb.infrastructure.h2.book.service;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.apache.log4j.Logger;
-
 import com.kreative.delb.domain.spi.BookSpi;
 import com.kreative.delb.infrastructure.h2.book.model.BookModel;
 import com.kreative.delb.infrastructure.h2.book.repository.BookRepository;
+import org.apache.log4j.Logger;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class BookAdapter implements BookSpi {
 

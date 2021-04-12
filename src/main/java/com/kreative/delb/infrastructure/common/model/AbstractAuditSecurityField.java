@@ -1,15 +1,14 @@
 package com.kreative.delb.infrastructure.common.model;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 
-import lombok.Getter;
-import lombok.Setter;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter

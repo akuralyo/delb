@@ -1,14 +1,13 @@
 package com.kreative.delb.user.dao;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-
+import com.kreative.delb.infrastructure.h2.User.model.UserModel;
+import com.kreative.delb.infrastructure.h2.User.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.kreative.delb.infrastructure.h2.User.model.UserModel;
-import com.kreative.delb.infrastructure.h2.User.repository.UserRepository;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 @Component
 public class UserDAO {

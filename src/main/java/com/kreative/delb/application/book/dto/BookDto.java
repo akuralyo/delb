@@ -19,22 +19,22 @@ public class BookDto {
     return authorDto;
   }
 
-  public String getIdBook() {
-    return idBook;
-  }
-
-  public String getTitle() {
-    return title;
-  }
-
   public BookDto setAuthorDto(AuthorDto authorDto) {
     this.authorDto = authorDto;
     return this;
   }
 
+  public String getIdBook() {
+    return idBook;
+  }
+
   public BookDto setIdBook(String idBook) {
     this.idBook = idBook;
     return this;
+  }
+
+  public String getTitle() {
+    return title;
   }
 
   public BookDto setTitle(String title) {

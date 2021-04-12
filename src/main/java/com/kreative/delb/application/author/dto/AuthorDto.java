@@ -1,21 +1,19 @@
 package com.kreative.delb.application.author.dto;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Null;
-
 import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import com.kreative.delb.application.book.dto.BookDto;
 import com.kreative.delb.application.common.ApiGroupValidation;
 import com.kreative.delb.application.common.resource.ViewsAuthor;
-
 import lombok.Getter;
 import lombok.Setter;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Null;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter

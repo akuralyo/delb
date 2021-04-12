@@ -1,20 +1,9 @@
 package com.kreative.delb.author.resource;
 
-import static com.kreative.delb.application.common.resource.constants.Api.PREFIXE;
-import static com.kreative.delb.application.common.resource.constants.Api.PRIVATE;
-import static com.kreative.delb.application.common.resource.constants.Api.Resource.AUTHORS;
-import static org.junit.Assert.assertNull;
-import static org.springframework.http.MediaType.APPLICATION_JSON;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
-import java.time.LocalDate;
-import java.util.UUID;
-
+import com.kreative.delb.DelbApplication;
+import com.kreative.delb.application.author.dto.AuthorDto;
+import com.kreative.delb.author.objectMother.AuthorMother;
+import com.kreative.delb.infrastructure.h2.author.model.AuthorModel;
 import org.apache.log4j.Logger;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -25,10 +14,17 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.web.util.NestedServletException;
 
-import com.kreative.delb.DelbApplication;
-import com.kreative.delb.application.author.dto.AuthorDto;
-import com.kreative.delb.author.objectMother.AuthorMother;
-import com.kreative.delb.infrastructure.h2.author.model.AuthorModel;
+import java.time.LocalDate;
+import java.util.UUID;
+
+import static com.kreative.delb.application.common.resource.constants.Api.PREFIXE;
+import static com.kreative.delb.application.common.resource.constants.Api.PRIVATE;
+import static com.kreative.delb.application.common.resource.constants.Api.Resource.AUTHORS;
+import static org.junit.Assert.assertNull;
+import static org.springframework.http.MediaType.APPLICATION_JSON;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest

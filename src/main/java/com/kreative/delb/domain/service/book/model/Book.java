@@ -1,7 +1,6 @@
 package com.kreative.delb.domain.service.book.model;
 
 import com.kreative.delb.domain.service.author.model.Author;
-
 import lombok.Getter;
 import lombok.Setter;
 
