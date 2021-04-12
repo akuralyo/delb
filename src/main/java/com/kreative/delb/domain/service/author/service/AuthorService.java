@@ -51,13 +51,6 @@ public class AuthorService {
         .findAll()
         .stream()
         .map(authorMapper::mapToDto)
-        .map(
-            authorDto -> {
-              final List<BookModel> bookList = bookSpi.findAllByAuthorId(authorDto.getIdAuthor());
-              bookSpi
-                  .findAllByAuthorId(authorDto.getIdAuthor())
-                  .forEach(book -> authorDto.getBookList().add(bookMapper.mapToDto(book)));
-            })
         .collect(Collectors.toList());
   }
 

@@ -3,6 +3,7 @@ package com.kreative.delb.application.author.resource;
 import java.util.HashMap;
 import java.util.List;
 
+import com.kreative.delb.application.author.adapter.AuthorDtoAdapter;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,11 +22,11 @@ import com.kreative.delb.domain.service.author.service.AuthorService;
 public class AuthorsPublicResource extends AbstractApiRessource<AuthorDto>
     implements ApiRestRessource<AuthorDto> {
 
-  private final AuthorService authorService;
+  private final AuthorDtoAdapter authorDtoAdapter;
 
-  public AuthorsPublicResource(final AuthorService authorService) {
+  public AuthorsPublicResource(final AuthorDtoAdapter authorDtoAdapter) {
     super();
-    this.authorService = authorService;
+    this.authorDtoAdapter = authorDtoAdapter;
   }
 
   @Override
@@ -41,21 +42,21 @@ public class AuthorsPublicResource extends AbstractApiRessource<AuthorDto>
   @Override
   @JsonView(ViewsAuthor.ApiPublic.class)
   public ResponseEntity<List<AuthorDto>> findAll() {
-    final List<AuthorDto> authorDtoList = authorService.findAll();
+    final List<AuthorDto> authorDtoList = authorDtoAdapter.findAll();
     return new ResponseEntity<>(authorDtoList, HttpStatus.OK);
   }
 
   @Override
   public ResponseEntity<List<HashMap<String, Object>>> findAllAndFilterAplly(
       final List<String> filterList) {
-    final List<AuthorDto> authorDtoList = authorService.findAll();
+    final List<AuthorDto> authorDtoList = authorDtoAdapter.findAll();
     return new ResponseEntity<>(filter(authorDtoList, filterList), HttpStatus.OK);
   }
 
   @Override
   @JsonView(ViewsAuthor.ApiPublic.class)
   public ResponseEntity<AuthorDto> findOneById(final String id) {
-    final AuthorDto authorDto = authorService.findOneById(id);
+    final AuthorDto authorDto = authorDtoAdapter.findOneById(id);
     return new ResponseEntity<>(authorDto, HttpStatus.OK);
   }
 
@@ -69,7 +70,7 @@ public class AuthorsPublicResource extends AbstractApiRessource<AuthorDto>
   @JsonView(ViewsAuthor.ApiPublic.class)
   public ResponseEntity<HashMap<String, Object>> findOneByIdAndFilterApply(
       final String id, final List<String> filterList) {
-    final AuthorDto authorDto = authorService.findOneById(id);
+    final AuthorDto authorDto = authorDtoAdapter.findOneById(id);
     return new ResponseEntity<>(filter(authorDto, filterList), HttpStatus.OK);
   }
 
