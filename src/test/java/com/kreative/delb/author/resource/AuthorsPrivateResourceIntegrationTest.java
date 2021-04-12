@@ -5,7 +5,7 @@ import com.kreative.delb.application.author.dto.AuthorDto;
 import com.kreative.delb.author.objectMother.AuthorMother;
 import com.kreative.delb.infrastructure.h2.author.model.AuthorModel;
 import org.apache.log4j.Logger;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -48,7 +48,7 @@ public class AuthorsPrivateResourceIntegrationTest extends AbstractAuthorResourc
         .andExpect(status().isNotImplemented());
   }
 
-  @Test(expected = NestedServletException.class)
+  @Test
   @WithMockUser(username = "anonymousUser")
   public void private_delete_ko_cuz_object_not_existing() throws Exception {
     mockMvc.perform(

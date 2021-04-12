@@ -1,4 +1,4 @@
-package com.kreative.delb.infrastructure.h2.author.service;
+package com.kreative.delb.infrastructure.h2.author.adapter;
 
 import com.kreative.delb.domain.service.author.model.Author;
 import com.kreative.delb.domain.spi.AuthorSpi;

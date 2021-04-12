@@ -2,7 +2,7 @@ package com.kreative.delb.book.resource;
 
 import com.kreative.delb.common.resource.AbstractIntegrationTest;
 import org.apache.log4j.Logger;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;

@@ -3,7 +3,7 @@ package com.kreative.delb.common.resource;
 import com.kreative.delb.DelbApplication;
 import com.kreative.delb.infrastructure.h2.User.model.UserModel;
 import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;

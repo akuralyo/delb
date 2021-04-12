@@ -1,6 +1,7 @@
 package com.kreative.delb.application.author.resource;
 
 import com.fasterxml.jackson.annotation.JsonView;
+import com.kreative.delb.application.author.adapter.AuthorDtoAdapter;
 import com.kreative.delb.application.author.dto.AuthorDto;
 import com.kreative.delb.application.common.AbstractApiRessource;
 import com.kreative.delb.application.common.ApiGroupValidation;
@@ -8,7 +9,6 @@ import com.kreative.delb.application.common.ApiRestPathVariable;
 import com.kreative.delb.application.common.ApiRestRessource;
 import com.kreative.delb.application.common.resource.ViewsAuthor;
 import com.kreative.delb.application.common.resource.constants.Api;
-import com.kreative.delb.domain.service.author.service.AuthorService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -25,10 +25,10 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 public class AuthorsPrivateResource extends AbstractApiRessource<AuthorDto>
     implements ApiRestRessource<AuthorDto> {
 
-  private final AuthorService authorService;
+  private final AuthorDtoAdapter authorDtoAdapter;
 
-  public AuthorsPrivateResource(final AuthorService authorService) {
-    this.authorService = authorService;
+  public AuthorsPrivateResource(final AuthorDtoAdapter authorDtoAdapter) {
+    this.authorDtoAdapter = authorDtoAdapter;
   }
 
   @Override
@@ -38,14 +38,14 @@ public class AuthorsPrivateResource extends AbstractApiRessource<AuthorDto>
 
   @Override
   public ResponseEntity delete(@PathVariable final String id) {
-    authorService.deleteAuthor(id);
+    authorDtoAdapter.deleteAuthor(id);
     return new ResponseEntity<>(HttpStatus.OK);
   }
 
   @Override
   @JsonView(ViewsAuthor.ApiPrivate.class)
   public ResponseEntity<List<AuthorDto>> findAll() {
-    final List<AuthorDto> authorDtoList = authorService.findAll();
+    final List<AuthorDto> authorDtoList = authorDtoAdapter.findAll();
     return new ResponseEntity<>(authorDtoList, HttpStatus.OK);
   }
 
@@ -57,21 +57,21 @@ public class AuthorsPrivateResource extends AbstractApiRessource<AuthorDto>
 
   @Override
   public ResponseEntity<AuthorDto> findOneById(final String id) {
-    final AuthorDto authorDto = authorService.findOneById(id);
+    final AuthorDto authorDto = authorDtoAdapter.findOneById(id);
     return new ResponseEntity<>(authorDto, HttpStatus.OK);
   }
 
   @Override
   @JsonView(ViewsAuthor.ApiPrivate.class)
   public ResponseEntity findOneByIdAndFilterApply(final String id, final List<String> filterList) {
-    final AuthorDto authorDto = authorService.findOneById(id);
+    final AuthorDto authorDto = authorDtoAdapter.findOneById(id);
     return new ResponseEntity<>(filter(authorDto, filterList), HttpStatus.OK);
   }
 
   @Override
   @JsonView(ViewsAuthor.ApiPrivate.class)
   public ResponseEntity update(final String id, final AuthorDto objectDto) {
-    final AuthorDto authorDtoUpdated = authorService.updateAuthorById(id, objectDto);
+    final AuthorDto authorDtoUpdated = authorDtoAdapter.updateAuthorById(id, objectDto);
     return new ResponseEntity<>(authorDtoUpdated, HttpStatus.OK);
   }
 

@@ -1,5 +1,6 @@
 package com.kreative.delb.domain.service.author.service;
 
+import com.kreative.delb.domain.service.author.exception.AuthorNotFoundException;
 import com.kreative.delb.domain.service.author.mapper.AuthorMapper;
 import com.kreative.delb.domain.service.author.model.Author;
 import com.kreative.delb.domain.service.book.mapper.BookMapper;
@@ -35,6 +36,8 @@ public class AuthorService {
     this.bookMapper = bookMapper;
   }
 
+
+
   public void deleteAuthor(final String id) {
     final AuthorModel author = authorSpi.findOneById(id);
     if (author != null) {
@@ -48,10 +51,10 @@ public class AuthorService {
     return authorSpi.findAll().stream().map(authorMapper::mapToDto).collect(Collectors.toList());
   }
 
-  public Author findOneById(final String id) {
+  public Author findOneById(final String id) throws AuthorNotFoundException {
     final AuthorModel authorModel = authorSpi.findOneById(id);
     if (authorModel == null) {
-      throw new HttpClientErrorException(HttpStatus.NOT_FOUND);
+      throw new AuthorNotFoundException();
     } else {
       final Author author = authorMapper.mapToDto(authorModel);
       bookSpi
@@ -61,12 +64,12 @@ public class AuthorService {
     }
   }
 
-  public Author updateAuthorById(final String id, final Author author) {
+  public Author updateAuthorById(final String id, final Author author) throws AuthorNotFoundException {
     final AuthorModel authorUpdated = authorSpi.updateById(id, author);
     if (authorUpdated != null) {
       return authorMapper.mapToDto(authorUpdated);
     } else {
-      throw new HttpClientErrorException(HttpStatus.NOT_FOUND);
+      throw new AuthorNotFoundException();
     }
   }
 }

@@ -1,4 +1,4 @@
-package com.kreative.delb.author.dao;
+package com.kreative.delb.infrastructure.h2.author.dao;
 
 import com.kreative.delb.infrastructure.h2.author.model.AuthorModel;
 import com.kreative.delb.infrastructure.h2.author.repository.AuthorRepository;

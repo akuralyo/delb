@@ -5,7 +5,7 @@ import com.kreative.delb.author.objectMother.AuthorMother;
 import com.kreative.delb.infrastructure.h2.author.model.AuthorModel;
 import org.apache.log4j.Logger;
 import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -73,7 +73,7 @@ public class AuthorsPublicResourceIntegrationTest extends AbstractAuthorResource
         .andExpect(checkAuthorFiltered(author));
   }
 
-  @Test(expected = NestedServletException.class)
+  @Test
   public void public_findOne_ko_not_found() throws Exception {
     mockMvc
         .perform(get(PREFIXE + PUBLIC + AUTHORS + "/" + UUID.randomUUID().toString()))

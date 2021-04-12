@@ -13,5 +13,5 @@ public interface AuthorApi {
 
   AuthorDto findOneById(final String id);
 
-  AuthorDto updateAuthorById(final String id, final Author author);
+  AuthorDto updateAuthorById(final String id, final AuthorDto author);
 }

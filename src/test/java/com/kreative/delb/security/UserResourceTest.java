@@ -2,7 +2,7 @@ package com.kreative.delb.security;
 
 import com.kreative.delb.common.resource.AbstractIntegrationTest;
 import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;

@@ -1,6 +1,7 @@
 package com.kreative.delb.author.objectMother;
 
 import com.kreative.delb.application.author.dto.AuthorDto;
+import com.kreative.delb.domain.service.author.model.Author;
 import com.kreative.delb.infrastructure.h2.author.model.AuthorModel;
 
 import java.time.LocalDate;
@@ -8,7 +9,20 @@ import java.util.*;
 
 public class AuthorMother {
 
-  public AuthorModel createAuthor(final int i) {
+  public Author createAuthor(final int i) {
+    final Author author = new Author();
+
+    author.setIdAuthor(UUID.randomUUID().toString());
+    author.setFirstName("FirstName" + i);
+    author.setLastName("LastName" + i);
+    author.setNickName("NickName" + i);
+    author.setBirthday(LocalDate.now());
+    author.setAdresse("Adresse" + i);
+
+    return author;
+  }
+
+  public AuthorModel createAuthorModel(final int i) {
     final AuthorModel authorModel = new AuthorModel();
 
     authorModel.setIdAuthor(UUID.randomUUID().toString());
@@ -21,7 +35,7 @@ public class AuthorMother {
     return authorModel;
   }
 
-  public AuthorModel createAuthor(final int i, final String userId) {
+  public AuthorModel createAuthorModel(final int i, final String userId) {
     final AuthorModel authorModel = new AuthorModel();
 
     authorModel.setIdAuthor(userId);
@@ -61,9 +75,9 @@ public class AuthorMother {
 
   public List<AuthorModel> createAuthorList() {
     final List<AuthorModel> authorList = new ArrayList<>();
-    authorList.add(createAuthor(0));
-    authorList.add(createAuthor(1));
-    authorList.add(createAuthor(2));
+    authorList.add(createAuthorModel(0));
+    authorList.add(createAuthorModel(1));
+    authorList.add(createAuthorModel(2));
     return authorList;
   }
 

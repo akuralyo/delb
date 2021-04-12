@@ -3,7 +3,7 @@ package com.kreative.delb.common.resource;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.kreative.delb.application.security.ConstantesRole;
-import com.kreative.delb.author.dao.AuthorDAO;
+import com.kreative.delb.infrastructure.h2.author.dao.AuthorDAO;
 import com.kreative.delb.author.objectMother.AuthorMother;
 import com.kreative.delb.book.dao.BookDAO;
 import com.kreative.delb.book.objectMother.BookMother;
@@ -64,7 +64,7 @@ public abstract class AbstractIntegrationTest {
   private void createAuthor(final int i) {
     UserModel user = createUserModel(i, ConstantesRole.ROLE_AUTHOR.name());
     final AuthorModel author =
-        authorRepository.save(new AuthorMother().createAuthor(i, user.getId()));
+        authorRepository.save(new AuthorMother().createAuthorModel(i, user.getId()));
     bookRepository.saveAll(new BookMother().createBookList(author.getIdAuthor()));
   }
 

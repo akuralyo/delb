@@ -1,46 +1,42 @@
 package com.kreative.delb.domain.service.author.service;
 
-import com.kreative.delb.application.author.dto.AuthorDto;
 import com.kreative.delb.author.objectMother.AuthorMother;
 import com.kreative.delb.book.objectMother.BookMother;
+import com.kreative.delb.domain.service.author.exception.AuthorNotFoundException;
 import com.kreative.delb.domain.service.author.mapper.AuthorMapper;
 import com.kreative.delb.domain.service.author.model.Author;
 import com.kreative.delb.domain.service.book.mapper.BookMapper;
-import com.kreative.delb.infrastructure.h2.author.service.AuthorAdapter;
-import com.kreative.delb.infrastructure.h2.book.service.BookAdapter;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import com.kreative.delb.domain.spi.AuthorSpi;
+import com.kreative.delb.domain.spi.BookSpi;
+import org.junit.Assert;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentMatchers;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
-import org.springframework.web.client.HttpClientErrorException;
-
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 
-@RunWith(MockitoJUnitRunner.class)
-public class AuthorServiceTest {
+class AuthorServiceTest {
 
-  @Mock private AuthorAdapter authorAdapter;
+  @Mock private AuthorSpi authorSpi;
 
   @Mock private AuthorMapper authorMapper;
 
-  @InjectMocks private AuthorService authorService;
+  private AuthorService authorService;
 
-  @Mock private BookAdapter bookAdapter;
+  @Mock private BookSpi bookSpi;
 
   @Mock private BookMapper bookMapper;
 
   @Test
-  public void findOneById_ok() {
+  public void findOneById_ok() throws AuthorNotFoundException {
     // Initiation des réponses
-    when(authorAdapter.findOneById(ArgumentMatchers.anyString()))
-        .thenReturn(new AuthorMother().createAuthor(0));
-    when(bookAdapter.findAllByAuthorId(ArgumentMatchers.anyString()))
+    when(authorSpi.findOneById(ArgumentMatchers.anyString()))
+        .thenReturn(new AuthorMother().createAuthorModel(0));
+    when(bookSpi.findAllByAuthorId(ArgumentMatchers.anyString()))
         .thenReturn(new BookMother().createBookList());
     // Appel
     final Author author = authorService.findOneById("id");
@@ -49,19 +45,24 @@ public class AuthorServiceTest {
     assertEquals(author.getBookList().size(), new BookMother().createBookList().size());
   }
 
-  @Before
-  public void setUp() {
+  @BeforeEach
+  public void init() {
     initMocks(this);
     when(authorMapper.mapToDto(ArgumentMatchers.any())).thenCallRealMethod();
     when(bookMapper.mapToDto(ArgumentMatchers.any())).thenCallRealMethod();
+
+    authorService = new AuthorService(authorSpi, bookSpi, authorMapper, bookMapper);
   }
 
-  @Test(expected = HttpClientErrorException.class)
+  @Test
   public void updateAuthor_ko() {
     // Initiation des réponses
-    when(authorAdapter.updateById(ArgumentMatchers.anyString(), ArgumentMatchers.any()))
+    when(authorSpi.updateById(ArgumentMatchers.anyString(), ArgumentMatchers.any(Author.class)))
         .thenReturn(null);
     // Appel
-    authorService.updateAuthorById("id", new AuthorDto());
+    AuthorNotFoundException exception =
+            assertThrows(AuthorNotFoundException.class,
+                    () ->  authorService.updateAuthorById("id", new Author()));
+
   }
 }

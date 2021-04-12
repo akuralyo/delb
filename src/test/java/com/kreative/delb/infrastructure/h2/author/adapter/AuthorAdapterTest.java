@@ -1,17 +1,14 @@
-package com.kreative.delb.infrastructure.h2.author.service;
+package com.kreative.delb.infrastructure.h2.author.adapter;
 
-import com.kreative.delb.application.author.dto.AuthorDto;
 import com.kreative.delb.author.objectMother.AuthorMother;
+import com.kreative.delb.domain.service.author.model.Author;
 import com.kreative.delb.infrastructure.h2.author.model.AuthorModel;
 import com.kreative.delb.infrastructure.h2.author.repository.AuthorRepository;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.BeforeEach;
 import org.mockito.ArgumentMatchers;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
 
 import java.util.List;
 import java.util.Optional;
@@ -22,10 +19,9 @@ import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 
-@RunWith(MockitoJUnitRunner.class)
-public class AuthorAdapterTest {
+class AuthorAdapterTest {
 
-  @InjectMocks private AuthorAdapter authorAdapter;
+  private AuthorAdapter authorAdapter;
 
   @Mock private AuthorRepository authorRepository;
 
@@ -37,7 +33,7 @@ public class AuthorAdapterTest {
     final List<AuthorModel> authorList = authorAdapter.findAll();
     // Vérification
     assertEquals(new AuthorMother().createAuthorList().size(), authorList.size());
-    checkObject_author(authorList.get(1), new AuthorMother().createAuthor(1));
+    checkObject_author(authorList.get(1), new AuthorMother().createAuthorModel(1));
   }
 
   @Test
@@ -56,23 +52,24 @@ public class AuthorAdapterTest {
     // Initiation des réponses
     final String idAuthor = UUID.randomUUID().toString();
     when(authorRepository.findOneByIdAuthor(ArgumentMatchers.anyString()))
-        .thenReturn(Optional.of(new AuthorMother().createAuthor(0, idAuthor)));
+        .thenReturn(Optional.of(new AuthorMother().createAuthorModel(0, idAuthor)));
     // Appel
     final AuthorModel author = authorAdapter.findOneById("id");
     // Vérification
-    checkObject_author(author, new AuthorMother().createAuthor(0, idAuthor));
+    checkObject_author(author, new AuthorMother().createAuthorModel(0, idAuthor));
   }
 
-  @Before
+  @BeforeEach
   public void setUp() {
     initMocks(this);
+    authorAdapter = new AuthorAdapter(authorRepository);
   }
 
   @Test
   public void update_ko() {
     when(authorRepository.findById(ArgumentMatchers.anyString())).thenReturn(Optional.empty());
     //
-    final AuthorModel author = authorAdapter.updateById("id", new AuthorDto());
+    final AuthorModel author = authorAdapter.updateById("id", new Author());
     //
     Assert.assertNull(author);
   }
@@ -80,18 +77,18 @@ public class AuthorAdapterTest {
   @Test
   public void update_ok() {
     when(authorRepository.findById(ArgumentMatchers.anyString()))
-        .thenReturn(Optional.of(new AuthorMother().createAuthor(0)));
-    final AuthorModel author = new AuthorMother().createAuthor(0);
+        .thenReturn(Optional.of(new AuthorMother().createAuthorModel(0)));
+    final AuthorModel authorModel = new AuthorMother().createAuthorModel(0);
+    authorModel.setFirstName("MyFirstName");
+
+    final Author author = new AuthorMother().createAuthor(0);
     author.setFirstName("MyFirstName");
 
-    final AuthorDto authorDto = new AuthorMother().createAuthorDto(0);
-    authorDto.setFirstName("MyFirstName");
-
-    when(authorRepository.save(ArgumentMatchers.any())).thenReturn(author);
+    when(authorRepository.save(ArgumentMatchers.any())).thenReturn(authorModel);
     //
-    final AuthorModel actualResponse = authorAdapter.updateById(author.getIdAuthor(), authorDto);
+    final AuthorModel actualResponse = authorAdapter.updateById(authorModel.getIdAuthor(), author);
     //
-    Assert.assertEquals(author, actualResponse);
+    Assert.assertEquals(authorModel, actualResponse);
   }
 
   private void checkObject_author(final AuthorModel expected, final AuthorModel returned) {

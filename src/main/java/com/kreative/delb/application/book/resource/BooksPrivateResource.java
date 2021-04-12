@@ -1,5 +1,6 @@
 package com.kreative.delb.application.book.resource;
 
+import com.kreative.delb.application.book.adapter.BookDtoAdapter;
 import com.kreative.delb.application.book.dto.BookDto;
 import com.kreative.delb.application.common.AbstractApiRessource;
 import com.kreative.delb.application.common.ApiRestRessource;
@@ -22,15 +23,15 @@ import static com.kreative.delb.application.common.resource.constants.Api.Resour
 public class BooksPrivateResource extends AbstractApiRessource<BookDto>
     implements ApiRestRessource<BookDto> {
 
-  private final BookService bookService;
+  private final BookDtoAdapter bookDtoAdapter;
 
-  public BooksPrivateResource(final BookService bookService) {
-    this.bookService = bookService;
+  public BooksPrivateResource(final BookDtoAdapter bookDtoAdapter) {
+    this.bookDtoAdapter = bookDtoAdapter;
   }
 
   @Override
   public ResponseEntity create(@RequestBody final BookDto objectDto) {
-    final BookDto bookDtoCreated = bookService.createBook(objectDto);
+    final BookDto bookDtoCreated = bookDtoAdapter.createBook(objectDto);
     return new ResponseEntity<>(bookDtoCreated, HttpStatus.CREATED);
   }
 

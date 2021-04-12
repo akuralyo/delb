@@ -26,7 +26,7 @@ public class AuthorDtoAdapter implements AuthorApi {
   }
 
   @Override
-  public AuthorDto updateAuthorById(String id, Author author) {
+  public AuthorDto updateAuthorById(String id, AuthorDto author) {
     return null;
   }
 }

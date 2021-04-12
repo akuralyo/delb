@@ -29,7 +29,7 @@ public abstract class AbstractAuthorResourceIntegrationTest extends AbstractInte
   }
 
   protected ResultMatcher checkAuthor(int i, boolean apiPrivate) {
-    return checkAuthor(new AuthorMother().createAuthor(i), apiPrivate);
+    return checkAuthor(new AuthorMother().createAuthorModel(i), apiPrivate);
   }
 
   protected ResultMatcher checkAuthorBook(int indexAuthor) {
